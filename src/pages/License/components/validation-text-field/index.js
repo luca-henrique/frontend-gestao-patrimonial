@@ -5,17 +5,17 @@ const ValidationTextField = withStyles({
   root: {
     "& input:valid + fieldset": {
       borderColor: "#A4A4A4",
-      borderWidth: 1
+      borderWidth: 1,
     },
     "& input:invalid + fieldset": {
-      borderColor: "red",
-      borderWidth: 2
+      borderColor: "#A4A4A4",
+      borderWidth: 2,
     },
     "& input:valid:focus + fieldset": {
       borderColor: "#088A85",
-      padding: "4px !important"
-    }
-  }
+      padding: "4px !important",
+    },
+  },
 })(TextField);
 
 export default ValidationTextField;

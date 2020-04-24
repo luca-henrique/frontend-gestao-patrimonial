@@ -10,19 +10,19 @@ import Copyright from "./components/copyright";
 const ValidationTextField = withStyles({
   root: {
     "& input:valid + fieldset": {
-      borderColor: "#000",
-      borderWidth: 1
+      borderColor: "#A4A4A4",
+      borderWidth: 1,
     },
     "& input:invalid + fieldset": {
       borderColor: "red",
-      borderWidth: 2
+      borderWidth: 2,
     },
     "& input:valid:focus + fieldset": {
       borderColor: "#2E64FE",
       borderLeftWidth: 6,
-      padding: "4px !important" // override inline-style
-    }
-  }
+      padding: "4px !important", // override inline-style
+    },
+  },
 })(TextField);
 
 export default function SignUp(props) {
@@ -34,8 +34,8 @@ export default function SignUp(props) {
   return (
     <>
       <Container className={classes.container}>
-        <div>
-          <Typography variant="h2" style={{ color: "#fff" }}>
+        <div className={classes.header}>
+          <Typography className={classes.title_header}>
             Gestão de Patrimônio
           </Typography>
         </div>
@@ -45,9 +45,9 @@ export default function SignUp(props) {
               Entrar
             </Typography>
           </div>
-          <div className={classes.button}>
+          <div className={classes.input}>
             <Typography variant="button" className={classes.typography}>
-              Email
+              Email:
             </Typography>
             <ValidationTextField
               variant="outlined"
@@ -55,12 +55,12 @@ export default function SignUp(props) {
               fullWidth
               type="text"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className={classes.button}>
+          <div className={classes.input}>
             <Typography variant="button" className={classes.typography}>
-              Senha
+              Senha:
             </Typography>
             <ValidationTextField
               variant="outlined"
@@ -68,11 +68,11 @@ export default function SignUp(props) {
               fullWidth
               type="password"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className={classes.signIn}>
-            <Button variant="contained" fullWidth className={classes.title}>
+            <Button variant="contained" fullWidth className={classes.button}>
               Entrar
             </Button>
           </div>
@@ -85,39 +85,78 @@ export default function SignUp(props) {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     backgroundImage: "linear-gradient(160deg, #039dfb 0%, #1f2f61 78%)",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
 
-  img: {
-    width: "450px",
-    height: "200",
-    marginTop: "40px",
-
+  header: {
+    display: "flex",
     [theme.breakpoints.down("sm")]: {
-      width: "300px"
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      height: "20%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "500px"
+      justifyContent: "center",
+      width: "100%",
+      height: "20%",
+      marginTop: "5%",
     },
-    [theme.breakpoints.up("lg")]: {}
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "60px",
+    },
   },
+
+  title_header: {
+    color: "#fff",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "35px",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "60px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "60px",
+    },
+  },
+
   title: {
-    marginBottom: "30px"
+    marginBottom: "30px",
   },
   typography: {
-    color: "#000"
+    color: "#A4A4A4",
+  },
+  input: {
+    marginTop: "10px",
+    marginBottom: "10px",
+    width: "100%",
   },
   button: {
     marginTop: "10px",
     marginBottom: "10px",
-    width: "100%"
+    width: "100%",
+    color: "#1f2f61",
   },
+
+  footer: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "20%",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "60px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "60px",
+    },
+  },
+
   signIn: {
     width: "100%",
-    marginTop: "15px"
-  }
+    marginTop: "15px",
+  },
 }));

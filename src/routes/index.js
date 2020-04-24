@@ -1,18 +1,33 @@
 import React from "react";
 import { Switch } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
 
-import Route from "./Route";
+import history from "./history";
+
+import Route from "./route";
 
 import License from "../pages/License";
 import SignIn from "../pages/SignIn";
-import Dashboard from "../pages/Dashboard";
+
+import AdminPage from "../pages/Admin/";
+import UserPage from "../pages/User/";
 
 export default function Routes() {
   return (
-    <Switch>
-      <Route path="/" exact component={License} />
-      <Route path="/entrar" component={SignIn} isLicensed />
-      <Route path="/dashboard" component={Dashboard} isPrivate isLicensed />
-    </Switch>
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path="/" exact component={License} />
+        <Route path="/entrar" component={SignIn} isLicensed />
+
+        <Route
+          path="/admin"
+          component={AdminPage}
+          isPrivate
+          isLicensed
+          isAdmin
+        />
+        <Route path="/user" component={UserPage} isPrivate isLicensed />
+      </Switch>
+    </ConnectedRouter>
   );
 }

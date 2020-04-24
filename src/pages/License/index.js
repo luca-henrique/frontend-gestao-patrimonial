@@ -1,30 +1,30 @@
 import React, { useState } from "react";
 
 import { Typography, Button } from "@material-ui/core/";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Logo from "../../assets/images/empresa-logo.png";
 import Copyright from "../Copyright/";
 
 import TextField from "./components/validation-text-field/";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   main: {
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       marginTop: "2%",
       width: "300px",
-      height: "250px"
+      height: "250px",
     },
     [theme.breakpoints.up("md")]: {
       marginTop: "2%",
       height: "300px",
-      width: "400px"
-    }
-  }
+      width: "400px",
+    },
+  },
 }));
 
-export default function() {
+export default function () {
   const [token, setToken] = useState("");
 
   const classes = useStyles();
@@ -35,7 +35,7 @@ export default function() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       <div className={classes.main}>
@@ -46,7 +46,7 @@ export default function() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
         className={classes.main}
       >
@@ -64,7 +64,7 @@ export default function() {
           size="small"
           type="password"
           value={token}
-          onChange={e => setToken(e.target.value)}
+          onChange={(e) => setToken(e.target.value)}
           style={{ width: "100%", marginBottom: "5%", fontSize: "20px" }}
         />
         <Button
@@ -73,7 +73,7 @@ export default function() {
           style={{
             width: "100%",
             backgroundColor: "#04B4AE",
-            color: "#ffff"
+            color: "#ffff",
           }}
         >
           Verificar
