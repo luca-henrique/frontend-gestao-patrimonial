@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 
 import clsx from "clsx";
 
-/**
- * Componentes
- */
+/* -> Components[Criados] <- */
+import LeftIcons from "./components/Menu/";
 
+/* -> Components[Biblioteca] <- */
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,26 +16,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
-/**
- * Icones
- */
-
+/* -> Icones <- */
 import MenuIcon from "@material-ui/icons/Menu";
-
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-/**
- * Components
- */
-
-import LeftIcons from "../Menu-Icon/";
-
-/**
- * Tamanho do menu lateral
- */
-
-const drawerWidth = 260;
+/* -> Tamanho do menu lateral[esquerda] <- */
+const drawerWidth = 310;
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,17 +1,28 @@
 import React from "react";
+
+/* -> Style <- */
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
 
-import NoteAddOutlinedIcon from "@material-ui/icons/NoteAddOutlined";
+/* -> Components[Biblioteca] <- */
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+} from "@material-ui/core/";
 
-import pdf from "../../../../../../assets/icons/pdf.png";
+/* -> Components[Criados] <- */
+import PatrimonioPage from "./components/list-patrimonio/";
+
+/* -> Icons[] <- */
+import { ExpandLess, ExpandMore } from "@material-ui/icons/";
+
+/* -> Icons[] <- */
+import pdf from "../../../../../../../../assets/icons/pdf.png";
+import inventario from "../../../../../../../../assets/icons/inventario.png";
+import termo from "../../../../../../../../assets/icons/termo.png";
+import transferencia from "../../../../../../../../assets/icons/transferencia.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NestedList() {
+export default function ListReport() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -55,7 +66,7 @@ export default function NestedList() {
         <ListItemIcon>
           <img
             src={pdf}
-            style={{ width: "35px", height: "35px" }}
+            style={{ width: "34px", height: "34px", color: "#a4a4a4" }}
             alt="relatório"
           />
         </ListItemIcon>
@@ -69,28 +80,44 @@ export default function NestedList() {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
+            <PatrimonioPage />
+          </ListItem>
+
+          <ListItem button className={classes.nested}>
             <ListItemIcon>
-              <StarBorder className={classes.list_icon} />
+              <img
+                src={inventario}
+                style={{ width: "35px", height: "35px" }}
+                alt="inventario"
+              />
             </ListItemIcon>
-            <ListItemText primary="Baixa" className={classes.list_text} />
+            <ListItemText primary="Inventario" className={classes.list_text} />
           </ListItem>
           <ListItem button className={classes.nested}>
             <ListItemIcon>
-              <StarBorder className={classes.list_icon} />
+              <img
+                src={termo}
+                style={{ width: "35px", height: "35px" }}
+                alt="termo"
+              />
             </ListItemIcon>
-            <ListItemText primary="Bem" className={classes.list_text} />
+            <ListItemText
+              primary="Termo de responsabilidade"
+              className={classes.list_text}
+            />
           </ListItem>
           <ListItem button className={classes.nested}>
             <ListItemIcon>
-              <StarBorder className={classes.list_icon} />
+              <img
+                src={transferencia}
+                style={{ width: "25px", height: "25px", marginLeft: "5px" }}
+                alt="transferência"
+              />
             </ListItemIcon>
-            <ListItemText primary="Estado" className={classes.list_text} />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder className={classes.list_icon} />
-            </ListItemIcon>
-            <ListItemText primary="Estado" className={classes.list_text} />
+            <ListItemText
+              primary="Transferência"
+              className={classes.list_text}
+            />
           </ListItem>
         </List>
       </Collapse>

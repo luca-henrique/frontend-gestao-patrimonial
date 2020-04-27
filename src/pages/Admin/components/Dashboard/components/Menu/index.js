@@ -1,5 +1,6 @@
 import React from "react";
 
+/* -> Components[Biblioteca] <- */
 import {
   List,
   ListItem,
@@ -8,35 +9,30 @@ import {
   makeStyles,
 } from "@material-ui/core/";
 
-import { ExitToApp, HomeWorkOutlined } from "@material-ui/icons/";
-
-import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
-
-import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
-
-/**
- *
- * Components
- */
-
+/* -> Components[Criados] <- */
 import ListItemCreate from "./components/list-item-create/";
+import ListRelatorios from "./components/list-pdf/";
 
-import ListPdf from "./components/list-pdf/";
+/* -> Icons <- */
+import {
+  ExitToApp,
+  HomeWorkOutlined,
+  PersonOutlineOutlined,
+  AssignmentOutlined,
+} from "@material-ui/icons/";
 
-/**
- * Icons[IMG]
- */
-import patrimonio from "../../../../assets/icons/patrimony.png";
+/* -> Icons <- */
+import patrimonio from "../../../../../../assets/icons/patrimony.png";
 
-export default function Menu(props) {
+export default function Menu() {
   const classes = useStyles();
 
   return (
     <div>
-      <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
+      <List className={classes.list}>
         <ListItem button className={classes.list_item}>
           <ListItemIcon>
-            <PersonOutlineOutlinedIcon className={classes.list_icon} />
+            <PersonOutlineOutlined className={classes.list_icon} />
           </ListItemIcon>
           <ListItemText className={classes.list_text} primary="Conta" />
         </ListItem>
@@ -45,14 +41,14 @@ export default function Menu(props) {
           <ListItemIcon>
             <HomeWorkOutlined className={classes.list_icon} />
           </ListItemIcon>
-          <ListItemText className={classes.list_text}>Prefeitura</ListItemText>
+          <ListItemText className={classes.list_text} primary="Prefeitura" />
         </ListItem>
 
         <ListItem button className={classes.list_item}>
           <ListItemIcon>
             <img
               src={patrimonio}
-              style={{ width: "35px", height: "35px" }}
+              className={classes.list_icon}
               alt="patrimonio"
             />
           </ListItemIcon>
@@ -63,21 +59,18 @@ export default function Menu(props) {
 
         <ListItem button className={classes.list_item}>
           <ListItemIcon>
-            <AssignmentOutlinedIcon className={classes.list_icon} />
+            <AssignmentOutlined className={classes.list_icon} />
           </ListItemIcon>
-          <ListItemText className={classes.list_text}>Log</ListItemText>
+          <ListItemText className={classes.list_text} primary="Log" />
         </ListItem>
 
-        <ListPdf />
+        {/*<ListRelatorios />*/}
 
-        <ListItem button style={{ color: "rgb(211, 66, 66)" }}>
+        <ListItem button className={classes.list_exit_item}>
           <ListItemIcon>
-            <ExitToApp style={{ fontSize: "35", color: "rgb(211, 66, 66)" }} />
+            <ExitToApp className={classes.list_exit_icon} />
           </ListItemIcon>
-          <ListItemText
-            style={{ fontSize: "10px", color: "rgb(211, 66, 66)" }}
-            primary="Sair"
-          />
+          <ListItemText className={classes.list_exit_text} primary="Sair" />
         </ListItem>
       </List>
     </div>
@@ -85,17 +78,38 @@ export default function Menu(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
+  list: {
+    paddingTop: "0px",
+    paddingBottom: "0px",
+  },
+
   list_item: {
     color: "#2E64FE",
   },
 
   list_icon: {
-    fontSize: "35px",
+    width: "34px",
+    height: "34px",
     color: "#a4a4a4",
   },
 
   list_text: {
     fontSize: "10px",
     color: "#a4a4a4",
+  },
+
+  list_exit_item: {
+    color: "rgb(211, 66, 66)",
+  },
+
+  list_exit_icon: {
+    width: "34px",
+    height: "34px",
+    color: "rgb(211, 66, 66)",
+  },
+
+  list_exit_text: {
+    fontSize: "10px",
+    color: "rgb(211, 66, 66)",
   },
 }));
