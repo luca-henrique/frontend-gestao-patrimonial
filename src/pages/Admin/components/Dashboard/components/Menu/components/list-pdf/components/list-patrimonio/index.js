@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 /* -> Style[] <- */
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,24 +17,50 @@ import {
   ExpandLess,
   ExpandMore,
   AssignmentOutlined,
-} from "@material-ui/icons/ExpandLess";
-
-import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
+  DescriptionOutlined,
+} from "@material-ui/icons/";
 
 /* -> Icons[PNG] <- */
 import patrimonio from "../../../../../../../../../../assets/icons/patrimony.png";
 import depreciacao from "../../../../../../../../../../assets/icons/depreciacao.png";
 
-export default function ListPatrimonio() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    maxWidth: "360px",
+    backgroundColor: theme.palette.background.paper,
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+    color: "#2E64FE",
+  },
+
+  list_icon: {
+    fontSize: "30px",
+    color: "#a4a4a4",
+  },
+
+  list_icon_root: {
+    fontSize: "35px",
+    color: "#a4a4a4",
+  },
+
+  list_text: {
+    fontSize: "10px",
+    color: "#a4a4a4",
+  },
+}));
+
+export default function PatrimonyList() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   return (
-    <List component="nav" className={classes.root} style={{ padding: "0px" }}>
+    <List component="nav" className={classes.root}>
       <ListItem button onClick={handleClick} style={{ padding: "0px" }}>
         <ListItemIcon>
           <img
@@ -61,7 +87,7 @@ export default function ListPatrimonio() {
 
           <ListItem button className={classes.nested}>
             <ListItemIcon>
-              <DescriptionOutlinedIcon className={classes.list_icon} />
+              <DescriptionOutlined className={classes.list_icon} />
             </ListItemIcon>
             <ListItemText
               primary="Por tombamento"
@@ -83,31 +109,3 @@ export default function ListPatrimonio() {
     </List>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-    padding: "0px",
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-    color: "#2E64FE",
-  },
-
-  list_icon: {
-    fontSize: "30px",
-    color: "#a4a4a4",
-  },
-
-  list_icon_root: {
-    fontSize: "35px",
-    color: "#a4a4a4",
-  },
-
-  list_text: {
-    fontSize: "10px",
-    color: "#a4a4a4",
-  },
-}));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -16,9 +16,37 @@ import natureza from "../../../../../../../../assets/icons/natureza.png";
 import origem from "../../../../../../../../assets/icons/origem.png";
 import localizacao from "../../../../../../../../assets/icons/localizacao.png";
 
-export default function ListCreateGeneral() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+    padding: "0px",
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+    color: "#2E64FE",
+  },
+
+  list_icon: {
+    fontSize: "30px",
+    color: "#a4a4a4",
+  },
+
+  list_icon_root: {
+    fontSize: "35px",
+    color: "#a4a4a4",
+  },
+
+  list_text: {
+    fontSize: "10px",
+    color: "#a4a4a4",
+  },
+}));
+
+function ListCreateGeneral() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -34,7 +62,7 @@ export default function ListCreateGeneral() {
               width: "32px",
               height: "32px",
               color: "#a4a4a4",
-              marginLeft: "3px",
+              marginLeft: "1px",
             }}
             alt="Cadastrar tipos gerais"
           />
@@ -148,30 +176,4 @@ export default function ListCreateGeneral() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-    padding: "0px",
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-    color: "#2E64FE",
-  },
-
-  list_icon: {
-    fontSize: "30px",
-    color: "#a4a4a4",
-  },
-
-  list_icon_root: {
-    fontSize: "35px",
-    color: "#a4a4a4",
-  },
-
-  list_text: {
-    fontSize: "10px",
-    color: "#a4a4a4",
-  },
-}));
+export default ListCreateGeneral;

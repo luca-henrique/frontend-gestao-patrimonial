@@ -64,7 +64,7 @@ export default function Menu() {
           <ListItemText className={classes.list_text} primary="Log" />
         </ListItem>
 
-        {/*<ListRelatorios />*/}
+        <ListRelatorios />
 
         <ListItem button className={classes.list_exit_item}>
           <ListItemIcon>
