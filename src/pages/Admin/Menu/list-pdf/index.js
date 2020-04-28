@@ -19,10 +19,10 @@ import PatrimonioPage from "./components/list-patrimonio/";
 import { ExpandLess, ExpandMore } from "@material-ui/icons/";
 
 /* -> Icons[] <- */
-import pdf from "../../../../../../../../assets/icons/pdf.png";
-import inventario from "../../../../../../../../assets/icons/inventario.png";
-import termo from "../../../../../../../../assets/icons/termo.png";
-import transferencia from "../../../../../../../../assets/icons/transferencia.png";
+import pdf from "../../../../assets/icons/pdf.png";
+import inventario from "../../../../assets/icons/inventario.png";
+import termo from "../../../../assets/icons/termo.png";
+import transferencia from "../../../../assets/icons/transferencia.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {

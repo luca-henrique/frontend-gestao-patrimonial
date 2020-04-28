@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import clsx from "clsx";
 
 /* -> Components[Criados] <- */
-import LeftIcons from "./components/Menu/";
+import LeftIcons from "../Menu/index";
 
 /* -> Components[Biblioteca] <- */
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -21,19 +21,32 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
+/* -> Rotas[esquerda] <- */
+import { Routes } from "../Menu/menu-routes";
+
 /* -> Tamanho do menu lateral[esquerda] <- */
 const drawerWidth = 310;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "10%",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+      height: "10%",
+    },
   },
+
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
+
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
@@ -42,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -50,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
   },
   drawerPaper: {
     width: drawerWidth,
@@ -65,7 +78,9 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
+    width: "800px",
     padding: theme.spacing(3),
+
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -95,12 +110,6 @@ export default function Dashboard(props) {
 
   const handleDrawerClose = () => {
     setOpen(false);
-  };
-
-  const PAGES = {
-    default: <h2>Home</h2>,
-    account: <h2>Conta</h2>,
-    prefeitura: <h2>Teste</h2>,
   };
 
   return (
@@ -155,7 +164,7 @@ export default function Dashboard(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-        {PAGES[pageLocation]}
+        {Routes[pageLocation]}
       </main>
     </div>
   );

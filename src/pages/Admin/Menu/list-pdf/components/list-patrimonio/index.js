@@ -21,8 +21,8 @@ import {
 } from "@material-ui/icons/";
 
 /* -> Icons[PNG] <- */
-import patrimonio from "../../../../../../../../../../assets/icons/patrimony.png";
-import depreciacao from "../../../../../../../../../../assets/icons/depreciacao.png";
+import patrimonio from "../../../../../../assets/icons/patrimony.png";
+import depreciacao from "../../../../../../assets/icons/depreciacao.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,7 +1,13 @@
 import React from "react";
 
-import Dashboard from "./components/Dashboard/";
+import Dashboard from "./Dashboard/";
+import CreateAccount from "../Admin/Menu/account/components/create/index";
 
-const Admin = () => <Dashboard />;
+const Admin = () => (
+  <>
+    <CreateAccount />
+    <Dashboard />
+  </>
+);
 
 export default Admin;

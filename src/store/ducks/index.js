@@ -8,11 +8,16 @@ import { reducer as toastr } from "react-redux-toastr";
  */
 
 import page from "./page";
+/**
+ * Contas
+ */
+import account from "./account";
 
 export default (history) =>
   combineReducers({
     toastr,
     page,
+    account,
 
     router: connectRouter(history),
   });
