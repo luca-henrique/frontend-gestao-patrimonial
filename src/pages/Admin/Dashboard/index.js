@@ -30,14 +30,7 @@ const drawerWidth = 310;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      height: "10%",
-    },
-    [theme.breakpoints.up("md")]: {
-      width: "100%",
-      height: "10%",
-    },
+    overflowY: "scroll !important",
   },
 
   appBar: {
@@ -78,9 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    width: "800px",
-    padding: theme.spacing(3),
-
+    padding: theme.spacing(2),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -158,14 +149,14 @@ export default function Dashboard(props) {
 
         <LeftIcons />
       </Drawer>
-      <main
+      <div
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
         <div className={classes.drawerHeader} />
         {Routes[pageLocation]}
-      </main>
+      </div>
     </div>
   );
 }

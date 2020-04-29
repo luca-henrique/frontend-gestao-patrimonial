@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 //import { toastr } from "react-redux-toastr";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Creators as CreatorsAccount } from "../../../../../../../../store/ducks/account";
 
@@ -24,6 +24,10 @@ export default function Create() {
   const dispatch = useDispatch();
 
   const classes = useStyles();
+
+  const account = useSelector((state) => state.account.update_account.data);
+
+  console.log(account);
 
   const [nome, setNome] = useState("");
   const [role, setRole] = useState(false);
@@ -105,7 +109,7 @@ export default function Create() {
             style={{
               width: "100%",
             }}
-            onClick={() => dispatch(CreatorsAccount.hideNewAccount())}
+            onClick={() => dispatch(CreatorsAccount.hideUpdateAccount())}
           >
             Fechar
           </Button>

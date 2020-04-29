@@ -5,6 +5,8 @@ import MaterialTable from "material-table";
 import { Lock, LockOpenOutlined } from "@material-ui/icons/";
 
 import Create from "./components/create/";
+import Update from "./components/update/";
+import Password from "./components/change-password/";
 
 import { useDispatch } from "react-redux";
 import { Creators as CreatorsAccount } from "../../../../store/ducks/account";
@@ -19,7 +21,7 @@ function View() {
   const dispatch = useDispatch();
 
   return (
-    <>
+    <div>
       <MaterialTable
         data={data}
         title="Contas"
@@ -41,7 +43,13 @@ function View() {
             title: "Privilegio",
             field: "admin",
             render: (rowData) => (
-              <>{rowData.admin === true ? <LockOpenOutlined /> : <Lock />}</>
+              <>
+                {rowData.admin === true ? (
+                  <LockOpenOutlined style={{ color: "#a4a4a4" }} />
+                ) : (
+                  <Lock style={{ color: "#a4a4a4" }} />
+                )}
+              </>
             ),
           },
         ]}
@@ -87,13 +95,31 @@ function View() {
           },
 
           {
+            icon: "edit",
+            tooltip: "Editar informações",
+            onClick: (event, rowData) => {
+              console.log(rowData);
+              dispatch(CreatorsAccount.showUpdateAccount(rowData));
+            },
+          },
+          {
+            icon: "lock",
+            tooltip: "Alterar senha",
+            onClick: (event, rowData) => {
+              dispatch(CreatorsAccount.showChangePasswordAccount(rowData.id));
+            },
+          },
+          {
             icon: "delete",
-            tooltip: "Deletar funcionario",
+            tooltip: "Deletar conta",
             onClick: (event, rowData) => {},
           },
         ]}
       />
-    </>
+      <Create />
+      <Update />
+      <Password />
+    </div>
   );
 }
 

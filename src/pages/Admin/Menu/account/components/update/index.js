@@ -2,39 +2,28 @@ import React from "react";
 
 import CreateLogin from "./components/body-page/";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { Creators as CreatorsAccount } from "../../../../../../store/ducks/account";
-
-import {
-  Typography,
-  Button,
-  Modal,
-  Backdrop,
-  Fade,
-  Grid,
-} from "@material-ui/core/";
+import { Typography, Modal, Backdrop, Fade, Grid } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "80%",
+      width: "100%",
       height: "80%",
     },
     [theme.breakpoints.up("md")]: {
       width: "30%",
-      height: "50%",
+      height: "55%",
     },
   },
 }));
 
-export default function Create() {
+export default function Update() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.account.create);
-  const dispatch = useDispatch();
-
+  const visible = useSelector((state) => state.account.update_account.visible);
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -44,7 +33,7 @@ export default function Create() {
         alignItems: "center",
         justifyContent: "center",
       }}
-      open={visible}
+      open={visible || false}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -75,34 +64,11 @@ export default function Create() {
                   textAlign: "center",
                 }}
               >
-                Nova Conta
+                Atualizar conta
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
               <CreateLogin />
-
-              <div style={{ width: "100%", marginTop: "20px" }}>
-                <Button
-                  variant="contained"
-                  style={{ color: "#0174DF", width: "100%" }}
-                >
-                  Criar
-                </Button>
-              </div>
-              <div>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  style={{
-                    width: "100%",
-                    marginTop: "15px",
-                    marginBottom: "5px",
-                  }}
-                  onClick={() => dispatch(CreatorsAccount.hideNewAccount())}
-                >
-                  Fechar
-                </Button>
-              </div>
             </Grid>
           </Grid>
         </div>
@@ -110,3 +76,7 @@ export default function Create() {
     </Modal>
   );
 }
+
+Update.defaultProps = {
+  visible: false,
+};

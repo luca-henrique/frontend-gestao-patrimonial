@@ -2,38 +2,28 @@ import React from "react";
 
 import CreateLogin from "./components/body-page/";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { Creators as CreatorsAccount } from "../../../../../../store/ducks/account";
-
-import {
-  Typography,
-  Button,
-  Modal,
-  Backdrop,
-  Fade,
-  Grid,
-} from "@material-ui/core/";
+import { Typography, Modal, Backdrop, Fade, Grid } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "80%",
+      width: "100%",
       height: "80%",
     },
     [theme.breakpoints.up("md")]: {
       width: "30%",
-      height: "50%",
+      height: "55%",
     },
   },
 }));
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.account.create);
-  const dispatch = useDispatch();
+  const visible = useSelector((state) => state.account.create_account);
 
   return (
     <Modal
@@ -60,7 +50,29 @@ export default function Create() {
             borderRadius: "5px",
           }}
           className={classes.modal}
-        ></div>
+        >
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item xs={12} sm={12}>
+              <Typography
+                variant="h5"
+                style={{
+                  color: "#a4a4a4",
+                  textAlign: "center",
+                }}
+              >
+                Nova conta
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <CreateLogin />
+            </Grid>
+          </Grid>
+        </div>
       </Fade>
     </Modal>
   );
