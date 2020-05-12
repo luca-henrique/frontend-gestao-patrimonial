@@ -27,15 +27,29 @@ export default function Create() {
 
   const account = useSelector((state) => state.account.update_account.data);
 
-  console.log(account);
+  const [nome, setNome] = useState(account.nome);
+  const [role, setRole] = useState(account.role);
+  const [email, setEmail] = useState(account.email);
 
-  const [nome, setNome] = useState("");
-  const [role, setRole] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    try {
+      e.preventDefault();
+      var account = {
+        nome,
+        role,
+        email,
+      };
+      console.log(account);
+      handleClose();
+    } catch (error) {}
+  };
+
+  const handleClose = () => {
+    dispatch(CreatorsAccount.hideUpdateAccount());
+  };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Grid
         container
         direction="row"
@@ -47,6 +61,7 @@ export default function Create() {
           <div>
             <Typography variant="button">Nome:</Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -89,19 +104,6 @@ export default function Create() {
           </div>
         </Grid>
 
-        <Grid item xs={12} sm={12} className={classes.grid}>
-          <div>
-            <Typography variant="button">Senha:</Typography>
-            <TextField
-              variant="outlined"
-              size="small"
-              fullWidth
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-        </Grid>
         <Grid item xs={12} sm={12} style={{ marginTop: "25px" }}>
           <Button
             color="secondary"
@@ -109,7 +111,7 @@ export default function Create() {
             style={{
               width: "100%",
             }}
-            onClick={() => dispatch(CreatorsAccount.hideUpdateAccount())}
+            onClick={handleClose}
           >
             Fechar
           </Button>

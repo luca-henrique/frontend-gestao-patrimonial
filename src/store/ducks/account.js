@@ -25,8 +25,8 @@ export const Types = {
   DELETE_ACCOUNT_REQUEST: "@account/DELETE_ACCOUNT_REQUEST",
   DELETE_ACCOUNT_SUCCESS: "@account/DELETE_ACCOUNT_SUCCESS",
 
-  CHANGER_PASSWORD_REQUEST: "@account/CHANGER_PASSWORD_REQUEST",
-  CHANGER_PASSWORD_SUCCESS: "@account/CHANGER_PASSWORD_SUCCESS",
+  ACCOUNT_CHANGE_PASSWORD_REQUEST: "@account/ACCOUNT_CHANGE_PASSWORD_REQUEST",
+  ACCOUNT_CHANGE_PASSWORD_SUCCESS: "@account/ACCOUNT_CHANGE_PASSWORD_SUCCESS",
 };
 
 const INITIAL_STATE = Immutable({
@@ -57,6 +57,9 @@ export default function User(state = INITIAL_STATE, action) {
       };
     case Types.HIDE_CHANGER_PASSWORD_ACCOUNT:
       return { ...state, password_account: { visible: false, account_id: "" } };
+
+    case Types.CREATE_ACCOUNT_REQUEST:
+      return { ...state, account: action.payload.account };
 
     default:
       return state;
@@ -94,25 +97,14 @@ export const Creators = {
     type: Types.HIDE_CHANGER_PASSWORD_ACCOUNT,
   }),
 
-  readUserRequest: () => ({
-    type: Types.READ_USER_REQUEST,
+  createAccountRequest: (account) => ({
+    type: Types.CREATE_ACCOUNT_REQUEST,
+    payload: {
+      account,
+    },
   }),
 
-  readUserSuccess: (user) => ({
-    type: Types.READ_USER_SUCCESS,
-    payload: { user },
-  }),
-
-  updateUserRequest: (user) => ({
-    type: Types.UPDATE_USER_REQUEST,
-    payload: { user },
-  }),
-  updateUserSucess: (user) => ({
-    type: Types.UPDATE_USER_SUCESS,
-    payload: { user },
-  }),
-  changerPasswordRequest: (password) => ({
-    type: Types.CHANGER_PASSWORD_REQUEST,
-    payload: { password },
+  changerPasswordRequest: () => ({
+    type: Types.ACCOUNT_CHANGE_PASSWORD_REQUEST,
   }),
 };

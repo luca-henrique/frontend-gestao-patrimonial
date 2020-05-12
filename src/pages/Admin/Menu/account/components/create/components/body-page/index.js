@@ -30,8 +30,26 @@ export default function Create() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleSubmit = (e) => {
+    try {
+      e.preventDefault();
+      var account = {
+        nome,
+        role,
+        email,
+        password,
+      };
+      dispatch(CreatorsAccount.createAccountRequest(account));
+      handleClose();
+    } catch (error) {}
+  };
+
+  const handleClose = () => {
+    dispatch(CreatorsAccount.hideNewAccount());
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Grid
         container
         direction="row"
@@ -43,6 +61,7 @@ export default function Create() {
           <div>
             <Typography variant="button">Nome:</Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -55,10 +74,11 @@ export default function Create() {
         <Grid item xs={12} sm={12} className={classes.grid}>
           <div>
             <FormControl
+              required
               variant="outlined"
               style={{ width: "100%" }}
               size="small"
-              fullWidth
+              name="role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
@@ -76,8 +96,10 @@ export default function Create() {
           <div>
             <Typography variant="button">E-mail:</Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
+              type="email"
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -89,6 +111,7 @@ export default function Create() {
           <div>
             <Typography variant="button">Senha:</Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -105,7 +128,7 @@ export default function Create() {
             style={{
               width: "100%",
             }}
-            onClick={() => dispatch(CreatorsAccount.hideNewAccount())}
+            onClick={handleClose}
           >
             Fechar
           </Button>
@@ -114,6 +137,7 @@ export default function Create() {
           <Button
             variant="contained"
             style={{ color: "#0174DF", width: "100%" }}
+            type="submit"
           >
             Criar
           </Button>

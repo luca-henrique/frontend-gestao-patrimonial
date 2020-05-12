@@ -54,7 +54,11 @@ export default function Menu() {
         <ListItemIcon>
           <HomeWorkOutlined className={classes.list_icon} />
         </ListItemIcon>
-        <ListItemText className={classes.list_text} primary="Prefeitura" />
+        <ListItemText
+          className={classes.list_text}
+          primary="Prefeitura"
+          onClick={() => changePage("prefecture")}
+        />
       </ListItem>
 
       <ListItem button className={classes.list_item}>
