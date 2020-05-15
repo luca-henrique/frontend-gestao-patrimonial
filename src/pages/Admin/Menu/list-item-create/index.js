@@ -16,6 +16,12 @@ import natureza from "../../../../assets/icons/natureza.png";
 import origem from "../../../../assets/icons/origem.png";
 import localizacao from "../../../../assets/icons/localizacao.png";
 
+/* -> Redux[Biblioteca] <- */
+import { useDispatch } from "react-redux";
+import { Creators as CreatorsPage } from "../../../../store/ducks/page";
+
+/* -> Components[Biblioteca] <- */
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -48,6 +54,12 @@ function ListCreateGeneral() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
+  function changePage(location) {
+    dispatch(CreatorsPage.changePageLocation(location));
+  }
+
   const handleClick = () => {
     setOpen(!open);
   };
@@ -79,7 +91,11 @@ function ListCreateGeneral() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("low")}
+          >
             <ListItemIcon>
               <img
                 src={baixa}
