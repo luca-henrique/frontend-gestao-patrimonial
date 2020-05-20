@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
+import { Creators as CreatorsNatureItem } from "~/store/ducks/nature-item";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      height: "50%",
+      height: "55%",
     },
     [theme.breakpoints.up("md")]: {
       width: "20%",
@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.low.update_low_item.visible);
+  const visible = useSelector((state) => state.nature.create_nature_item);
 
   const dispatch = useDispatch();
 
   const [descricao, setDescricao] = useState("");
 
   const handleOnClose = () => {
-    dispatch(CreatorsLowItem.hideUpdateLowItem());
+    dispatch(CreatorsNatureItem.hideNewNatureItem());
   };
 
   return (
@@ -79,7 +79,7 @@ export default function Create() {
                   color: "#a4a4a4",
                 }}
               >
-                Baixa
+                Natureza
               </Typography>
             </Grid>
             <Grid
@@ -136,7 +136,7 @@ export default function Create() {
                 style={{ color: "#0174DF", width: "100%" }}
                 type="submit"
               >
-                Atualizar
+                Criar
               </Button>
             </Grid>
           </Grid>

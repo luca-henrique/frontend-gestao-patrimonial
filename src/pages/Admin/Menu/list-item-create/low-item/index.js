@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsLowItem } from "../../../../../store/ducks/low-item";
+import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
 
 import Create from "./create/";
+import Update from "./update/";
 
 function LowItem() {
   const [selectedRow, setSelectedRow] = useState("");
@@ -16,7 +17,7 @@ function LowItem() {
     <div>
       <MaterialTable
         data={data}
-        title="Contas"
+        title="Baixa"
         columns={[
           {
             title: "Código",
@@ -79,11 +80,14 @@ function LowItem() {
           {
             icon: "delete",
             tooltip: "Deletar",
-            onClick: (event, rowData) => {},
+            onClick: (event, rowData) => {
+              dispatch(CreatorsLowItem.deleteLowItemRequest(rowData.id));
+            },
           },
         ]}
       />
       <Create />
+      <Update />
     </div>
   );
 }

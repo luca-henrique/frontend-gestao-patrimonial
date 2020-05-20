@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsLowItem } from "../../../../../../store/ducks/low-item";
+import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      height: "40%",
+      height: "50%",
     },
     [theme.breakpoints.up("md")]: {
       width: "20%",
-      height: "30%",
+      height: "35%",
     },
   },
 }));
@@ -32,7 +32,13 @@ export default function Create() {
   const classes = useStyles();
   const visible = useSelector((state) => state.low.create_low_item);
 
+  const dispatch = useDispatch();
+
   const [descricao, setDescricao] = useState("");
+
+  const handleOnClose = () => {
+    dispatch(CreatorsLowItem.hideNewLowItem());
+  };
 
   return (
     <Modal
@@ -70,13 +76,18 @@ export default function Create() {
               <Typography
                 variant="h4"
                 style={{
-                  textAlign: "center",
+                  color: "#a4a4a4",
                 }}
               >
                 Baixa
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              style={{ marginTop: "25px", width: "100%" }}
+            >
               <div>
                 <Typography
                   variant="button"
@@ -97,11 +108,36 @@ export default function Create() {
               </div>
             </Grid>
 
-            <Grid item xs={12} sm={5}>
-              <Button>Salvar</Button>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              style={{ marginTop: "25px", width: "100%" }}
+            >
+              <Button
+                color="secondary"
+                variant="contained"
+                style={{
+                  width: "100%",
+                }}
+                onClick={handleOnClose}
+              >
+                Fechar
+              </Button>
             </Grid>
-            <Grid item xs={12} sm={5}>
-              <Button>Fechar</Button>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              style={{ marginTop: "25px", width: "100%" }}
+            >
+              <Button
+                variant="contained"
+                style={{ color: "#0174DF", width: "100%" }}
+                type="submit"
+              >
+                Criar
+              </Button>
             </Grid>
           </Grid>
         </div>

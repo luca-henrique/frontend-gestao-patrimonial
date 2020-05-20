@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
+import { Creators as CreatorsNatureItem } from "~/store/ducks/nature-item";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -30,14 +30,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.low.update_low_item.visible);
+  const visible = useSelector(
+    (state) => state.nature.update_nature_item.visible
+  );
 
   const dispatch = useDispatch();
 
   const [descricao, setDescricao] = useState("");
 
   const handleOnClose = () => {
-    dispatch(CreatorsLowItem.hideUpdateLowItem());
+    dispatch(CreatorsNatureItem.hideUpdateNatureItem());
   };
 
   return (
@@ -79,7 +81,7 @@ export default function Create() {
                   color: "#a4a4a4",
                 }}
               >
-                Baixa
+                Natureza
               </Typography>
             </Grid>
             <Grid

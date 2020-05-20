@@ -108,7 +108,11 @@ function ListCreateGeneral() {
             </ListItemIcon>
             <ListItemText primary="Baixa" className={classes.list_text} />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("good")}
+          >
             <ListItemIcon>
               <img
                 src={bem}
@@ -121,7 +125,11 @@ function ListCreateGeneral() {
             </ListItemIcon>
             <ListItemText primary="Bem" className={classes.list_text} />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("state")}
+          >
             <ListItemIcon>
               <img
                 src={estado}
@@ -134,7 +142,11 @@ function ListCreateGeneral() {
             </ListItemIcon>
             <ListItemText primary="Estado" className={classes.list_text} />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("nature")}
+          >
             <ListItemIcon>
               <img
                 src={natureza}
@@ -147,7 +159,11 @@ function ListCreateGeneral() {
             </ListItemIcon>
             <ListItemText primary="Natureza" className={classes.list_text} />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("origin")}
+          >
             <ListItemIcon>
               <img
                 src={origem}
@@ -160,7 +176,11 @@ function ListCreateGeneral() {
             </ListItemIcon>
             <ListItemText primary="Origem" className={classes.list_text} />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("occurrence")}
+          >
             <ListItemIcon>
               <img
                 src={baixa}
@@ -173,7 +193,11 @@ function ListCreateGeneral() {
             </ListItemIcon>
             <ListItemText className={classes.list_text} primary="Ocorrência" />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("locale")}
+          >
             <ListItemIcon>
               <img
                 src={localizacao}

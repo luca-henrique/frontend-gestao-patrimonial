@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
+import { Creators as CreatorsGoodItem } from "~/store/ducks/good-item";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -19,25 +19,26 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      height: "50%",
+      height: "55%",
     },
     [theme.breakpoints.up("md")]: {
       width: "20%",
-      height: "35%",
+      height: "40%",
     },
   },
 }));
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.low.update_low_item.visible);
+  const visible = useSelector((state) => state.good.create_good_item);
 
   const dispatch = useDispatch();
 
   const [descricao, setDescricao] = useState("");
+  const [depreciacao, setDepreciacao] = useState("");
 
   const handleOnClose = () => {
-    dispatch(CreatorsLowItem.hideUpdateLowItem());
+    dispatch(CreatorsGoodItem.hideNewGoodItem());
   };
 
   return (
@@ -79,7 +80,7 @@ export default function Create() {
                   color: "#a4a4a4",
                 }}
               >
-                Baixa
+                Bem
               </Typography>
             </Grid>
             <Grid
@@ -114,6 +115,32 @@ export default function Create() {
               sm={12}
               style={{ marginTop: "25px", width: "100%" }}
             >
+              <div>
+                <Typography
+                  variant="button"
+                  style={{
+                    color: "#a4a4a4",
+                  }}
+                >
+                  Depreciação:
+                </Typography>
+                <TextField
+                  required
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={depreciacao}
+                  onChange={(e) => setDepreciacao(e.target.value)}
+                />
+              </div>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              style={{ marginTop: "25px", width: "100%" }}
+            >
               <Button
                 color="secondary"
                 variant="contained"
@@ -136,7 +163,7 @@ export default function Create() {
                 style={{ color: "#0174DF", width: "100%" }}
                 type="submit"
               >
-                Atualizar
+                Criar
               </Button>
             </Grid>
           </Grid>
