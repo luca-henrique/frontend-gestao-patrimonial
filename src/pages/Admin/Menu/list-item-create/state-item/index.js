@@ -3,21 +3,21 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsGoodItem } from "~/store/ducks/good-item";
+import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
 
 import Create from "./create/";
 import Update from "./update/";
 
-function GoodItem() {
+function StateItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas", depreciacao: "10%" }];
+  const data = [{ id: 1, descricao: "Maquinas" }];
 
   const dispatch = useDispatch();
   return (
     <div>
       <MaterialTable
         data={data}
-        title="Bem"
+        title="Estado"
         columns={[
           {
             title: "Código",
@@ -26,10 +26,6 @@ function GoodItem() {
           {
             title: "Descrição",
             field: "descricao",
-          },
-          {
-            title: "Depreciação",
-            field: "depreciacao",
           },
         ]}
         onRowClick={(evt, selectedRow) => {
@@ -69,7 +65,7 @@ function GoodItem() {
             tooltip: "Cadastrar",
             isFreeAction: true,
             onClick: (event) => {
-              dispatch(CreatorsGoodItem.showNewGoodItem());
+              dispatch(CreatorsStateItem.showNewStateItem());
             },
           },
 
@@ -77,7 +73,7 @@ function GoodItem() {
             icon: "edit",
             tooltip: "Editar informações",
             onClick: (event, rowData) => {
-              dispatch(CreatorsGoodItem.showUpdateGoodItem(rowData));
+              dispatch(CreatorsStateItem.showUpdateStateItem(rowData));
             },
           },
 
@@ -85,7 +81,7 @@ function GoodItem() {
             icon: "delete",
             tooltip: "Deletar",
             onClick: (event, rowData) => {
-              dispatch(CreatorsGoodItem.deleteGoodItemRequest(rowData.id));
+              dispatch(CreatorsStateItem.deleteStateItemRequest(rowData.id));
             },
           },
         ]}
@@ -96,4 +92,4 @@ function GoodItem() {
   );
 }
 
-export default GoodItem;
+export default StateItem;

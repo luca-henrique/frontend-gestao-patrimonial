@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsGoodItem } from "~/store/ducks/good-item";
+import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -19,26 +19,25 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      height: "55%",
+      height: "45%",
     },
     [theme.breakpoints.up("md")]: {
       width: "20%",
-      height: "40%",
+      height: "35%",
     },
   },
 }));
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.good.update_good_item.visible);
+  const visible = useSelector((state) => state.state.update_state_item.visible);
 
   const dispatch = useDispatch();
 
   const [descricao, setDescricao] = useState("");
-  const [depreciacao, setDepreciacao] = useState("");
 
   const handleOnClose = () => {
-    dispatch(CreatorsGoodItem.hideUpdateGoodItem());
+    dispatch(CreatorsStateItem.hideUpdateStateItem());
   };
 
   return (
@@ -105,32 +104,6 @@ export default function Create() {
                   fullWidth
                   value={descricao}
                   onChange={(e) => setDescricao(e.target.value)}
-                />
-              </div>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <div>
-                <Typography
-                  variant="button"
-                  style={{
-                    color: "#a4a4a4",
-                  }}
-                >
-                  Depreciação:
-                </Typography>
-                <TextField
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={depreciacao}
-                  onChange={(e) => setDepreciacao(e.target.value)}
                 />
               </div>
             </Grid>

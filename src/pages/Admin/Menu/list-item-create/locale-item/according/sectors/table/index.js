@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 
-import { useDispatch } from "react-redux";
-
 import MaterialTable from "material-table";
 
+import { Creators as CreatorsUnits } from "~/store/ducks/units";
+import { Creators as CreatorsSectors } from "~/store/ducks/sectors";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Paper } from "@material-ui/core/";
+
+import CreatePage from "./create";
+import UpdatePage from "./update";
 
 export default function Sectors() {
   const [selectedRow, setSelectedRow] = useState("");
@@ -15,6 +20,21 @@ export default function Sectors() {
   ];
 
   const dispatch = useDispatch();
+
+  const visible = useSelector((state) => state.units.units_list.visible);
+
+  const handleShowAccordingUnits = (id) => {
+    dispatch(CreatorsUnits.showAccordingUnits(id));
+  };
+
+  const handleShowNew = () => {
+    dispatch(CreatorsSectors.showNewSector());
+  };
+
+  const handleShowUpdate = (data) => {
+    dispatch(CreatorsSectors.showUpdateSector(data));
+  };
+
   return (
     <div style={{ width: "100%" }}>
       <MaterialTable
@@ -69,22 +89,36 @@ export default function Sectors() {
             icon: "add",
             tooltip: "Cadastrar",
             isFreeAction: true,
-            onClick: (event) => {},
+            onClick: (event) => {
+              handleShowNew();
+            },
           },
 
           {
             icon: "edit",
-            tooltip: "Editar informações",
-            onClick: (event, rowData) => {},
+            tooltip: "Editar",
+            onClick: (event, rowData) => {
+              handleShowUpdate(rowData);
+            },
           },
 
           {
             icon: "delete",
             tooltip: "Deletar",
-            onClick: (event, rowData) => {},
+            onClick: (event) => {},
+          },
+
+          {
+            icon: "visibility",
+            hidden: !visible,
+            onClick: (event, rowData) => {
+              handleShowAccordingUnits(rowData.id);
+            },
           },
         ]}
       />
+      <CreatePage />
+      <UpdatePage />
     </div>
   );
 }

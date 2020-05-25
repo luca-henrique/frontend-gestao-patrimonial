@@ -8,6 +8,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import UnitsPage from "./table/";
 
+import { Creators as CreatorsUnits } from "~/store/ducks/units";
+
+import { useDispatch, useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -27,8 +31,15 @@ export default function ControlledExpansionPanels() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
+  const dispatch = useDispatch();
+
+  const visible = useSelector((state) => state.units.units_list.visible);
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+    if (!isExpanded) {
+      dispatch(CreatorsUnits.hideAccordingUnits());
+    }
   };
 
   return (
@@ -36,13 +47,14 @@ export default function ControlledExpansionPanels() {
       <ExpansionPanel
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
+        disabled={visible}
       >
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-          <Typography className={classes.heading}>Setores</Typography>
+          <Typography className={classes.heading}>Unidades</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <UnitsPage />

@@ -70,4 +70,11 @@ export const Creators = {
     type: Types.HIDE_UPDATE_MODAL_LOW_ITEM,
   }),
   /* --> Modal <-- */
+
+  deleteLowItemRequest: (id) => ({
+    type: Types.DELETE_LOW_ITEM_REQUEST,
+    payload: {
+      id,
+    },
+  }),
 };

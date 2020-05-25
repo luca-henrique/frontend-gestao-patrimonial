@@ -9,6 +9,9 @@ export const Types = {
   SHOW_UPDATE_MODAL_LOCALE_ITEM: "@localeItem/SHOW_UPDATE_MODAL_LOCALE_ITEM",
   HIDE_UPDATE_MODAL_LOCALE_ITEM: "@localeItem/HIDE_UPDATE_MODAL_LOCALE_ITEM",
 
+  SHOW_LOCALE_ITEM_SECTORS: "@localeItem/SHOW_LOCALE_ITEM_SECTORS",
+  HIDE_LOCALE_ITEM_SECTORS: "@localeItem/HIDE_LOCALE_ITEM_SECTORS",
+
   /* -> REQUISIÇÔES [ CRUD ] <- */
 
   CREATE_LOCALE_ITEM_REQUEST: "@localeItem/CREATE_LOCALE_ITEM_REQUEST",
@@ -70,4 +73,11 @@ export const Creators = {
     type: Types.HIDE_UPDATE_MODAL_LOCALE_ITEM,
   }),
   /* --> Modal <-- */
+
+  deleteLocaleItemRequest: (id) => ({
+    type: Types.DELETE_LOCALE_ITEM_REQUEST,
+    payload: {
+      id,
+    },
+  }),
 };

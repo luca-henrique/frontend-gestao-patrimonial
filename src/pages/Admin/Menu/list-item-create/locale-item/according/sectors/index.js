@@ -6,6 +6,8 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import { Creators as CreatorsSectors } from "~/store/ducks/sectors";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import SectorsPage from "./table/";
@@ -27,12 +29,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlledExpansionPanels() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
   const visible = useSelector((state) => state.sectors.sectors_list.visible);
 
+  const [expanded, setExpanded] = React.useState(false);
+
+  const dispatch = useDispatch();
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+    if (!isExpanded) {
+      dispatch(CreatorsSectors.hideAccordingSectors());
+    }
   };
 
   return (

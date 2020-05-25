@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 
 import { Creators as CreatorsLocaleItem } from "~/store/ducks/locale-item";
+
 import { Creators as CreatorsSectors } from "~/store/ducks/sectors";
 import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "material-table";
+
 import AccordingSectors from "./according/sectors/";
 import AccordingUnits from "./according/units/";
 
-import VisibilityIcon from "@material-ui/icons/Visibility";
+import CreatePage from "./create";
+import UpdatePage from "./update";
 
 export default function LocalItem() {
   const [selectedRow, setSelectedRow] = useState("");
@@ -19,20 +22,16 @@ export default function LocalItem() {
 
   const visible = useSelector((state) => state.sectors.sectors_list.visible);
 
-  const id_institution = useSelector(
-    (state) => state.sectors.sectors_list.id_institution
-  );
-
   const handleShowAccordingSectors = (id) => {
-    console.log(id);
-    console.log(id_institution);
-    if (visible === true) {
-      dispatch(CreatorsSectors.showAccordingSectors(id));
-    } else {
-      if (id_institution === id) {
-        dispatch(CreatorsSectors.hideAccordingSectors());
-      }
-    }
+    dispatch(CreatorsSectors.showAccordingSectors(id));
+  };
+
+  const handleShowNewLocaleItem = () => {
+    dispatch(CreatorsLocaleItem.showNewLocaleItem());
+  };
+
+  const handleShowUpdateLocaleItem = (data) => {
+    dispatch(CreatorsLocaleItem.showUpdateLocaleItem(data));
   };
 
   const dispatch = useDispatch();
@@ -83,86 +82,48 @@ export default function LocalItem() {
             searchPlaceholder: "Procurar",
           },
         }}
-      />
-      <AccordingSectors />
-
-      <AccordingUnits />
-    </div>
-  );
-}
-
-/**
- 
-
-   actions={[
+        actions={[
           {
             icon: "add",
-            tooltip: "Cadastrar",
+            tooltip: "Cadastrar uma nova localidade.",
             isFreeAction: true,
-            onClick: (event) => {},
+            onClick: (event) => {
+              handleShowNewLocaleItem();
+            },
           },
 
           {
             icon: "edit",
-            tooltip: "Editar informações",
-            onClick: (event, rowData) => {},
+            tooltip: "Editar informações.",
+            onClick: (event, rowData) => {
+              handleShowUpdateLocaleItem(rowData);
+            },
+          },
+          {
+            icon: "delete",
+            tooltip: "Excluir",
+            onClick: (event, rowData) => {
+              dispatch(CreatorsLocaleItem.deleteLocaleItemRequest(rowData.id));
+            },
           },
 
           {
-            icon: "delete",
-            tooltip: "Deletar",
-            onClick: (event, rowData) => {},
-          },
-          {
             icon: "visibility",
-            tooltip: "Mostrar Setores",
+            hidden: !visible,
+            tooltip: "Mostrar setores.",
             onClick: (event, rowData) => {
               handleShowAccordingSectors(rowData.id);
             },
           },
         ]}
+      />
 
+      <CreatePage />
 
- */
+      <UpdatePage />
 
-/*
- 
- 
-  detailPanel={[
-          {
-            icon: "edit",
-            tooltip: "Editar informações",
-            onClick: (event, rowData) => {},
-            render: (rowData) => {
-              return <div />;
-            },
-          },
-          {
-            icon: "delete",
-            tooltip: "Deletar",
-            onClick: (event, rowData) => {},
-            render: (rowData) => {
-              return <div />;
-            },
-          },
-          {
-            icon: (rowData) => (
-              <VisibilityIcon
-                onClick={() => {
-                  console.log(rowData);
-                  handleShowAccordingSectors(rowData.id);
-                }}
-              />
-            ),
-            openIcon: () => <VisibilityIcon style={{ color: "#0080FF" }} />,
-            tooltip: "Setores",
-            render: (rowData) => {
-              return <div onClick={() => console.log("dokw")} />;
-            },
-          },
-        ]}
- 
- 
- 
- 
- */
+      <AccordingSectors />
+      <AccordingUnits />
+    </div>
+  );
+}

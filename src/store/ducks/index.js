@@ -18,6 +18,8 @@ import account from "./account";
 import low from "./low-item";
 import good from "./good-item";
 import locale from "./locale-item";
+import sectors from "./sectors";
+import units from "./units";
 import origin from "./origin-item";
 import occurrence from "./occurrence-item";
 import state from "./state-item";
@@ -31,7 +33,11 @@ export default (history) =>
 
     low,
     good,
+
     locale,
+    sectors,
+    units,
+
     origin,
     occurrence,
     state,

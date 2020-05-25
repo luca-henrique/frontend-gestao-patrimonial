@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
 import { useDispatch } from "react-redux";
+import { Creators as CreatorsUnits } from "~/store/ducks/units";
 
 import MaterialTable from "material-table";
-
 import { Paper } from "@material-ui/core/";
+
+import CreatePage from "./create";
+import UpdatePage from "./update";
 
 export default function Units() {
   const [selectedRow, setSelectedRow] = useState("");
@@ -15,6 +18,14 @@ export default function Units() {
   ];
 
   const dispatch = useDispatch();
+
+  const handleShowNew = () => {
+    dispatch(CreatorsUnits.showNewUnits());
+  };
+
+  const handleShowUpdate = (data) => {
+    dispatch(CreatorsUnits.showUpdateUnits(data));
+  };
   return (
     <div style={{ width: "100%" }}>
       <MaterialTable
@@ -69,13 +80,17 @@ export default function Units() {
             icon: "add",
             tooltip: "Cadastrar",
             isFreeAction: true,
-            onClick: (event) => {},
+            onClick: (event) => {
+              handleShowNew();
+            },
           },
 
           {
             icon: "edit",
             tooltip: "Editar informações",
-            onClick: (event, rowData) => {},
+            onClick: (event, rowData) => {
+              handleShowUpdate(rowData);
+            },
           },
 
           {
@@ -85,6 +100,8 @@ export default function Units() {
           },
         ]}
       />
+      <CreatePage />
+      <UpdatePage />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsOriginItem } from "~/store/ducks/origin-item";
+import { Creators as CreatorsSector } from "~/store/ducks/sectors";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -19,27 +19,25 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      height: "45%",
+      height: "40%",
     },
     [theme.breakpoints.up("md")]: {
       width: "20%",
-      height: "35%",
+      height: "30%",
     },
   },
 }));
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector(
-    (state) => state.origin.update_origin_item.visible
-  );
+  const visible = useSelector((state) => state.sectors.update_sector.visible);
 
   const dispatch = useDispatch();
 
   const [descricao, setDescricao] = useState("");
 
   const handleOnClose = () => {
-    dispatch(CreatorsOriginItem.hideUpdateOriginItem());
+    dispatch(CreatorsSector.hideUpdateSector());
   };
 
   return (
@@ -81,7 +79,7 @@ export default function Create() {
                   color: "#a4a4a4",
                 }}
               >
-                Origem
+                Setor
               </Typography>
             </Grid>
             <Grid
