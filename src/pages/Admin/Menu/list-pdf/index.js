@@ -14,6 +14,7 @@ import {
 
 /* -> Components[Criados] <- */
 import PatrimonioPage from "./components/list-patrimonio/";
+import ModalReports from "../reports/index";
 
 /* -> Icons[] <- */
 import { ExpandLess, ExpandMore } from "@material-ui/icons/";
@@ -61,66 +62,73 @@ export default function ListReport() {
   };
 
   return (
-    <List component="nav" className={classes.root}>
-      <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <img
-            src={pdf}
-            style={{ width: "34px", height: "34px", color: "#a4a4a4" }}
-            alt="relatório"
-          />
-        </ListItemIcon>
-        <ListItemText primary="Relatórios" className={classes.list_text} />
-        {open ? (
-          <ExpandLess style={{ color: "#a4a4a4" }} />
-        ) : (
-          <ExpandMore style={{ color: "#a4a4a4" }} />
-        )}
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <PatrimonioPage />
-          </ListItem>
+    <>
+      <List component="nav" className={classes.root}>
+        <ListItem button onClick={handleClick}>
+          <ListItemIcon>
+            <img
+              src={pdf}
+              style={{ width: "34px", height: "34px", color: "#a4a4a4" }}
+              alt="relatório"
+            />
+          </ListItemIcon>
+          <ListItemText primary="Relatórios" className={classes.list_text} />
+          {open ? (
+            <ExpandLess style={{ color: "#a4a4a4" }} />
+          ) : (
+            <ExpandMore style={{ color: "#a4a4a4" }} />
+          )}
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button className={classes.nested}>
+              <PatrimonioPage />
+            </ListItem>
 
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <img
-                src={inventario}
-                style={{ width: "35px", height: "35px" }}
-                alt="inventario"
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <img
+                  src={inventario}
+                  style={{ width: "35px", height: "35px" }}
+                  alt="inventario"
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Inventario"
+                className={classes.list_text}
               />
-            </ListItemIcon>
-            <ListItemText primary="Inventario" className={classes.list_text} />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <img
-                src={termo}
-                style={{ width: "35px", height: "35px" }}
-                alt="termo"
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <img
+                  src={termo}
+                  style={{ width: "35px", height: "35px" }}
+                  alt="termo"
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Termo de responsabilidade"
+                className={classes.list_text}
               />
-            </ListItemIcon>
-            <ListItemText
-              primary="Termo de responsabilidade"
-              className={classes.list_text}
-            />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <img
-                src={transferencia}
-                style={{ width: "25px", height: "25px", marginLeft: "5px" }}
-                alt="transferência"
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <img
+                  src={transferencia}
+                  style={{ width: "25px", height: "25px", marginLeft: "5px" }}
+                  alt="transferência"
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Transferência"
+                className={classes.list_text}
               />
-            </ListItemIcon>
-            <ListItemText
-              primary="Transferência"
-              className={classes.list_text}
-            />
-          </ListItem>
-        </List>
-      </Collapse>
-    </List>
+            </ListItem>
+          </List>
+        </Collapse>
+      </List>
+
+      <ModalReports />
+    </>
   );
 }

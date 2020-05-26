@@ -21,6 +21,8 @@ import LocalePage from "./list-item-create/locale-item/index";
 
 /* --> List Item Create [Cadastros Gerais] <-- */
 
+import LogPage from "./log/";
+
 export const Routes = {
   default: <h2>Home</h2>,
   account: <Account />,
@@ -34,4 +36,7 @@ export const Routes = {
   origin: <OriginPage />,
   occurrence: <OccurrencePage />,
   locale: <LocalePage />,
+
+  /* [Log] */
+  log: <LogPage />,
 };

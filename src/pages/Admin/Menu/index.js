@@ -78,7 +78,11 @@ export default function Menu() {
         <ListItemIcon>
           <AssignmentOutlined className={classes.list_icon} />
         </ListItemIcon>
-        <ListItemText className={classes.list_text} primary="Log" />
+        <ListItemText
+          className={classes.list_text}
+          primary="Log"
+          onClick={() => changePage("log")}
+        />
       </ListItem>
 
       <ListRelatorios />
