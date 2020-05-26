@@ -43,14 +43,14 @@ export default function Create() {
         alignItems: "center",
         justifyContent: "center",
       }}
-      open={true}
+      open={false}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
       }}
     >
-      <Fade in={true}>
+      <Fade in={false}>
         <div
           style={{
             backgroundColor: "#fff",
@@ -61,15 +61,11 @@ export default function Create() {
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="flex-start"
-          >
+          <Grid container direction="row">
             <Grid item xs={12} sm={12}>
               <Typography variant="h4">Relatório Geral</Typography>
             </Grid>
+
             <Grid item xs={12} sm={3}>
               <Grid
                 container
@@ -79,6 +75,203 @@ export default function Create() {
               >
                 <Grid item xs={12} sm={12}>
                   <Grid container direction="column">
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} sm={1} />
+
+            <Grid item xs={12} sm={3}>
+              <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+              >
+                <Grid item xs={12} sm={12}>
+                  <Grid container direction="column">
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            {/* Aqui */}
+            <Grid item xs={12} sm={1} />
+
+            <Grid item xs={12} sm={3}>
+              <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+              >
+                <Grid item xs={12} sm={12}>
+                  <Grid container direction="column">
+                    <Grid item xs={12} sm={12}>
+                      <div>
+                        <FormControl
+                          variant="outlined"
+                          style={{ width: "100%" }}
+                          size="small"
+                          fullWidth
+                        >
+                          <Typography variant="button">Orgão:</Typography>
+                          <Select native size="small" fullWidth>
+                            <option value="" />
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
                     <Grid item xs={12} sm={12}>
                       <div>
                         <FormControl
