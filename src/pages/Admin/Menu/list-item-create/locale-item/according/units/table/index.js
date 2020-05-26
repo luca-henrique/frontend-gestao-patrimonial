@@ -13,8 +13,16 @@ export default function Units() {
   const [selectedRow, setSelectedRow] = useState("");
 
   const data = [
-    { id: 1, descricao: "DEPARTAMENTO DE OBRAS E INFRA ESTRUTURA" },
-    { id: 2, descricao: "DEPARTAMENTO DE SERVIÇOS PUBLICOS PERMANENTE" },
+    {
+      id: 1,
+      descricao: "DEPARTAMENTO DE OBRAS E INFRA ESTRUTURA",
+      responsavel: "Henrique Paes",
+    },
+    {
+      id: 2,
+      descricao: "DEPARTAMENTO DE SERVIÇOS PUBLICOS PERMANENTE",
+      responsavel: "Lucas Henrique Paes de Carvalho",
+    },
   ];
 
   const dispatch = useDispatch();
@@ -42,6 +50,10 @@ export default function Units() {
           {
             title: "Descrição",
             field: "descricao",
+          },
+          {
+            title: "Responsavel",
+            field: "responsavel",
           },
         ]}
         onRowClick={(evt, selectedRow) => {
@@ -96,7 +108,9 @@ export default function Units() {
           {
             icon: "delete",
             tooltip: "Deletar",
-            onClick: (event, rowData) => {},
+            onClick: (event, rowData) => {
+              dispatch(CreatorsUnits.deleteUnitRequest(rowData.id));
+            },
           },
         ]}
       />

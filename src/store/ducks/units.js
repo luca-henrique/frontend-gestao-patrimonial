@@ -28,12 +28,17 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  units_list: { visible: true, data: [], id_institution: 0 },
+  units_list: { visible: true, id_sector: 0 },
   create_units: false,
   update_units: { visible: false, data: [] },
+
+  create_unit_resquest: {},
+  read_units_request: 0,
+  update_unit_resquest: {},
+  delete_unit_request: 0,
 });
 
-export default function UNITS(state = INITIAL_STATE, action) {
+export default function Units(state = INITIAL_STATE, action) {
   switch (action.type) {
     /* --> Controller[Action] <-- */
 
@@ -41,7 +46,7 @@ export default function UNITS(state = INITIAL_STATE, action) {
     case Types.SHOW_ACCORDING_UNITS:
       return {
         ...state,
-        units_list: { visible: false, id_institution: action.payload.id },
+        units_list: { visible: false, id_sector: action.payload.id },
       };
 
     case Types.HIDE_ACCORDING_UNITS:
@@ -60,7 +65,21 @@ export default function UNITS(state = INITIAL_STATE, action) {
       };
 
     case Types.HIDE_UPDATE_MODAL_UNITS:
-      return { ...state, update_units: { visible: true, data: [] } };
+      return { ...state, update_units: { visible: false, data: [] } };
+
+    /* CRUD[REQUEST] */
+
+    case Types.CREATE_UNITS_REQUEST:
+      return { ...state, create_unit_request: action.payload.unit };
+
+    case Types.READ_UNITS_REQUEST:
+      return { ...state, read_units_request: action.payload.id };
+
+    case Types.UPDATE_UNITS_REQUEST:
+      return { ...state, update_unit_request: action.payload.unit };
+
+    case Types.DELETE_UNITS_REQUEST:
+      return { ...state, delete_unit_request: action.payload.id };
 
     default:
       return state;
@@ -79,5 +98,52 @@ export const Creators = {
     type: Types.HIDE_ACCORDING_UNITS,
   }),
 
+  showNewUnits: () => ({
+    type: Types.SHOW_NEW_MODAL_UNITS,
+  }),
+
+  hideNewUnits: () => ({
+    type: Types.HIDE_NEW_MODAL_UNITS,
+  }),
+
+  showUpdateUnits: (data) => ({
+    type: Types.SHOW_UPDATE_MODAL_UNITS,
+    payload: {
+      data,
+    },
+  }),
+
+  hideUpdateUnits: () => ({
+    type: Types.HIDE_UPDATE_MODAL_UNITS,
+  }),
+
   /* --> Modal <-- */
+
+  createUnitRequest: (unit) => ({
+    type: Types.CREATE_UNITS_REQUEST,
+    payload: {
+      unit,
+    },
+  }),
+
+  readUnitRequest: (id) => ({
+    type: Types.READ_UNITS_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  updateUnitRequest: (unit) => ({
+    type: Types.UPDATE_UNITS_REQUEST,
+    payload: {
+      unit,
+    },
+  }),
+
+  deleteUnitRequest: (id) => ({
+    type: Types.DELETE_UNITS_REQUEST,
+    payload: {
+      id,
+    },
+  }),
 };

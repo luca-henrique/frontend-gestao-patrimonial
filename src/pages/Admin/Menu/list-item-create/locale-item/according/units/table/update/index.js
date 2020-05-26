@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsGoodItem } from "~/store/ducks/good-item";
+import { Creators as CreatorsUnits } from "~/store/ducks/units";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -18,11 +18,11 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "80%",
-      height: "55%",
+      width: "100%",
+      height: "60%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "20%",
+      width: "30%",
       height: "40%",
     },
   },
@@ -30,15 +30,38 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.good.update_good_item.visible);
+
+  const visible = useSelector((state) => state.units.update_units.visible);
+
+  const data = useSelector((state) => state.units.update_units.data);
 
   const dispatch = useDispatch();
 
   const [descricao, setDescricao] = useState("");
-  const [depreciacao, setDepreciacao] = useState("");
+  const [responsavel, setResponsavel] = useState("");
+
+  React.useEffect(() => {
+    setDescricao(data.descricao);
+    setResponsavel(data.responsavel);
+  }, [data.descricao, data.responsavel]);
+
+  const handleOnSubmitUpdate = (e) => {
+    e.preventDefault();
+
+    var unit = {
+      id: data.id,
+      descricao,
+      responsavel,
+    };
+
+    dispatch(CreatorsUnits.updateUnitRequest(unit));
+    handleOnClose();
+  };
 
   const handleOnClose = () => {
-    dispatch(CreatorsGoodItem.hideUpdateGoodItem());
+    setDescricao("");
+    setResponsavel("");
+    dispatch(CreatorsUnits.hideUpdateUnits());
   };
 
   return (
@@ -80,92 +103,96 @@ export default function Create() {
                   color: "#a4a4a4",
                 }}
               >
-                Bem
+                Únidade
               </Typography>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <div>
-                <Typography
-                  variant="button"
-                  style={{
-                    color: "#a4a4a4",
-                  }}
-                >
-                  Descrição:
-                </Typography>
-                <TextField
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-              </div>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <div>
-                <Typography
-                  variant="button"
-                  style={{
-                    color: "#a4a4a4",
-                  }}
-                >
-                  Depreciação:
-                </Typography>
-                <TextField
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={depreciacao}
-                  onChange={(e) => setDepreciacao(e.target.value)}
-                />
-              </div>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{
-                  width: "100%",
-                }}
-                onClick={handleOnClose}
+            <form onSubmit={handleOnSubmitUpdate}>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Fechar
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                variant="contained"
-                style={{ color: "#0174DF", width: "100%" }}
-                type="submit"
+                <div>
+                  <Typography
+                    variant="button"
+                    style={{
+                      color: "#a4a4a4",
+                    }}
+                  >
+                    Descrição:
+                  </Typography>
+                  <TextField
+                    required
+                    variant="outlined"
+                    size="small"
+                    type="text"
+                    fullWidth
+                    value={descricao || ""}
+                    onChange={(e) => setDescricao(e.target.value)}
+                  />
+                </div>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Atualizar
-              </Button>
-            </Grid>
+                <div>
+                  <Typography
+                    variant="button"
+                    style={{
+                      color: "#a4a4a4",
+                    }}
+                  >
+                    Responsável:
+                  </Typography>
+                  <TextField
+                    required
+                    variant="outlined"
+                    size="small"
+                    type="text"
+                    fullWidth
+                    value={responsavel || ""}
+                    onChange={(e) => setResponsavel(e.target.value)}
+                  />
+                </div>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleOnClose}
+                >
+                  Fechar
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <Button
+                  variant="contained"
+                  style={{ color: "#0174DF", width: "100%" }}
+                  type="submit"
+                >
+                  Atualizar
+                </Button>
+              </Grid>
+            </form>
           </Grid>
         </div>
       </Fade>
