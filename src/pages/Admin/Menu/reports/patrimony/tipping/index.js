@@ -9,6 +9,8 @@ import {
   Fade,
   Grid,
   TextField,
+  FormControl,
+  Select,
   Button,
 } from "@material-ui/core/";
 
@@ -34,118 +36,119 @@ export default function Create() {
   const dispatch = useDispatch();
 
   return (
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
+    <Grid
+      container
+      direction="row"
+      justify="flex-start"
+      alignItems="flex-start"
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      open={visible}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
+        color: "#a4a4a4",
       }}
     >
-      <Fade in={visible}>
-        <div
-          style={{
-            backgroundColor: "#fff",
-            padding: "20px",
-            border: "2px solid #a4a4a4",
-            borderRadius: "5px",
-          }}
-          className={classes.modal}
+      <Grid item xs={12} sm={12}>
+        <Typography variant="h4">Tombamento</Typography>
+      </Grid>
+
+      <Grid item xs={12} sm={12}>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
         >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={12}>
-              <Typography
-                variant="h4"
-                style={{
-                  color: "#a4a4a4",
-                }}
-              >
-                Bem
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <div>
-                <Typography
-                  variant="button"
-                  style={{
-                    color: "#a4a4a4",
-                  }}
-                >
-                  Descrição:
-                </Typography>
-                <TextField required variant="outlined" size="small" fullWidth />
-              </div>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <div>
-                <Typography
-                  variant="button"
-                  style={{
-                    color: "#a4a4a4",
-                  }}
-                >
-                  Depreciação:
-                </Typography>
-                <TextField required variant="outlined" size="small" fullWidth />
-              </div>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{
-                  width: "100%",
-                }}
-              >
-                Fechar
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                variant="contained"
-                style={{ color: "#0174DF", width: "100%" }}
-                type="submit"
-              >
-                Criar
-              </Button>
-            </Grid>
+          <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+            <div>
+              <Typography variant="button">Numero do tombamento:</Typography>
+            </div>
           </Grid>
+
+          <Grid item xs={12} sm={5} style={{ marginTop: "10px" }}>
+            <div>
+              <Typography variant="button">De:</Typography>
+              <TextField
+                defaultValue="0"
+                variant="outlined"
+                size="small"
+                fullWidth
+                type="number"
+              />
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={2} />
+
+          <Grid item xs={12} sm={5} style={{ marginTop: "10px" }}>
+            <div>
+              <Typography variant="button">Até:</Typography>
+              <TextField
+                defaultValue="0"
+                variant="outlined"
+                size="small"
+                fullWidth
+                type="number"
+              />
+            </div>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
+        <div>
+          <Typography variant="button">Local:</Typography>
         </div>
-      </Fade>
-    </Modal>
+      </Grid>
+
+      <Grid item xs={12} sm={4} style={{ marginTop: "10px" }}>
+        <FormControl
+          variant="outlined"
+          style={{ width: "100%" }}
+          size="small"
+          fullWidth
+        >
+          <Typography variant="button">Orgão:</Typography>
+          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+            <option value="" />
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={12} sm={4} style={{ marginTop: "10px" }}>
+        <FormControl
+          variant="outlined"
+          style={{ width: "100%", paddingLeft: "5px" }}
+          size="small"
+          fullWidth
+        >
+          <Typography variant="button">Setor:</Typography>
+          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+            <option value="" />
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={12} sm={4} style={{ marginTop: "10px" }}>
+        <FormControl
+          variant="outlined"
+          style={{ width: "100%", paddingLeft: "5px" }}
+          size="small"
+          fullWidth
+        >
+          <Typography variant="button">Únidade:</Typography>
+          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+            <option value="" />
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={12} sm={12} style={{ marginTop: "25px", width: "100%" }}>
+        <Button
+          variant="contained"
+          style={{ color: "#0174DF", width: "100%" }}
+          type="submit"
+        >
+          Gerar
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
