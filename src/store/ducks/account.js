@@ -3,19 +3,22 @@ import Immutable from "seamless-immutable";
 export const Types = {
   /* -> Modal [ CREATE, UPDATE, CHANGE PASSWORD ] <- */
 
+  /* Abrir/fechar modal para criar uma nova conta */
   SHOW_NEW_MODAL_ACCOUNT: "@account/SHOW_NEW_MODAL_ACCOUNT",
   HIDE_NEW_MODAL_ACCOUNT: "@account/HIDE_NEW_MODAL_ACCOUNT",
 
+  /* Abrir/fechar modal para atualizar a conta */
   SHOW_UPDATE_MODAL_ACCOUNT: "@account/SHOW_UPDATE_MODAL_ACCOUNT",
   HIDE_UPDATE_MODAL_ACCOUNT: "@account/HIDE_UPDATE_MODAL_ACCOUNT",
 
+  /* Abrir/fechar modal para atualizar password */
   SHOW_CHANGER_PASSWORD_ACCOUNT: "@account/SHOW_CHANGER_PASSWORD_ACCOUNT",
   HIDE_CHANGER_PASSWORD_ACCOUNT: "@account/HIDE_CHANGER_PASSWORD_ACCOUNT",
 
+  /* -> REQUISIÇÔES [ CRUD+CHANGE PASSWORD ] <- */
   CREATE_ACCOUNT_REQUEST: "@account/CREATE_ACCOUNT_REQUEST",
   CREATE_ACCOUNT_SUCCESS: "@account/CREATE_ACCOUNT_SUCCESS",
 
-  /* -> REQUISIÇÔES [ CRUD+CHANGE PASSWORD ] <- */
   READ_ACCOUNT_REQUEST: "@account/READ_ACCOUNT_REQUEST",
   READ_ACCOUNT_SUCCESS: "@account/READ_ACCOUNT_SUCCESS",
 
@@ -33,6 +36,12 @@ const INITIAL_STATE = Immutable({
   create_account: false,
   update_account: { visible: false, data: [] },
   password_account: { visible: false, account_id: null },
+
+  create_account_request: {},
+  read_accounts: [],
+  update_account_request: {},
+  delete_account_request: 0,
+  update_password_request: 0,
 });
 
 export default function User(state = INITIAL_STATE, action) {
@@ -60,6 +69,15 @@ export default function User(state = INITIAL_STATE, action) {
 
     case Types.CREATE_ACCOUNT_REQUEST:
       return { ...state, account: action.payload.account };
+
+    case Types.READ_ACCOUNT_SUCCESS:
+      return { ...state, read_accounts: action.payload.accounts };
+
+    case Types.UPDATE_ACCOUNT_REQUEST:
+      return { ...state, update_account_request: action.payload.account };
+
+    case Types.DELETE_ACCOUNT_REQUEST:
+      return { ...state, delete_account_request: action.payload.id };
 
     default:
       return state;
@@ -101,6 +119,31 @@ export const Creators = {
     type: Types.CREATE_ACCOUNT_REQUEST,
     payload: {
       account,
+    },
+  }),
+
+  readAccountRequest: () => ({
+    type: Types.READ_ACCOUNT_REQUEST,
+  }),
+
+  readAccountSuccess: (accounts) => ({
+    type: Types.READ_ACCOUNT_SUCCESS,
+    payload: {
+      accounts,
+    },
+  }),
+
+  updateAccountRequest: (account) => ({
+    type: Types.UPDATE_ACCOUNT_REQUEST,
+    payload: {
+      account,
+    },
+  }),
+
+  deleteAccountRequest: (id) => ({
+    type: Types.DELETE_ACCOUNT_REQUEST,
+    payload: {
+      id,
     },
   }),
 

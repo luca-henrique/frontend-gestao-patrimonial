@@ -3,6 +3,9 @@ import React from "react";
 /* -> Style <- */
 import { makeStyles } from "@material-ui/core/styles";
 
+import { useDispatch } from "react-redux";
+import { Creators as CreatorsPage } from "~/store/ducks/page";
+
 /* -> Components[Biblioteca] <- */
 import {
   List,
@@ -14,7 +17,6 @@ import {
 
 /* -> Components[Criados] <- */
 import PatrimonioPage from "./components/list-patrimonio/";
-import ModalReports from "../reports/index";
 
 /* -> Icons[] <- */
 import { ExpandLess, ExpandMore } from "@material-ui/icons/";
@@ -57,9 +59,15 @@ export default function ListReport() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+
   const handleClick = () => {
     setOpen(!open);
   };
+
+  function changePage(location) {
+    dispatch(CreatorsPage.changePageLocation(location));
+  }
 
   return (
     <>
@@ -85,7 +93,11 @@ export default function ListReport() {
               <PatrimonioPage />
             </ListItem>
 
-            <ListItem button className={classes.nested}>
+            <ListItem
+              button
+              className={classes.nested}
+              onClick={() => changePage("inventory")}
+            >
               <ListItemIcon>
                 <img
                   src={inventario}
@@ -98,7 +110,11 @@ export default function ListReport() {
                 className={classes.list_text}
               />
             </ListItem>
-            <ListItem button className={classes.nested}>
+            <ListItem
+              button
+              className={classes.nested}
+              onClick={() => changePage("statement")}
+            >
               <ListItemIcon>
                 <img
                   src={termo}
@@ -111,7 +127,11 @@ export default function ListReport() {
                 className={classes.list_text}
               />
             </ListItem>
-            <ListItem button className={classes.nested}>
+            <ListItem
+              button
+              className={classes.nested}
+              onClick={() => changePage("transfer")}
+            >
               <ListItemIcon>
                 <img
                   src={transferencia}
@@ -127,8 +147,6 @@ export default function ListReport() {
           </List>
         </Collapse>
       </List>
-
-      <ModalReports />
     </>
   );
 }

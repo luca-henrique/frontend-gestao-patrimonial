@@ -3,6 +3,9 @@ import React, { useState } from "react";
 /* -> Style[] <- */
 import { makeStyles } from "@material-ui/core/styles";
 
+import { useDispatch } from "react-redux";
+import { Creators as CreatorsPage } from "~/store/ducks/page";
+
 /* -> Components[Biblioteca] <- */
 import {
   List,
@@ -54,10 +57,15 @@ const useStyles = makeStyles((theme) => ({
 export default function PatrimonyList() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     setOpen(!open);
   };
+
+  function changePage(location) {
+    dispatch(CreatorsPage.changePageLocation(location));
+  }
 
   return (
     <List component="nav" className={classes.root}>
@@ -78,14 +86,22 @@ export default function PatrimonyList() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("general")}
+          >
             <ListItemIcon>
               <AssignmentOutlined className={classes.list_icon} />
             </ListItemIcon>
             <ListItemText primary="Geral" className={classes.list_text} />
           </ListItem>
 
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("tipping")}
+          >
             <ListItemIcon>
               <DescriptionOutlined className={classes.list_icon} />
             </ListItemIcon>
@@ -94,7 +110,11 @@ export default function PatrimonyList() {
               className={classes.list_text}
             />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => changePage("depreciation")}
+          >
             <ListItemIcon>
               <img
                 src={depreciacao}

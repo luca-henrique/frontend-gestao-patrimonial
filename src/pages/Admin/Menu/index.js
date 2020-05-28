@@ -61,7 +61,11 @@ export default function Menu() {
         />
       </ListItem>
 
-      <ListItem button className={classes.list_item}>
+      <ListItem
+        button
+        className={classes.list_item}
+        onClick={() => changePage("patrimony")}
+      >
         <ListItemIcon>
           <img
             src={patrimonio}

@@ -1,7 +1,10 @@
 import React from "react";
 
 import Account from "./account/";
+
 import Prefecture from "./prefecture/update/";
+
+import Patrimony from "./patrimony/";
 
 /* --> List Item Create [Cadastros Gerais] <-- */
 
@@ -19,14 +22,29 @@ import OccurrencePage from "./list-item-create/occurrence-item";
 
 import LocalePage from "./list-item-create/locale-item/index";
 
-/* --> List Item Create [Cadastros Gerais] <-- */
+/* --> Log [Alterações feitas no sistema] <-- */
 
 import LogPage from "./log/";
+
+/* --> Gerar [Relatorio] <-- */
+
+import GeneralPatrimonyReport from "./reports/patrimony/general";
+
+import DepreciationPatrimonyReport from "./reports/patrimony/depreciation";
+
+import TippingPatrimonyReport from "./reports/patrimony/tipping";
+
+import InvetoryReport from "./reports/inventory/";
+
+import StatementResponsibilityReport from "./reports/statement-responsibility";
+
+import TransferReport from "./reports/transfer";
 
 export const Routes = {
   default: <h2>Home</h2>,
   account: <Account />,
   prefecture: <Prefecture />,
+  patrimony: <Patrimony />,
 
   /* [Items] */
   low: <LowPage />,
@@ -39,4 +57,13 @@ export const Routes = {
 
   /* [Log] */
   log: <LogPage />,
+
+  /* Patrimony[Reports] */
+  general: <GeneralPatrimonyReport />,
+  depreciation: <DepreciationPatrimonyReport />,
+  tipping: <TippingPatrimonyReport />,
+
+  inventory: <InvetoryReport />,
+  statement: <StatementResponsibilityReport />,
+  transfer: <TransferReport />,
 };

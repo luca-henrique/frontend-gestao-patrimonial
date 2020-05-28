@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 
 import MaterialTable from "material-table";
+
 import { Lock, LockOpenOutlined } from "@material-ui/icons/";
 
-import Create from "./components/create/";
-import Update from "./components/update/";
-import Password from "./components/change-password/";
-
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsAccount } from "../../../../store/ducks/account";
 
 function View() {
   const [selectedRow, setSelectedRow] = useState("");
@@ -23,33 +19,66 @@ function View() {
     <div>
       <MaterialTable
         data={data}
-        title="Contas"
+        title="Patrimônio"
+        style={{ width: "2500px" }}
         columns={[
           {
-            title: "Código",
+            title: "Codigo",
             field: "id",
           },
           {
-            title: "Nome",
-            field: "nome",
+            title: "Data Entrada",
+            field: "entry_date",
+            type: "date",
           },
           {
-            title: "E-mail",
+            title: "Tombamento",
+            field: "tipping",
+          },
+          {
+            title: "Discriminação",
+            field: "discrimination",
+          },
+          {
+            title: "Situação",
+            field: "situation",
+          },
+          {
+            title: "Natureza",
+            field: "nature",
+          },
+          {
+            title: "Tipo do bem",
+            field: "good",
+          },
+          {
+            title: "Empenho",
+            field: "commit",
+          },
+          {
+            title: "Data de compra",
+            field: "buy_date",
+            type: "date",
+          },
+          {
+            title: "Licitação",
             field: "email",
           },
-
           {
-            title: "Privilegio",
-            field: "admin",
-            render: (rowData) => (
-              <>
-                {rowData.admin === true ? (
-                  <LockOpenOutlined style={{ color: "#a4a4a4" }} />
-                ) : (
-                  <Lock style={{ color: "#a4a4a4" }} />
-                )}
-              </>
-            ),
+            title: "Nota fiscal",
+            field: "invoice",
+          },
+          {
+            title: "Orgão",
+            field: "institution",
+          },
+          {
+            title: "Setor",
+            field: "sector",
+          },
+          {
+            title: "Únidade",
+            field: "unit",
           },
         ]}
         onRowClick={(evt, selectedRow) => {
@@ -88,37 +117,26 @@ function View() {
             icon: "add",
             tooltip: "Add User",
             isFreeAction: true,
-            onClick: (event) => {
-              dispatch(CreatorsAccount.showNewAccount());
-            },
+            onClick: (event) => {},
           },
 
           {
             icon: "edit",
             tooltip: "Editar informações",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsAccount.showUpdateAccount(rowData));
-            },
+            onClick: (event, rowData) => {},
           },
           {
             icon: "lock",
             tooltip: "Alterar senha",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsAccount.showChangePasswordAccount(rowData.id));
-            },
+            onClick: (event, rowData) => {},
           },
           {
             icon: "delete",
             tooltip: "Deletar conta",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsAccount.deleteAccountRequest(rowData.id));
-            },
+            onClick: (event, rowData) => {},
           },
         ]}
       />
-      <Create />
-      <Update />
-      <Password />
     </div>
   );
 }
