@@ -2,7 +2,7 @@ import React from "react";
 
 /* -> Redux[Biblioteca] <- */
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsPage } from "../../../store/ducks/page";
+import { Creators as CreatorsPage } from "~/store/ducks/page";
 
 /* -> Components[Biblioteca] <- */
 import {

@@ -5,6 +5,7 @@ import Account from "./account/";
 import Prefecture from "./prefecture/update/";
 
 import Patrimony from "./patrimony/";
+import ItemPatrimony from "./patrimony/item-patrimony/";
 
 /* --> List Item Create [Cadastros Gerais] <-- */
 
@@ -44,7 +45,10 @@ export const Routes = {
   default: <h2>Home</h2>,
   account: <Account />,
   prefecture: <Prefecture />,
+
+  /* [Patrimony] */
   patrimony: <Patrimony />,
+  item_patrimony: <ItemPatrimony />,
 
   /* [Items] */
   low: <LowPage />,

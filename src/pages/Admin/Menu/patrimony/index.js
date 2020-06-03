@@ -2,15 +2,40 @@ import React, { useState } from "react";
 
 import MaterialTable from "material-table";
 
-import { Lock, LockOpenOutlined } from "@material-ui/icons/";
+import { Creators as CreatorsPage } from "~/store/ducks/page";
 
 import { useDispatch } from "react-redux";
+
+import WarningIcon from "@material-ui/icons/Warning";
 
 function View() {
   const [selectedRow, setSelectedRow] = useState("");
 
+  const date = new Date().toISOString().slice(0, 10);
+
   const data = [
-    { id: 1, nome: "Lucas", email: "lukas.paes18@gmail.com", admin: true },
+    {
+      tipping: 1,
+      discrimination: "CHAVE PRT MN PDWM 10,0CV",
+      situation: true,
+      commit: "okfgoekr",
+      buy_date: date,
+      invoice: "1565444",
+      institution: "SECRETARIA DE SAUDE",
+      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+    },
+    {
+      tipping: 1,
+      discrimination: "CHAVE PRT MN PDWM 10,0CV",
+      situation: false,
+      commit: "okfgoekr",
+      buy_date: date,
+      invoice: "1565444",
+      institution: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+    },
   ];
 
   const dispatch = useDispatch();
@@ -20,16 +45,21 @@ function View() {
       <MaterialTable
         data={data}
         title="Patrimônio"
-        style={{ width: "2500px" }}
         columns={[
           {
-            title: "Codigo",
-            field: "id",
-          },
-          {
-            title: "Data Entrada",
-            field: "entry_date",
-            type: "date",
+            title: "Situação",
+            field: "situation",
+            render: (rowData) => (
+              <>
+                <WarningIcon
+                  style={
+                    rowData.situation === false
+                      ? { color: "#58ACFA" }
+                      : { color: "#DF0101" }
+                  }
+                />
+              </>
+            ),
           },
           {
             title: "Tombamento",
@@ -39,31 +69,18 @@ function View() {
             title: "Discriminação",
             field: "discrimination",
           },
-          {
-            title: "Situação",
-            field: "situation",
-          },
-          {
-            title: "Natureza",
-            field: "nature",
-          },
-          {
-            title: "Tipo do bem",
-            field: "good",
-          },
+
           {
             title: "Empenho",
             field: "commit",
           },
+
           {
-            title: "Data de compra",
+            title: "Data da Compra",
             field: "buy_date",
             type: "date",
           },
-          {
-            title: "Licitação",
-            field: "email",
-          },
+
           {
             title: "Nota fiscal",
             field: "invoice",
@@ -85,8 +102,10 @@ function View() {
           setSelectedRow(selectedRow);
         }}
         options={{
+          cellStyle: { whiteSpace: "nowrap" },
           headerStyle: {
             color: "#a4a4a4",
+            whiteSpace: "nowrap",
           },
           actionsCellStyle: { color: "#a4a4a4" },
           rowStyle: (rowData) => ({
@@ -119,20 +138,23 @@ function View() {
             isFreeAction: true,
             onClick: (event) => {},
           },
+          {
+            icon: "visibility",
+            tooltip: "Mostrar informações",
+            onClick: (event, rowData) => {
+              dispatch(CreatorsPage.changePageLocation("item_patrimony"));
+            },
+          },
 
           {
             icon: "edit",
             tooltip: "Editar informações",
             onClick: (event, rowData) => {},
           },
-          {
-            icon: "lock",
-            tooltip: "Alterar senha",
-            onClick: (event, rowData) => {},
-          },
+
           {
             icon: "delete",
-            tooltip: "Deletar conta",
+            tooltip: "Deletar item",
             onClick: (event, rowData) => {},
           },
         ]}
