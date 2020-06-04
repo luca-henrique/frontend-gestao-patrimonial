@@ -2,41 +2,88 @@ import React, { useState } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "24px",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "24px",
+    },
+  },
+  input: {
+    marginTop: "20px",
+    paddingRight: "10px",
+  },
+}));
+
 const Purchase = () => {
   //toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-  const value = 600;
+
+  const [bidding, setBidding] = useState("");
+  const [effort, setEffort] = useState("");
+  const [buyDate, setBuyDate] = useState("");
+  const [numberInvoice, setNumberInvoice] = useState("");
+  const [dateInvoice, setDateInvoice] = useState("");
+
+  const [value, setValue] = useState(100.0);
   const [acquisitionValue, setAcquisitionValue] = useState(
     value.toLocaleString("pt-br", { style: "currency", currency: "BRL" })
   );
 
+  const classes = useStyles();
+
   return (
     <>
       <Grid item xs={12} sm={12} style={{ marginTop: "30px" }}>
-        <h2>Informação da aquisição</h2>
+        <Typography className={classes.title}>
+          Informação da aquisição
+        </Typography>
       </Grid>
 
-      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={4} className={classes.input}>
         <div>
           <Typography variant="button">Licitação:</Typography>
-          <TextField variant="outlined" size="small" fullWidth />
+          <TextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={bidding}
+            onChange={(e) => setBidding(e.target.value)}
+          />
         </div>
       </Grid>
 
-      <Grid item xs={12} sm={12}>
+      <Grid item xs={12} sm={4} className={classes.input}>
         <div>
           <Typography variant="button">Empenho:</Typography>
-          <TextField variant="outlined" size="small" fullWidth />
+          <TextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={effort}
+            onChange={(e) => setEffort(e.target.value)}
+          />
         </div>
       </Grid>
 
-      <Grid item xs={12} sm={12}>
+      <Grid item xs={12} sm={4} className={classes.input}>
         <div>
           <Typography variant="button">Data de compra:</Typography>
-          <TextField variant="outlined" size="small" fullWidth type="date" />
+          <TextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            type="date"
+            value={buyDate}
+            onChange={(e) => setBuyDate(e.target.value)}
+          />
         </div>
       </Grid>
 
-      <Grid item xs={12} sm={12}>
+      <Grid item xs={12} sm={4} className={classes.input}>
         <div>
           <Typography variant="button">Valor da aquisição:</Typography>
           <TextField
@@ -48,16 +95,29 @@ const Purchase = () => {
           />
         </div>
       </Grid>
-      <Grid item xs={12} sm={12}>
+      <Grid item xs={12} sm={4} className={classes.input}>
         <div>
           <Typography variant="button">Nº da nota fiscal:</Typography>
-          <TextField variant="outlined" size="small" fullWidth />
+          <TextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={numberInvoice}
+            onChange={(e) => setNumberInvoice(e.target.value)}
+          />
         </div>
       </Grid>
-      <Grid item xs={12} sm={12}>
+      <Grid item xs={12} sm={4} className={classes.input}>
         <div>
           <Typography variant="button">Data da nota fiscal:</Typography>
-          <TextField variant="outlined" size="small" fullWidth type="date" />
+          <TextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            type="date"
+            value={dateInvoice}
+            onChange={(e) => setDateInvoice(e.target.value)}
+          />
         </div>
       </Grid>
     </>
