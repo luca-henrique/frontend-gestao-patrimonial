@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
 import MaterialTable from "material-table";
 
 import { Creators as CreatorsPage } from "~/store/ducks/page";
-
+import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
 import { useDispatch } from "react-redux";
 
 import WarningIcon from "@material-ui/icons/Warning";
+import Typography from "@material-ui/core/Typography";
 
 function View() {
-  const [selectedRow, setSelectedRow] = useState("");
-
   const date = new Date().toISOString().slice(0, 10);
 
   const data = [
     {
+      id: 214,
       tipping: 1,
       discrimination: "CHAVE PRT MN PDWM 10,0CV",
-      situation: true,
+      situation: "ativo",
       commit: "okfgoekr",
       buy_date: date,
       invoice: "1565444",
@@ -26,9 +26,22 @@ function View() {
       unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
     },
     {
+      id: 332,
       tipping: 1,
       discrimination: "CHAVE PRT MN PDWM 10,0CV",
-      situation: false,
+      situation: "transferido",
+      commit: "okfgoekr",
+      buy_date: date,
+      invoice: "1565444",
+      institution: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
+    },
+    {
+      id: 5456,
+      tipping: 1,
+      discrimination: "CHAVE PRT MN PDWM 10,0CV",
+      situation: "baixa",
       commit: "okfgoekr",
       buy_date: date,
       invoice: "1565444",
@@ -38,26 +51,26 @@ function View() {
     },
   ];
 
+  const colors = {
+    ativo: "#088A08",
+    transferido: "#FF8000",
+    baixa: "#DF0101",
+  };
+
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <MaterialTable
         data={data}
-        title="Patrimônio"
+        title={null}
         columns={[
           {
             title: "Situação",
             field: "situation",
             render: (rowData) => (
               <>
-                <WarningIcon
-                  style={
-                    rowData.situation === false
-                      ? { color: "#58ACFA" }
-                      : { color: "#DF0101" }
-                  }
-                />
+                <WarningIcon style={{ color: colors[rowData.situation] }} />
               </>
             ),
           },
@@ -98,9 +111,6 @@ function View() {
             field: "unit",
           },
         ]}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow);
-        }}
         options={{
           cellStyle: { whiteSpace: "nowrap" },
           headerStyle: {
@@ -108,12 +118,8 @@ function View() {
             whiteSpace: "nowrap",
           },
           actionsCellStyle: { color: "#a4a4a4" },
-          rowStyle: (rowData) => ({
-            backgroundColor:
-              selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#58ACFA"
-                : "#FFF",
-          }),
+
+          searchFieldAlignment: "left",
         }}
         localization={{
           header: {
@@ -134,7 +140,7 @@ function View() {
         actions={[
           {
             icon: "add",
-            tooltip: "Add User",
+            tooltip: "Adicionar patrimônio",
             isFreeAction: true,
             onClick: (event) => {},
           },
@@ -143,22 +149,36 @@ function View() {
             tooltip: "Mostrar informações",
             onClick: (event, rowData) => {
               dispatch(CreatorsPage.changePageLocation("item_patrimony"));
+              dispatch(CreatorsPatrimony.showPatrimony(rowData));
             },
-          },
-
-          {
-            icon: "edit",
-            tooltip: "Editar informações",
-            onClick: (event, rowData) => {},
-          },
-
-          {
-            icon: "delete",
-            tooltip: "Deletar item",
-            onClick: (event, rowData) => {},
           },
         ]}
       />
+      <div style={{ display: "flex", flexDirection: "row", marginTop: "20px" }}>
+        <div>
+          <Typography variant="subtitle1" color="initial">
+            Situações do patrimônio:
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="subtitle1" style={{ color: colors["ativo"] }}>
+            ativo,
+          </Typography>
+        </div>
+        <div>
+          <Typography
+            variant="subtitle1"
+            style={{ color: colors["transferido"] }}
+          >
+            transferido,
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="subtitle1" style={{ color: colors["baixa"] }}>
+            baixa
+          </Typography>
+        </div>
+      </div>
     </div>
   );
 }

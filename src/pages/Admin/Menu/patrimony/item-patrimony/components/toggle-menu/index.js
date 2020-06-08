@@ -1,12 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Creators as CreatorsDeletePatrimony } from "~/store/ducks/delete-patrimony-item";
+
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from "@material-ui/lab/";
 
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
 import LoopIcon from "@material-ui/icons/Loop";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-
 import Icon from "~/assets/icons/danger.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,22 +60,46 @@ export default function SpeedDials() {
     setOpen(true);
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const clickActions = (name) => {
-    switch (expr) {
-      case 'Deletar':
-        console.log('Oranges are $0.59 a pound.');
-        break;
-      case 'Mangoes':
-      case 'Papayas':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        // expected output: "Mangoes and papayas are $2.79 a pound."
-        break;
-      default:
-        console.log(`Sorry, we are out of ${expr}.`);
+  //id do patrimonio que foi selecionado na tabela
+  const patrimony_id = useSelector(
+    (state) => state.patrimony_item.show_patrimony.id
+  );
+
+  const dispatch = useDispatch();
+
+  const userLog = (user) => {
+    if (user === "admin") {
+      dispatch(
+        CreatorsDeletePatrimony.showModalDeletePatrimonyAdmin(patrimony_id)
+      );
+    } else {
+      dispatch(
+        CreatorsDeletePatrimony.showModalDeletePatrimonyUser(patrimony_id)
+      );
+    }
   };
 
-  
+  const clickActions = (name) => {
+    switch (name) {
+      case "Ocorrência":
+        console.log("Ocorrência.");
+        break;
+      case "Transferência":
+        console.log("Transferência.");
+        break;
+      case "Baixa":
+        console.log("Baixa.");
+        break;
+      case "Duplicar":
+        console.log("Duplicar.");
+        break;
+      case "Deletar":
+        userLog("user");
+        break;
+      default:
+        console.log(`Sorry, we are out of ${name}.`);
+    }
+  };
 
   return (
     <SpeedDial
@@ -90,8 +116,10 @@ export default function SpeedDials() {
           key={action.name}
           icon={action.icon}
           tooltipTitle={action.name}
-          onClick={() => {handleClose(action.name);clickActions(action.name)}
-        }
+          onClick={() => {
+            handleClose(action.name);
+            clickActions(action.name);
+          }}
         />
       ))}
     </SpeedDial>

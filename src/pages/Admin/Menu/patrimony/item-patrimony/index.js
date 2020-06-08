@@ -18,6 +18,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
 import BasicsImformation from "./components/basics-information/";
 import Localization from "./components/localization/";
@@ -28,6 +29,9 @@ import Low from "./components/low/";
 import ToggleMenu from "./components/toggle-menu";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import DeleteDialogPatrimonyAdmin from "../delete-patrimony-admin/";
+import DeleteDialogPatrimonyUser from "../delete-patrimony-user/";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -120,6 +124,24 @@ const PatrimonyItem = () => {
                   <FileCopyIcon style={{ color: "#a4a4a4" }} />
                 </IconButton>
               </Tooltip>
+            </label>
+
+            <input
+              accept="image/*"
+              className={classes.input}
+              id="icon-button-photo"
+              type="file"
+            />
+            <label htmlFor="icon-button-photo">
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <Tooltip title="Adicionar Foto">
+                  <PhotoCamera style={{ color: "#a4a4a4" }} />
+                </Tooltip>
+              </IconButton>
             </label>
 
             <Tooltip title="Ficha do bem">
@@ -223,6 +245,8 @@ const PatrimonyItem = () => {
           </Alert>
         </Snackbar>
       </form>
+      <DeleteDialogPatrimonyAdmin />
+      <DeleteDialogPatrimonyUser />
     </Grid>
   );
 };
