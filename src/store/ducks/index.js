@@ -25,6 +25,9 @@ import occurrence from "./occurrence-item";
 import state from "./state-item";
 import nature from "./nature-item";
 
+import patrimony_item from "./patrimony";
+import delete_patrimony_item from "./delete-patrimony-item";
+
 export default (history) =>
   combineReducers({
     toastr,
@@ -42,6 +45,9 @@ export default (history) =>
     occurrence,
     state,
     nature,
+
+    patrimony_item,
+    delete_patrimony_item,
 
     router: connectRouter(history),
   });
