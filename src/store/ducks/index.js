@@ -28,6 +28,9 @@ import nature from "./nature-item";
 import patrimony_item from "./patrimony";
 import delete_patrimony_item from "./delete-patrimony-item";
 import duplicate_patrimony_item from "./duplicate-patrimony-item";
+import low_patrimony_item from "./low-patrimony-item";
+import transfer_patrimony_item from "./transference-patrimony-item";
+import occurrente_patrimony_item from "./occurrence-patrimony-item";
 
 export default (history) =>
   combineReducers({
@@ -50,6 +53,9 @@ export default (history) =>
     patrimony_item,
     delete_patrimony_item,
     duplicate_patrimony_item,
+    low_patrimony_item,
+    transfer_patrimony_item,
+    occurrente_patrimony_item,
 
     router: connectRouter(history),
   });
