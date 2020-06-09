@@ -4,8 +4,10 @@ import Account from "./account/";
 
 import Prefecture from "./prefecture/update/";
 
-import Patrimony from "./patrimony/";
-import ItemPatrimony from "./patrimony/item-patrimony/";
+// Listar todos os itens do patrimonio
+import ListPatrimony from "../Patrimony/list";
+import CreatePatrimony from "../Patrimony/create";
+import UpdatePatrimony from "../Patrimony/update";
 
 /* --> List Item Create [Cadastros Gerais] <-- */
 
@@ -47,8 +49,9 @@ export const Routes = {
   prefecture: <Prefecture />,
 
   /* [Patrimony] */
-  patrimony: <Patrimony />,
-  item_patrimony: <ItemPatrimony />,
+  patrimony_list: <ListPatrimony />,
+  patrimony_create: <CreatePatrimony />,
+  patrimony_update: <UpdatePatrimony />,
 
   /* [Items] */
   low: <LowPage />,

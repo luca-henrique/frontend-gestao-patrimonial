@@ -142,13 +142,15 @@ function View() {
             icon: "add",
             tooltip: "Adicionar patrimônio",
             isFreeAction: true,
-            onClick: (event) => {},
+            onClick: (event, rowData) => {
+              dispatch(CreatorsPage.changePageLocation("patrimony_create"));
+            },
           },
           {
             icon: "visibility",
             tooltip: "Mostrar informações",
             onClick: (event, rowData) => {
-              dispatch(CreatorsPage.changePageLocation("item_patrimony"));
+              dispatch(CreatorsPage.changePageLocation("patrimony_update"));
               dispatch(CreatorsPatrimony.showPatrimony(rowData));
             },
           },

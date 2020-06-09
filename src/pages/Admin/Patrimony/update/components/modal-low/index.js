@@ -12,16 +12,9 @@ import TextField from "@material-ui/core/TextField";
 export default function AlertDialog() {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const patrimony_id = useSelector(
-    (state) => state.patrimony_item.show_patrimony.id
-  );
-
-  const visible = useSelector(
-    (state) => state.delete_patrimony_item.delete_user.visible
-  );
+  const [dateLow, setDateLow] = useState("");
+  const [typeLow, setTypeLow] = useState("");
+  const [reason, setReason] = useState("");
 
   const handleClose = () => {
     dispatch(CreatorsPatrimonyDelete.hideModalDeletePatrimonyUser());
@@ -29,21 +22,17 @@ export default function AlertDialog() {
 
   const deletePatrimony = (e) => {
     e.preventDefault();
-    dispatch(
-      CreatorsPatrimonyDelete.deletePatrimonyUserRequest(
-        { email, password },
-        patrimony_id
-      )
-    );
+
     handleClose();
-    setEmail("");
-    setPassword("");
+    setDateLow("");
+    setTypeLow("");
+    setReason("");
   };
 
   return (
     <div>
       <Dialog
-        open={visible}
+        open={true}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -57,20 +46,30 @@ export default function AlertDialog() {
               required
               autoFocus
               margin="dense"
-              label="Email"
+              label="date"
               type="email"
               fullWidth
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={dateLow}
+              onChange={(e) => setDateLow(e.target.value)}
             />
             <TextField
               required
               margin="dense"
-              label="Password"
-              type="password"
+              label="Tipo de baixa"
+              type="text"
               fullWidth
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={typeLow}
+              onChange={(e) => setTypeLow(e.target.value)}
+            />
+
+            <TextField
+              required
+              margin="dense"
+              label="Motivo"
+              type="text"
+              fullWidth
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
             />
           </DialogContent>
           <DialogActions>

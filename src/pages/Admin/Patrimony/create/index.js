@@ -9,29 +9,20 @@ import {
   IconButton,
   Tooltip,
   Button,
-  Snackbar,
 } from "@material-ui/core/";
 
-import { Alert } from "@material-ui/lab/";
-
-import EditIcon from "@material-ui/icons/Edit";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
-import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
+/* Components */
 import BasicsImformation from "./components/basics-information/";
 import Localization from "./components/localization/";
 import ClassificationDiscrimination from "./components/classification-discrimination/";
 import PurchaseInformation from "./components/purchase-information";
 import Low from "./components/low/";
 
-import ToggleMenu from "./components/toggle-menu";
-
 import { makeStyles } from "@material-ui/core/styles";
-
-import DeleteDialogPatrimonyAdmin from "../delete-patrimony-admin/";
-import DeleteDialogPatrimonyUser from "../delete-patrimony-user/";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -61,35 +52,8 @@ const PatrimonyItem = () => {
   // eslint-disable-next-line no-unused-vars
   const [invoice, setInvoice] = useState(false);
 
-  const [edit, setEdit] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  function updateRequestPatrimonyItem(e) {
-    e.preventDefault();
-    changeEdit();
-  }
-
-  const changeEdit = () => {
-    setEdit(!edit);
-  };
-
   const backForListPatrimony = () => {
-    if (edit === false) {
-      dispatch(CreatorsPage.changePageLocation("patrimony"));
-    } else {
-      handleClick();
-    }
-  };
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
+    dispatch(CreatorsPage.changePageLocation("patrimony_list"));
   };
 
   return (
@@ -100,7 +64,7 @@ const PatrimonyItem = () => {
       alignItems="flex-start"
       style={{ color: "#BDBDBD" }}
     >
-      <form onSubmit={updateRequestPatrimonyItem}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <Grid item xs={12} sm={12} className={classes.headerIcons}>
           <Tooltip title="Voltar">
             <IconButton
@@ -143,21 +107,6 @@ const PatrimonyItem = () => {
                 </Tooltip>
               </IconButton>
             </label>
-
-            <Tooltip title="Ficha do bem">
-              <IconButton>
-                <PictureAsPdfIcon style={{ color: "#a4a4a4" }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Editar Informações">
-              <IconButton onClick={changeEdit}>
-                <EditIcon
-                  style={
-                    edit === false ? { color: "#a4a4a4" } : { color: "#FF0040" }
-                  }
-                />
-              </IconButton>
-            </Tooltip>
           </div>
         </Grid>
 
@@ -218,35 +167,16 @@ const PatrimonyItem = () => {
         </Grid>
 
         <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
-          <ToggleMenu />
+          <Button
+            variant="contained"
+            type="submit"
+            fullWidth
+            style={{ backgroundColor: "#2E64FE", color: "#fff" }}
+          >
+            criar novo patrimônio
+          </Button>
         </Grid>
-
-        {edit === true ? (
-          <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
-            <Button
-              variant="outlined"
-              type="submit"
-              style={{
-                width: "100%",
-                backgroundColor: "#FF0040",
-                color: "#fff",
-              }}
-            >
-              Salvar Alterações
-            </Button>
-          </Grid>
-        ) : (
-          <></>
-        )}
-
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
-            Salve as alterações antes de sair da página.
-          </Alert>
-        </Snackbar>
       </form>
-      <DeleteDialogPatrimonyAdmin />
-      <DeleteDialogPatrimonyUser />
     </Grid>
   );
 };

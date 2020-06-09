@@ -7,7 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Creators as CreatorsPatrimonyDelete } from "../../../../../store/ducks/delete-patrimony-item";
+import { Creators as CreatorsPatrimonyDelete } from "~/store/ducks/delete-patrimony-item";
 
 export default function AlertDialog() {
   const dispatch = useDispatch();

@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsDeletePatrimony } from "~/store/ducks/delete-patrimony-item";
+import { Creators as CreatorsDuplicatePatrimony } from "~/store/ducks/duplicate-patrimony-item";
+
+import { toast } from "react-toastify";
 
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from "@material-ui/lab/";
 
@@ -43,10 +46,6 @@ const actions = [
   },
 ];
 
-/**
- * pedir senha para excluir patrimonio
- */
-
 export default function SpeedDials() {
   const classes = useStyles();
 
@@ -60,22 +59,35 @@ export default function SpeedDials() {
     setOpen(true);
   };
 
-  //id do patrimonio que foi selecionado na tabela
-  const patrimony_id = useSelector(
-    (state) => state.patrimony_item.show_patrimony.id
-  );
-
   const dispatch = useDispatch();
+
+  const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
+
+  console.log(patrimony);
 
   const userLog = (user) => {
     if (user === "admin") {
       dispatch(
-        CreatorsDeletePatrimony.showModalDeletePatrimonyAdmin(patrimony_id)
+        CreatorsDeletePatrimony.showModalDeletePatrimonyAdmin(patrimony.id)
       );
     } else {
       dispatch(
-        CreatorsDeletePatrimony.showModalDeletePatrimonyUser(patrimony_id)
+        CreatorsDeletePatrimony.showModalDeletePatrimonyUser(patrimony.id)
       );
+    }
+  };
+
+  const low = () => {
+    if (patrimony.situation === "baixa") {
+      toast.error("Já foi realizada uma baixa nesse item.", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -88,10 +100,12 @@ export default function SpeedDials() {
         console.log("Transferência.");
         break;
       case "Baixa":
-        console.log("Baixa.");
+        low();
         break;
       case "Duplicar":
-        console.log("Duplicar.");
+        dispatch(
+          CreatorsDuplicatePatrimony.showModalDuplicatePatrimony(patrimony.id)
+        );
         break;
       case "Deletar":
         userLog("user");

@@ -4,6 +4,8 @@ import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 
+import { ToastContainer } from "react-toastify";
+
 import { store } from "../store/";
 
 import Routes from "../routes/";
@@ -17,6 +19,7 @@ const App = () => (
   <Provider store={store}>
     <Router history={history}>
       <GlobalStyle />
+      <ToastContainer />
       <Routes />
       <ReduxToastr />
     </Router>
