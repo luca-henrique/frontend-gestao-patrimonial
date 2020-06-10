@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as CreatorsPatrimonyDelete } from "../../../../../store/ducks/delete-patrimony-item";
+import { Creators as CreatorsPatrimonyLow } from "~/store/ducks/low-patrimony-item";
 import TextField from "@material-ui/core/TextField";
 
 export default function AlertDialog() {
@@ -16,9 +16,7 @@ export default function AlertDialog() {
   const [typeLow, setTypeLow] = useState("");
   const [reason, setReason] = useState("");
 
-  const handleClose = () => {
-    dispatch(CreatorsPatrimonyDelete.hideModalDeletePatrimonyUser());
-  };
+  const handleClose = () => {};
 
   const deletePatrimony = (e) => {
     e.preventDefault();

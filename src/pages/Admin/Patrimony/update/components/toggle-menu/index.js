@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsDeletePatrimony } from "~/store/ducks/delete-patrimony-item";
 import { Creators as CreatorsDuplicatePatrimony } from "~/store/ducks/duplicate-patrimony-item";
+import { Creators as CreatorsTransfer } from "~/store/ducks/transference-patrimony-item";
 
 import { toast } from "react-toastify";
 
@@ -97,7 +98,9 @@ export default function SpeedDials() {
         console.log("Ocorrência.");
         break;
       case "Transferência":
-        console.log("Transferência.");
+        dispatch(
+          CreatorsTransfer.showModalListTransferencePatrimony(patrimony.id)
+        );
         break;
       case "Baixa":
         low();

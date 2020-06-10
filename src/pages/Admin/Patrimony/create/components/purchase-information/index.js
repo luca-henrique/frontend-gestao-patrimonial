@@ -39,7 +39,7 @@ const Purchase = () => {
     <>
       <Grid item xs={12} sm={12} style={{ marginTop: "30px" }}>
         <Typography className={classes.title}>
-          Informação da aquisição
+          Informações da aquisição
         </Typography>
       </Grid>
 

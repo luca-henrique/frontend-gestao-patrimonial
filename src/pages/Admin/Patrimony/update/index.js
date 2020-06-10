@@ -33,6 +33,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteDialogPatrimonyAdmin from "./components/modal-delete-admin";
 import DeleteDialogPatrimonyUser from "./components/modal-delete-user/";
 import DuplicateDialogPatrimony from "./components/modal-duplicate/";
+import TransferModalPatrimony from "./components/modal-transfer/list";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -250,6 +251,7 @@ const PatrimonyItem = () => {
       <DeleteDialogPatrimonyAdmin />
       <DeleteDialogPatrimonyUser />
       <DuplicateDialogPatrimony />
+      <TransferModalPatrimony />
     </Grid>
   );
 };

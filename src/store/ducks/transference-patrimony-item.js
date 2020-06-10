@@ -14,7 +14,7 @@ export const Types = {
   SHOW_MODAL_UPDATE_TRANSFERENCE_PATRIMONY:
     "@transference-patrimony/SHOW_MODAL_TRANSFERENCE_PATRIMONY",
   HIDE_MODAL_UPDATE_TRANSFERENCE_PATRIMONY:
-    "@transference-patrimony/HIDE_MODAL_TRANSFERENCE_PATRIMONY",
+    "@transference-patrimony/HIDE_MODAL_UPDATE_TRANSFERENCE_PATRIMONY",
 
   /* Requisições */
   CREATE_TRANSFERENCE_PATRIMONY_REQUEST:
@@ -40,16 +40,19 @@ const INITIAL_STATE = Immutable({
 
   show_modal_update_transference_patrimony: {
     visible: false,
-    id_transference: 0,
+    transference: {},
   },
 
-  create_occurrence_patrimony_request: { id_patrimony: 0, transference: {} },
+  create_transference_patrimony_request: { id_patrimony: 0, transference: {} },
 
-  read_occurrence_patrimony: { id_patrimony: 0, transferences: [] },
+  read_transference_patrimony: { id_patrimony: 0, transferences: [] },
 
-  update_occurrence_patrimony_request: { id_transference: 0, transference: {} },
+  update_transference_patrimony_request: {
+    id_transference: 0,
+    transference: {},
+  },
 
-  delete_occurrence_patrimony_request: { id_transference: 0 },
+  delete_transference_patrimony_request: { id_transference: 0 },
 });
 
 export default function transferencePatrimony(state = INITIAL_STATE, action) {
@@ -93,7 +96,7 @@ export default function transferencePatrimony(state = INITIAL_STATE, action) {
         ...state,
         show_modal_update_transference_patrimony: {
           visible: true,
-          id_transference: action.payload.id,
+          transference: action.payload.data,
         },
       };
     case Types.HIDE_MODAL_UPDATE_TRANSFERENCE_PATRIMONY:
@@ -101,7 +104,7 @@ export default function transferencePatrimony(state = INITIAL_STATE, action) {
         ...state,
         show_modal_update_transference_patrimony: {
           visible: false,
-          id_transference: 0,
+          transference: {},
         },
       };
 
@@ -119,7 +122,7 @@ export const Creators = {
   }),
 
   hideModalListTransferencePatrimony: () => ({
-    type: Types.SHOW_MODAL_LIST_TRANSFERENCE_PATRIMONY,
+    type: Types.HIDE_MODAL_LIST_TRANSFERENCE_PATRIMONY,
   }),
 
   showModalCreateTransferencePatrimony: (id) => ({
@@ -133,10 +136,10 @@ export const Creators = {
     type: Types.HIDE_MODAL_CREATE_TRANSFERENCE_PATRIMONY,
   }),
 
-  showModalUpdateTransferencePatrimony: (id) => ({
+  showModalUpdateTransferencePatrimony: (data) => ({
     type: Types.SHOW_MODAL_UPDATE_TRANSFERENCE_PATRIMONY,
     payload: {
-      id,
+      data,
     },
   }),
 
