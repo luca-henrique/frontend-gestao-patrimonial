@@ -90,6 +90,7 @@ export default function ChangerPassword() {
                   Nova senha:
                 </Typography>
                 <TextField
+                  required
                   variant="outlined"
                   size="small"
                   fullWidth
@@ -103,6 +104,7 @@ export default function ChangerPassword() {
                   Confirme a senha:
                 </Typography>
                 <TextField
+                  required
                   variant="outlined"
                   size="small"
                   fullWidth

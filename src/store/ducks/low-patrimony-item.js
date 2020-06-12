@@ -12,18 +12,23 @@ export const Types = {
   HIDE_MODAL_UPDATE_LOW_PATRIMONY:
     "@low-patrimony/HIDE_MODAL_UPDATE_LOW_PATRIMONY",
 
+  SHOW_MODAL_REMOVE_LOW_PATRIMONY:
+    "@low-patrimony/SHOW_MODAL_REMOVE_LOW_PATRIMONY",
+  HIDE_MODAL_REMOVE_LOW_PATRIMONY:
+    "@low-patrimony/HIDE_MODAL_REMOVE_LOW_PATRIMONY",
+
   CREATE_LOW_PATRIMONY_REQUEST: "@low-patrimony/CREATE_LOW_PATRIMONY_REQUEST",
-  UPDATE_LOW_PATRIMONY_REQUEST: "@low-patrimony/UPDATE_LOW_PATRIMONY_REQUEST",
+  DELETE_LOW_PATRIMONY_REQUEST: "@low-patrimony/UPDATE_LOW_PATRIMONY_REQUEST",
 };
 
 const INITIAL_STATE = Immutable({
   show_create_modal_low_patrimony: { visible: false, id_patrimony: 0 },
 
-  show_update_modal_low_patrimony: { visible: false, low: {} },
+  show_remove_modal_low_patrimony: { visible: false, id_low: 0 },
 
   read_low_patrimony_request: { id_patrimony: 0 },
 
-  read_low_patrimony_success: { data: {} },
+  read_low_patrimony_success: { data: {}, exist: false },
 
   create_low_patrimony_request: { low: {} },
 
@@ -32,18 +37,32 @@ const INITIAL_STATE = Immutable({
 
 export default function lowPatrimony(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.SHOW_MODAL_LOW_PATRIMONY:
+    case Types.SHOW_MODAL_CREATE_LOW_PATRIMONY:
       return {
         ...state,
-        show_patrimony_low: {
+        show_create_modal_low_patrimony: {
           visible: true,
           id_patrimony: action.payload.id,
         },
       };
-    case Types.HIDE_MODAL_LOW_PATRIMONY:
+    case Types.HIDE_MODAL_CREATE_LOW_PATRIMONY:
       return {
         ...state,
-        low_patrimony_request: { visible: false, id_patrimony: 0 },
+        show_create_modal_low_patrimony: { visible: false, id_patrimony: 0 },
+      };
+
+    case Types.SHOW_MODAL_REMOVE_LOW_PATRIMONY:
+      return {
+        ...state,
+        show_remove_modal_low_patrimony: {
+          visible: true,
+          id_low: action.payload.id,
+        },
+      };
+    case Types.HIDE_MODAL_REMOVE_LOW_PATRIMONY:
+      return {
+        ...state,
+        show_remove_modal_low_patrimony: { visible: false, id_low: 0 },
       };
 
     default:
@@ -52,14 +71,25 @@ export default function lowPatrimony(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  showModalLowPatrimony: (id) => ({
-    type: Types.SHOW_MODAL_LOW_PATRIMONY,
+  showModalCreateLowPatrimony: (id) => ({
+    type: Types.SHOW_MODAL_CREATE_LOW_PATRIMONY,
     payload: {
       id,
     },
   }),
 
-  hideModalLowPatrimony: () => ({
-    type: Types.HIDE_MODAL_LOW_PATRIMONY,
+  hideModalCreateLowPatrimony: () => ({
+    type: Types.HIDE_MODAL_CREATE_LOW_PATRIMONY,
+  }),
+
+  showModalRemoveLowPatrimony: (id) => ({
+    type: Types.SHOW_MODAL_REMOVE_LOW_PATRIMONY,
+    payload: {
+      id,
+    },
+  }),
+
+  hideModalRemoveLowPatrimony: () => ({
+    type: Types.HIDE_MODAL_REMOVE_LOW_PATRIMONY,
   }),
 };

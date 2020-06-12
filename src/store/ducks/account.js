@@ -35,7 +35,7 @@ export const Types = {
 const INITIAL_STATE = Immutable({
   create_account: false,
   update_account: { visible: false, data: [] },
-  password_account: { visible: false, account_id: null },
+  password_account: { visible: false },
 
   create_account_request: {},
   read_accounts: [],
@@ -62,10 +62,10 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.SHOW_CHANGER_PASSWORD_ACCOUNT:
       return {
         ...state,
-        password_account: { visible: true, account_id: action.payload.id },
+        password_account: { visible: true },
       };
     case Types.HIDE_CHANGER_PASSWORD_ACCOUNT:
-      return { ...state, password_account: { visible: false, account_id: "" } };
+      return { ...state, password_account: { visible: false } };
 
     case Types.CREATE_ACCOUNT_REQUEST:
       return { ...state, account: action.payload.account };
@@ -104,11 +104,8 @@ export const Creators = {
     type: Types.HIDE_UPDATE_MODAL_ACCOUNT,
   }),
 
-  showChangePasswordAccount: (id) => ({
+  showChangePasswordAccount: () => ({
     type: Types.SHOW_CHANGER_PASSWORD_ACCOUNT,
-    payload: {
-      id,
-    },
   }),
 
   hideChangePasswordAccount: () => ({

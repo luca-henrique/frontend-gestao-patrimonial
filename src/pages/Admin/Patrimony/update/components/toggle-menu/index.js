@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsDeletePatrimony } from "~/store/ducks/delete-patrimony-item";
 import { Creators as CreatorsDuplicatePatrimony } from "~/store/ducks/duplicate-patrimony-item";
 import { Creators as CreatorsTransfer } from "~/store/ducks/transference-patrimony-item";
+import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
+import { Creators as CreatorsOccurrencePatrimony } from "~/store/ducks/occurrence-patrimony-item";
 
 import { toast } from "react-toastify";
 
@@ -64,7 +66,13 @@ export default function SpeedDials() {
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
 
+  const existOccurrence = useSelector(
+    (state) => state.occurrente_patrimony_item.read_occurrence_patrimony.exist
+  );
+
   console.log(patrimony);
+
+  console.log("Lembre que falta configurar os ids de cada item");
 
   const userLog = (user) => {
     if (user === "admin") {
@@ -74,6 +82,22 @@ export default function SpeedDials() {
     } else {
       dispatch(
         CreatorsDeletePatrimony.showModalDeletePatrimonyUser(patrimony.id)
+      );
+    }
+  };
+
+  const occurrence = () => {
+    if (!existOccurrence) {
+      dispatch(
+        CreatorsOccurrencePatrimony.showModalCreateOccurrencePatrimony(
+          patrimony.id
+        )
+      );
+    } else {
+      dispatch(
+        CreatorsOccurrencePatrimony.showModalUpdateOccurrencePatrimony(
+          patrimony.id
+        )
       );
     }
   };
@@ -89,13 +113,16 @@ export default function SpeedDials() {
         draggable: true,
         progress: undefined,
       });
+      dispatch(CreatorsLowPatrimony.showModalRemoveLowPatrimony(patrimony.id));
+    } else {
+      dispatch(CreatorsLowPatrimony.showModalCreateLowPatrimony(patrimony.id));
     }
   };
 
   const clickActions = (name) => {
     switch (name) {
       case "Ocorrência":
-        console.log("Ocorrência.");
+        occurrence();
         break;
       case "Transferência":
         dispatch(

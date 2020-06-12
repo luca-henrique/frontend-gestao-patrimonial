@@ -103,8 +103,9 @@ function View() {
           {
             icon: "lock",
             tooltip: "Alterar senha",
+            isFreeAction: true,
             onClick: (event, rowData) => {
-              dispatch(CreatorsAccount.showChangePasswordAccount(rowData.id));
+              dispatch(CreatorsAccount.showChangePasswordAccount());
             },
           },
           {

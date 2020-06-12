@@ -6,32 +6,36 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as CreatorsPatrimonyLow } from "~/store/ducks/low-patrimony-item";
+import { Creators as CreatorsPatrimonyOccurrence } from "~/store/ducks/occurrence-patrimony-item";
 import TextField from "@material-ui/core/TextField";
 
 export default function AlertDialog() {
   const dispatch = useDispatch();
 
   const visible = useSelector(
-    (state) => state.low_patrimony_item.show_create_modal_low_patrimony.visible
+    (state) =>
+      state.occurrente_patrimony_item.show_modal_create_occurrence_patrimony
+        .visible
   );
   console.log(visible);
 
-  const [dateLow, setDateLow] = useState("");
-  const [typeLow, setTypeLow] = useState("");
-  const [reason, setReason] = useState("");
+  const [dateOccurrence, setDateOccurrence] = useState("");
+  const [typeOccurrence, setTypeOccurrenc] = useState("");
+  const [report, setReport] = useState("");
+  const [specification, setSpecification] = useState("");
 
   const handleClose = () => {
-    dispatch(CreatorsPatrimonyLow.hideModalCreateLowPatrimony());
+    dispatch(CreatorsPatrimonyOccurrence.hideModalCreateOccurrencePatrimony());
   };
 
   const deletePatrimony = (e) => {
     e.preventDefault();
 
     handleClose();
-    setDateLow("");
-    setTypeLow("");
-    setReason("");
+    setDateOccurrence("");
+    setTypeOccurrenc("");
+    setReport("");
+    setSpecification("");
   };
 
   return (
@@ -43,7 +47,7 @@ export default function AlertDialog() {
         aria-describedby="alert-dialog-description"
       >
         <form onSubmit={deletePatrimony}>
-          <DialogTitle id="alert-dialog-title">{"Baixa"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Ocorrência"}</DialogTitle>
           <DialogContent>
             <TextField
               required
@@ -55,8 +59,8 @@ export default function AlertDialog() {
               label="Data"
               type="date"
               fullWidth
-              value={dateLow}
-              onChange={(e) => setDateLow(e.target.value)}
+              value={dateOccurrence}
+              onChange={(e) => setDateOccurrence(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -65,21 +69,33 @@ export default function AlertDialog() {
               label="Tipo de baixa"
               type="text"
               fullWidth
-              value={typeLow}
-              onChange={(e) => setTypeLow(e.target.value)}
+              value={typeOccurrence}
+              onChange={(e) => setTypeOccurrenc(e.target.value)}
             />
 
             <TextField
               variant="outlined"
               required
               margin="dense"
-              label="Motivo"
+              label="Laudo"
               type="text"
               fullWidth
-              rows={4}
+              rows={3}
               multiline
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
+              value={report}
+              onChange={(e) => setReport(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              required
+              margin="dense"
+              label="Especificação"
+              type="text"
+              fullWidth
+              rows={3}
+              multiline
+              value={specification}
+              onChange={(e) => setSpecification(e.target.value)}
             />
           </DialogContent>
           <DialogActions>
@@ -87,7 +103,7 @@ export default function AlertDialog() {
               Fechar
             </Button>
             <Button color="primary" type="submit">
-              Dar baixa
+              Adicionar ocorrência
             </Button>
           </DialogActions>
         </form>

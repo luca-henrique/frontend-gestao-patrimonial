@@ -14,29 +14,30 @@ export const Types = {
 
   CREATE_OCCURRENCE_PATRIMONY_REQUEST:
     "@occurrence-patrimony/CREATE_OCCURRENCE_PATRIMONY_REQUEST",
+
+  READ_OCCURRENCE_PATRIMONY_REQUEST:
+    "@occurrence-patrimony/READ_OCCURRENCE_PATRIMONY_REQUEST",
+  READ_OCCURRENCE_PATRIMONY_SUCCESS:
+    "@occurrence-patrimony/READ_OCCURRENCE_PATRIMONY_SUCCESS",
+
   UPDATE_OCCURRENCE_PATRIMONY_REQUEST:
     "@occurrence-patrimony/UPDATE_OCCURRENCE_PATRIMONY_REQUEST",
 };
 
 const INITIAL_STATE = Immutable({
-  create_patrimony_occurence: { visible: false, id_patrimony: 0 },
+  show_modal_create_occurrence_patrimony: { visible: false, id_patrimony: 0 },
 
-  update_patrimony_occurence: {
-    visible: false,
-    id_occorence: 0,
-  },
+  show_modal_update_occurrence_patrimony: { visible: false, id_occurrence: 0 },
 
-  create_occurence_patrimony_request: { id_patrimony: 0, occurrence: {} },
-
-  update_occurence_patrimony_request: { id_occurrence: 0, occurrence: {} },
+  read_occurrence_patrimony: { exist: false, id_patrimony: 0, data: [] },
 });
 
-export default function lowPatrimony(state = INITIAL_STATE, action) {
+export default function occurrencePatrimony(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.SHOW_MODAL_CREATE_OCCURRENCE_PATRIMONY:
       return {
         ...state,
-        create_patrimony_occurence: {
+        show_modal_create_occurrence_patrimony: {
           visible: true,
           id_patrimony: action.payload.id,
         },
@@ -44,13 +45,16 @@ export default function lowPatrimony(state = INITIAL_STATE, action) {
     case Types.HIDE_MODAL_CREATE_OCCURRENCE_PATRIMONY:
       return {
         ...state,
-        create_patrimony_occurence: { visible: false, id_patrimony: 0 },
+        show_modal_create_occurrence_patrimony: {
+          visible: false,
+          id_patrimony: 0,
+        },
       };
 
     case Types.SHOW_MODAL_UPDATE_OCCURRENCE_PATRIMONY:
       return {
         ...state,
-        update_patrimony_occurence: {
+        show_modal_update_occurrence_patrimony: {
           visible: true,
           id_occurrence: action.payload.id,
         },
@@ -58,7 +62,10 @@ export default function lowPatrimony(state = INITIAL_STATE, action) {
     case Types.HIDE_MODAL_UPDATE_OCCURRENCE_PATRIMONY:
       return {
         ...state,
-        update_patrimony_occurence: { visible: false, id_occurrence: 0 },
+        show_modal_update_occurrence_patrimony: {
+          visible: false,
+          id_occurrence: 0,
+        },
       };
 
     case Types.CREATE_OCCURRENCE_PATRIMONY_REQUEST:
@@ -76,6 +83,23 @@ export default function lowPatrimony(state = INITIAL_STATE, action) {
         update_occurence_patrimony_request: {
           id_occurrence: action.payload.id,
           occurrence: action.payload.occurrence,
+        },
+      };
+
+    case Types.READ_OCCURRENCE_PATRIMONY_REQUEST:
+      return {
+        ...state,
+        read_occurrence_patrimony: {
+          id_patrimony: action.payload.id,
+        },
+      };
+
+    case Types.READ_OCCURRENCE_PATRIMONY_SUCCESS:
+      return {
+        ...state,
+        read_occurrence_patrimony: {
+          exist: true,
+          data: action.payload.data,
         },
       };
 
@@ -120,6 +144,20 @@ export const Creators = {
     payload: {
       id,
       occurrence,
+    },
+  }),
+
+  readOccurrencePatrimonyRequest: (id) => ({
+    type: Types.READ_OCCURRENCE_PATRIMONY_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  readOccurrencePatrimonySuccess: (data) => ({
+    type: Types.READ_OCCURRENCE_PATRIMONY_SUCCESS,
+    payload: {
+      data,
     },
   }),
 };

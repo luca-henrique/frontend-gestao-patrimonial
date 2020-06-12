@@ -32,8 +32,16 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import DeleteDialogPatrimonyAdmin from "./components/modal-delete-admin";
 import DeleteDialogPatrimonyUser from "./components/modal-delete-user/";
+
 import DuplicateDialogPatrimony from "./components/modal-duplicate/";
+
 import TransferModalPatrimony from "./components/modal-transfer/list";
+
+import LowDialogPatrimonyCreate from "./components/modal-low/create";
+import LowDialogPatrimonyRemove from "./components/modal-low/remove";
+
+import OccurrenceDialogPatrimonyCreate from "./components/modal-occurrence/create";
+import OccurrenceDialogPatrimonyUpdate from "./components/modal-occurrence/update";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -250,8 +258,16 @@ const PatrimonyItem = () => {
 
       <DeleteDialogPatrimonyAdmin />
       <DeleteDialogPatrimonyUser />
+
       <DuplicateDialogPatrimony />
+
       <TransferModalPatrimony />
+
+      <LowDialogPatrimonyCreate />
+      <LowDialogPatrimonyRemove />
+
+      <OccurrenceDialogPatrimonyCreate />
+      <OccurrenceDialogPatrimonyUpdate />
     </Grid>
   );
 };
