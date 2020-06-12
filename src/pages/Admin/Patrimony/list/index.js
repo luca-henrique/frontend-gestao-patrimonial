@@ -120,6 +120,8 @@ function View() {
           actionsCellStyle: { color: "#a4a4a4" },
 
           searchFieldAlignment: "left",
+          toolbarButtonAlignment: "left",
+          searchFieldStyle: { width: "350px" },
         }}
         localization={{
           header: {
