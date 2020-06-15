@@ -1,7 +1,7 @@
 import React from "react";
 
 import Dashboard from "./Dashboard/";
-import Prefecture from "./Menu/prefecture/create/";
+import Prefecture from "./Prefecture/create/";
 
 const Admin = () => {
   return (

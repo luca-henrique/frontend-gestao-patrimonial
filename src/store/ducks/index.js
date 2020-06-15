@@ -8,6 +8,7 @@ import { reducer as toastr } from "react-redux-toastr";
  */
 
 import page from "./page";
+import drawer from "./drawer-menu";
 /**
  * Contas
  */
@@ -36,6 +37,8 @@ export default (history) =>
   combineReducers({
     toastr,
     page,
+    drawer,
+
     account,
 
     low,

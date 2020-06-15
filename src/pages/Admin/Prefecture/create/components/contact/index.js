@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
-import formatPhoneNumber from "../../../../../../util/formatPhoneNumber";
+import formatPhoneNumber from "~/pages/util/formatPhoneNumber";
 
 export default function Components() {
   const [number, setNumber] = useState();

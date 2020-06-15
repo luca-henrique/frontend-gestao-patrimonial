@@ -5,6 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch } from "react-redux";
 import { Creators as CreatorsPage } from "~/store/ducks/page";
+import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
+
+/* -> fica verificando se é desktop ou mobile <- */
+import { isMobile } from "react-device-detect";
 
 /* -> Components[Biblioteca] <- */
 import {
@@ -24,8 +28,8 @@ import {
 } from "@material-ui/icons/";
 
 /* -> Icons[PNG] <- */
-import patrimonio from "../../../../../../assets/icons/patrimony.png";
-import depreciacao from "../../../../../../assets/icons/depreciacao.png";
+import patrimonio from "~/assets/icons/patrimony.png";
+import depreciacao from "~/assets/icons/depreciacao.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +69,9 @@ export default function PatrimonyList() {
 
   function changePage(location) {
     dispatch(CreatorsPage.changePageLocation(location));
+    if (isMobile) {
+      dispatch(CreatorsDrawerMenu.hideDrawerMenu());
+    }
   }
 
   return (

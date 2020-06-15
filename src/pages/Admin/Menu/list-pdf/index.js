@@ -5,6 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch } from "react-redux";
 import { Creators as CreatorsPage } from "~/store/ducks/page";
+import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
+
+/* -> fica verificando se é desktop ou mobile <- */
+import { isMobile } from "react-device-detect";
 
 /* -> Components[Biblioteca] <- */
 import {
@@ -22,10 +26,10 @@ import PatrimonioPage from "./components/list-patrimonio/";
 import { ExpandLess, ExpandMore } from "@material-ui/icons/";
 
 /* -> Icons[] <- */
-import pdf from "../../../../assets/icons/pdf.png";
-import inventario from "../../../../assets/icons/inventario.png";
-import termo from "../../../../assets/icons/termo.png";
-import transferencia from "../../../../assets/icons/transferencia.png";
+import pdf from "~/assets/icons/pdf.png";
+import inventario from "~/assets/icons/inventario.png";
+import termo from "~/assets/icons/termo.png";
+import transferencia from "~/assets/icons/transferencia.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +71,9 @@ export default function ListReport() {
 
   function changePage(location) {
     dispatch(CreatorsPage.changePageLocation(location));
+    if (isMobile) {
+      dispatch(CreatorsDrawerMenu.hideDrawerMenu());
+    }
   }
 
   return (

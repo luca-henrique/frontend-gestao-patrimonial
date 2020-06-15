@@ -1,8 +1,8 @@
 import React from "react";
 
-import Account from "./account/";
+import Account from "../Account/";
 
-import Prefecture from "./prefecture/update/";
+import Prefecture from "../Prefecture/update/";
 
 // Listar todos os itens do patrimonio
 import ListPatrimony from "../Patrimony/list";
@@ -11,37 +11,37 @@ import UpdatePatrimony from "../Patrimony/update";
 
 /* --> List Item Create [Cadastros Gerais] <-- */
 
-import LowPage from "./list-item-create/low-item/";
+import LowPage from "../General-Record/low-item/";
 
-import GoodPage from "./list-item-create/good-item/";
+import GoodPage from "../General-Record/good-item/";
 
-import StatePage from "./list-item-create/state-item";
+import StatePage from "../General-Record/state-item";
 
-import NaturePage from "./list-item-create/nature-item/";
+import NaturePage from "../General-Record/nature-item/";
 
-import OriginPage from "./list-item-create/origin-item/";
+import OriginPage from "../General-Record/origin-item/";
 
-import OccurrencePage from "./list-item-create/occurrence-item";
+import OccurrencePage from "../General-Record/occurrence-item";
 
-import LocalePage from "./list-item-create/locale-item/index";
+import LocalePage from "../General-Record/locale-item/index";
 
 /* --> Log [Alterações feitas no sistema] <-- */
 
-import LogPage from "./log/";
+import LogPage from "../Log/";
 
 /* --> Gerar [Relatorio] <-- */
 
-import GeneralPatrimonyReport from "./reports/patrimony/general";
+import GeneralPatrimonyReport from "../Reports/patrimony/general";
 
-import DepreciationPatrimonyReport from "./reports/patrimony/depreciation";
+import DepreciationPatrimonyReport from "../Reports/patrimony/depreciation";
 
-import TippingPatrimonyReport from "./reports/patrimony/tipping";
+import TippingPatrimonyReport from "../Reports/patrimony/tipping";
 
-import InvetoryReport from "./reports/inventory/";
+import InvetoryReport from "../Reports/inventory/";
 
-import StatementResponsibilityReport from "./reports/statement-responsibility";
+import StatementResponsibilityReport from "../Reports/statement-responsibility";
 
-import TransferReport from "./reports/transfer";
+import TransferReport from "../Reports/transfer";
 
 export const Routes = {
   default: <h2>Home</h2>,

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { isMobile } from "react-device-detect";
+
+import { useSelector, useDispatch } from "react-redux";
+import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
 
 import clsx from "clsx";
 
@@ -15,7 +18,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 
 /* -> Icones <- */
 import MenuIcon from "@material-ui/icons/Menu";
@@ -26,7 +28,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { Routes } from "../Menu/menu-routes";
 
 /* -> Tamanho do menu lateral[esquerda] <- */
-const drawerWidth = 310;
+const drawerWidth = isMobile === true ? 250 : 310;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,16 +94,18 @@ export default function Dashboard(props) {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [open, setOpen] = useState(true);
+  const dispatch = useDispatch();
 
   const pageLocation = useSelector(({ page }) => page.location);
 
+  const drawer = useSelector((state) => state.drawer.drawer.visible);
+
   const handleDrawerOpen = () => {
-    setOpen(true);
+    dispatch(CreatorsDrawerMenu.showDrawerMenu());
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    dispatch(CreatorsDrawerMenu.hideDrawerMenu());
   };
 
   return (
@@ -111,7 +115,7 @@ export default function Dashboard(props) {
         position="fixed"
         style={{ backgroundColor: "#2E64FE" }}
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+          [classes.appBarShift]: drawer,
         })}
       >
         <Toolbar>
@@ -120,7 +124,7 @@ export default function Dashboard(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton, drawer && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
@@ -133,7 +137,7 @@ export default function Dashboard(props) {
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={drawer}
         classes={{
           paper: classes.drawerPaper,
         }}
@@ -152,7 +156,7 @@ export default function Dashboard(props) {
       </Drawer>
       <div
         className={clsx(classes.content, {
-          [classes.contentShift]: open,
+          [classes.contentShift]: drawer,
         })}
       >
         <div className={classes.drawerHeader} />

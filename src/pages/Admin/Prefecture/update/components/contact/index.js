@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
-import formatPhoneNumber from "../../../../../../util/formatPhoneNumber";
+import formatPhoneNumber from "~/pages/util/formatPhoneNumber";
 
 function Contact(props) {
   const [number, setNumber] = useState("");

@@ -3,6 +3,10 @@ import React from "react";
 /* -> Redux[Biblioteca] <- */
 import { useDispatch } from "react-redux";
 import { Creators as CreatorsPage } from "~/store/ducks/page";
+import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
+
+/* -> fica verificando se é desktop ou mobile <- */
+import { isMobile } from "react-device-detect";
 
 /* -> Components[Biblioteca] <- */
 import {
@@ -26,7 +30,7 @@ import {
 } from "@material-ui/icons/";
 
 /* -> Icons <- */
-import patrimonio from "../../../assets/icons/patrimony.png";
+import patrimonio from "~/assets/icons/patrimony.png";
 
 export default function Menu() {
   const classes = useStyles();
@@ -35,6 +39,10 @@ export default function Menu() {
 
   function changePage(location) {
     dispatch(CreatorsPage.changePageLocation(location));
+
+    if (isMobile) {
+      dispatch(CreatorsDrawerMenu.hideDrawerMenu());
+    }
   }
 
   return (
@@ -57,7 +65,10 @@ export default function Menu() {
         <ListItemText
           className={classes.list_text}
           primary="Prefeitura"
-          onClick={() => changePage("prefecture")}
+          onClick={(e) => {
+            console.log(e);
+            changePage("prefecture");
+          }}
         />
       </ListItem>
 

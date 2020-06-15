@@ -16,7 +16,7 @@ const middlewares = [sagaMiddleware, routerMiddleware(history)];
 
 const store = createStore(
   rootReducer(history),
-  compose(applyMiddleware(...middlewares), console.tron.createEnhancer())
+  compose(applyMiddleware(...middlewares))
 );
 
 sagaMiddleware.run(rootSaga);

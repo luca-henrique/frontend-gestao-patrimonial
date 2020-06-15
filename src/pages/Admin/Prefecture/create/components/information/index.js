@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
-import { cnpjMask } from "../../../../../../util/maskCnpj";
+import { cnpjMask } from "~/pages/util/maskCnpj";
 
 const Information = () => {
   const [cnpj, setCnpj] = useState();

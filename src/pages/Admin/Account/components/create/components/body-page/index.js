@@ -3,7 +3,7 @@ import React, { useState } from "react";
 //import { toastr } from "react-redux-toastr";
 import { useDispatch } from "react-redux";
 
-import { Creators as CreatorsAccount } from "../../../../../../../../store/ducks/account";
+import { Creators as CreatorsAccount } from "~/store/ducks/account";
 
 import { FormControl, Button } from "@material-ui/core/";
 import Select from "@material-ui/core/Select";

@@ -8,7 +8,7 @@ import Update from "./components/update/";
 import Password from "./components/change-password/";
 
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsAccount } from "../../../../store/ducks/account";
+import { Creators as CreatorsAccount } from "~/store/ducks/account";
 
 function View() {
   const [selectedRow, setSelectedRow] = useState("");

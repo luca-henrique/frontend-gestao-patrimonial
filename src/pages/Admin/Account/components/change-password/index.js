@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsAccount } from "../../../../../../store/ducks/account";
+import { Creators as CreatorsAccount } from "~/store/ducks/account";
 
 import { useDispatch, useSelector } from "react-redux";
 

@@ -8,17 +8,21 @@ import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
-import box from "../../../../assets/icons/box.png";
-import baixa from "../../../../assets/icons/danger.png";
-import bem from "../../../../assets/icons/bem2.png";
-import estado from "../../../../assets/icons/estado.png";
-import natureza from "../../../../assets/icons/natureza.png";
-import origem from "../../../../assets/icons/origem.png";
-import localizacao from "../../../../assets/icons/localizacao.png";
+import box from "~/assets/icons/box.png";
+import baixa from "~/assets/icons/danger.png";
+import bem from "~/assets/icons/bem2.png";
+import estado from "~/assets/icons/estado.png";
+import natureza from "~/assets/icons/natureza.png";
+import origem from "~/assets/icons/origem.png";
+import localizacao from "~/assets/icons/localizacao.png";
 
 /* -> Redux[Biblioteca] <- */
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsPage } from "../../../../store/ducks/page";
+import { Creators as CreatorsPage } from "~/store/ducks/page";
+import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
+
+/* -> detecta se é mobile  */
+import { isMobile } from "react-device-detect";
 
 /* -> Components[Biblioteca] <- */
 
@@ -58,6 +62,9 @@ function ListCreateGeneral() {
 
   function changePage(location) {
     dispatch(CreatorsPage.changePageLocation(location));
+    if (isMobile) {
+      dispatch(CreatorsDrawerMenu.hideDrawerMenu());
+    }
   }
 
   const handleClick = () => {
