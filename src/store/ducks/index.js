@@ -3,6 +3,14 @@ import { connectRouter } from "connected-react-router";
 
 import { reducer as toastr } from "react-redux-toastr";
 
+/**Licença */
+
+import { reducer as license } from "./license";
+
+/* login */
+
+import { reducer as auth } from "./auth";
+
 /**
  * controler de mudança de rotas
  */
@@ -36,6 +44,11 @@ import occurrente_patrimony_item from "./occurrence-patrimony-item";
 export default (history) =>
   combineReducers({
     toastr,
+
+    license,
+
+    auth,
+
     page,
     drawer,
 

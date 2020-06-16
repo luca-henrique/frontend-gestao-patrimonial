@@ -2,6 +2,8 @@ import React from "react";
 import PropTyes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 
+import { store } from "../store/index";
+
 export default function RouteWrapper({
   component: Component,
   isPrivate,
@@ -9,26 +11,18 @@ export default function RouteWrapper({
   isAdmin,
   ...rest
 }) {
-  const signed = true;
+  console.log(store.getState());
 
-  const licensed = true;
+  const license = store.getState().license.isLisenced;
 
-  const admin = true;
+  const signed = store.getState().auth.signedIn;
 
-  if (!licensed && isLicensed) {
+  if (!license && isLicensed) {
     return <Redirect to="/" />;
   }
 
-  if (!signed && licensed && !isLicensed) {
+  if (!signed && license && !isLicensed) {
     return <Redirect to="/entrar" />;
-  }
-
-  if (signed && licensed && !admin && isAdmin && !isLicensed && !isPrivate) {
-    return <Redirect to="/user" />;
-  }
-
-  if (signed && licensed && admin && !isAdmin && !isLicensed && !isPrivate) {
-    return <Redirect to="/admin" />;
   }
 
   return <Route {...rest} component={Component} />;

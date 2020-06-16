@@ -3,10 +3,14 @@ import React, { useState } from "react";
 import { Typography, Button } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Logo from "../../assets/images/empresa-logo.png";
+import Logo from "~/assets/images/empresa-logo.png";
 import Copyright from "../Copyright/";
 
 import TextField from "./components/validation-text-field/";
+
+import LicenseActions from "~/store/ducks/license";
+
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -24,10 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function () {
+export default function() {
   const [token, setToken] = useState("");
 
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const handleSubmitToken = (e) => {
+    e.preventDefault();
+
+    dispatch(LicenseActions.licenseRequest(token));
+  };
 
   return (
     <div
@@ -42,6 +54,7 @@ export default function () {
         <img src={Logo} width="100%" height="100%" alt="Sistem de patrimônio" />
       </div>
       <form
+        onSubmit={handleSubmitToken}
         style={{
           display: "flex",
           flexDirection: "column",
