@@ -1,20 +1,14 @@
 import axios from "axios";
+import { store } from "../store/index";
 
 const local = "http://127.0.0.1:3333";
-const server = "https://fiberstreet.dktelecom.net.br";
-const local01 = "http://127.0.0.1:3333/";
-
-export const endPoint = false ? server : local;
-export const endPointWs = false
-  ? `wss://fiberstreet.dktelecom.net.br`
-  : `ws://127.0.0.1:3333`;
+const websocket = "ws://localhost:3333/adonis-ws";
 
 /** This API will connect to NodeJS Server */
 const api = axios.create({
-  baseURL: endPoint,
+  baseURL: local,
 });
 
-/*
 api.interceptors.request.use((config) => {
   const { token } = store.getState().auth;
   const { active: provider } = store.getState().provider;
@@ -30,4 +24,3 @@ api.interceptors.request.use((config) => {
 
   return { ...config, headers };
 });
-*/

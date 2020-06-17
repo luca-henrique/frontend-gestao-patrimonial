@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Ws from "@adonisjs/websocket-client";
+
+import WebSocket from "~/service/socket";
 
 import { Typography, Button } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,9 +38,27 @@ export default function() {
 
   const dispatch = useDispatch();
 
+  const socket = WebSocket.connect();
+
+  const license = socket.subscribe(`license`);
+
+  useEffect(() => {
+    received();
+  });
+
+  const send = () => {
+    license.emit("message", token);
+  };
+
+  const received = () => {
+    license.on("message", (event) => {
+      console.log(event);
+    });
+  };
+
   const handleSubmitToken = (e) => {
     e.preventDefault();
-
+    send();
     dispatch(LicenseActions.licenseRequest(token));
   };
 
