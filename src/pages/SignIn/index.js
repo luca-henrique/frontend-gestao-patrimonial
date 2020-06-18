@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
+import AuthActions from "~/store/ducks/auth";
+import { useDispatch } from "react-redux";
+
 import { Form, Container } from "./components/";
 
 import Copyright from "./components/copyright";
@@ -14,7 +17,7 @@ const ValidationTextField = withStyles({
       borderWidth: 1,
     },
     "& input:invalid + fieldset": {
-      borderColor: "red",
+      borderColor: "#A4A4A4",
       borderWidth: 2,
     },
     "& input:valid:focus + fieldset": {
@@ -25,11 +28,18 @@ const ValidationTextField = withStyles({
   },
 })(TextField);
 
-export default function SignUp(props) {
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(AuthActions.signInRequest(email, password));
+  };
 
   return (
     <>
@@ -39,7 +49,7 @@ export default function SignUp(props) {
             Gestão de Patrimônio
           </Typography>
         </div>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <div className={classes.title}>
             <Typography variant="h3" className={classes.typography}>
               Entrar
@@ -50,10 +60,11 @@ export default function SignUp(props) {
               Email:
             </Typography>
             <ValidationTextField
+              required
               variant="outlined"
               size="small"
               fullWidth
-              type="text"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -63,6 +74,7 @@ export default function SignUp(props) {
               Senha:
             </Typography>
             <ValidationTextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -72,7 +84,12 @@ export default function SignUp(props) {
             />
           </div>
           <div className={classes.signIn}>
-            <Button variant="contained" fullWidth className={classes.button}>
+            <Button
+              variant="contained"
+              fullWidth
+              className={classes.button}
+              type="submit"
+            >
               Entrar
             </Button>
           </div>

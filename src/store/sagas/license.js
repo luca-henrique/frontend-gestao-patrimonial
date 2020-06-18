@@ -1,36 +1,51 @@
 import { call, put } from "redux-saga/effects";
-import api from "../../services/api";
+import api from "~/service/api";
 
 import { push } from "connected-react-router";
 
-import LicensedActions from "../ducks/license";
+import LicenseActions from "../ducks/license";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
-export function* signIn({ token }) {
+export function* updateToken({ token }) {
   try {
-    const response = yield call(api.post, "license", { token });
-    console.log(response);
-
-    //localStorage.setItem("@Omni:token", response.data.token);
+    const response = yield call(api.put, "license", { token });
+    localStorage.setItem("@License:isLicensed", response.data.license);
+    yield put(LicenseActions.licenseSuccess(response.data.license));
+    yield put(push("/entrar"));
   } catch (err) {
     yield put(
       toastrActions.add({
-        title: "Falha no login",
-        message:
-          "Email/senha errados, entre em contato com a empresa responsavel ou com o administrador.",
+        title: "Falha na chave da licença",
+        message: "Está chave de acesso já está em uso/ou já foi usada.",
       })
     );
   }
 }
 
-export function* signOut() {
-  /**
-   * Remover tudo quando sair
-   */
+export function* checkLicense() {
+  try {
+    const { data } = yield call(api.get, "license");
 
-  localStorage.removeItem("@Omni:token");
-  localStorage.removeItem("@Omni:team");
+    console.log(data);
 
-  yield put(push("/"));
+    if (data.length >= 1) {
+      const license = data[data.length - 1].license;
+      yield put(LicenseActions.licenceCheckRequest(license));
+      if (license) {
+        yield put(push("/entrar"));
+      } else {
+        yield put(push("/"));
+      }
+    } else {
+      yield put(push("/"));
+    }
+  } catch (error) {
+    yield put(
+      toastrActions.add({
+        title: "Falha na chave da licença",
+        message: "Está chave de acesso já está em uso/ou já foi usada.",
+      })
+    );
+  }
 }

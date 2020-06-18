@@ -1,17 +1,21 @@
 // eslint-disable-next-line no-unused-vars
 import { all, takeLatest } from "redux-saga/effects";
 
-import { Types as TypesAccount } from "../ducks/account";
-import { createAccount } from "./account";
+import { startApplication } from "./start";
 
-import { Types as TypesUnits } from "../ducks/units";
-import { createUnit, updateUnit } from "./units";
+import { LicenseTypes } from "../ducks/license";
+import { updateToken, checkLicense } from "./license";
+
+import { AuthTypes } from "../ducks/auth";
+import { signIn, signOut } from "./auth";
 
 export default function* rootSaga() {
   return yield all([
-    takeLatest(TypesAccount.CREATE_ACCOUNT_REQUEST, createAccount),
+    takeLatest("persist/REHYDRATE", startApplication),
+    takeLatest("persist/REHYDRATE", checkLicense), //Checa a lincesa toda vez que acessa o sistema
 
-    takeLatest(TypesUnits.CREATE_UNITS_REQUEST, createUnit),
-    takeLatest(TypesUnits.UPDATE_UNITS_REQUEST, updateUnit),
+    takeLatest(LicenseTypes.LICENSE_REQUEST, updateToken),
+
+    takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
   ]);
 }

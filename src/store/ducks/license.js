@@ -3,18 +3,18 @@ import Immutable from "seamless-immutable";
 
 /* Types & Action Creators */
 const { Types, Creators } = createActions({
+  licenceCheckRequest: ["token"],
   licenseRequest: ["token"],
   licenseSuccess: ["token"],
 });
 
-export const AuthTypes = Types;
+export const LicenseTypes = Types;
 export default Creators;
 
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
-  isLisenced: false,
-  token: {},
+  isLisenced: !!localStorage.getItem("@License:isLicensed"),
 });
 
 /* Reducers */
@@ -24,4 +24,7 @@ export const success = (state, { token }) => {
 };
 
 /* Reducers to types */
-export const reducer = createReducer(INITIAL_STATE, {});
+export const reducer = createReducer(INITIAL_STATE, {
+  [Types.LICENCE_CHECK_REQUEST]: success,
+  [Types.LICENSE_SUCCESS]: success,
+});

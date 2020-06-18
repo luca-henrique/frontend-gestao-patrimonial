@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import api from "../../services/api";
+import api from "~/service/api";
 
 import { push } from "connected-react-router";
 
@@ -9,12 +9,12 @@ import { actions as toastrActions } from "react-redux-toastr";
 
 export function* signIn({ email, password }) {
   try {
-    const response = yield call(api.post, "authenticate", { email, password });
+    const response = yield call(api.post, "auth", { email, password });
     if (response.status === 204) {
       throw new Error("Não veio jwt");
     }
+
     localStorage.setItem("@Omni:token", response.data.token);
-    console.log(response);
     yield put(AuthActions.signInSuccess(response.data.token));
   } catch (err) {
     yield put(
