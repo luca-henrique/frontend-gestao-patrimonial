@@ -82,7 +82,7 @@ export default function Create() {
               onChange={(e) => setRole(e.target.value)}
             >
               <Typography variant="button">Função:</Typography>
-              <Select native size="small" fullWidth>
+              <Select native size="small" fullWidth value={role}>
                 <option value="" />
                 <option value="true">administrador</option>
                 <option value="false">funcionário</option>
@@ -121,7 +121,7 @@ export default function Create() {
             variant="contained"
             style={{ color: "#0174DF", width: "100%" }}
           >
-            Criar
+            Atualizar
           </Button>
         </Grid>
       </Grid>

@@ -6,9 +6,8 @@ import { store } from "../store/index";
 
 export default function RouteWrapper({
   component: Component,
-  isPrivate,
   isLicensed,
-  isAdmin,
+  isPrivate,
   ...rest
 }) {
   console.log(store.getState());
@@ -17,12 +16,18 @@ export default function RouteWrapper({
 
   const signed = store.getState().auth.signedIn;
 
+  const role = store.getState().account.account_joined.role;
+
   if (!license && isLicensed) {
     return <Redirect to="/" />;
-  }
-
-  if (!signed && license && !isLicensed) {
+  } else if (!signed && license && !isLicensed) {
     return <Redirect to="/entrar" />;
+  } else if (signed && license && isLicensed && !isPrivate) {
+    if (role) {
+      return <Redirect to="/admin" />;
+    } else {
+      return <Redirect to="/user" />;
+    }
   }
 
   return <Route {...rest} component={Component} />;

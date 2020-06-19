@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up("md")]: {
       width: "30%",
-      height: "55%",
+      height: "45%",
     },
   },
 }));

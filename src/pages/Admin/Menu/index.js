@@ -4,6 +4,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
+import { Creators as CreatorsAccount } from "~/store/ducks/account";
+import AuthAction from "~/store/ducks/auth";
 
 /* -> fica verificando se é desktop ou mobile <- */
 import { isMobile } from "react-device-detect";
@@ -50,7 +52,10 @@ export default function Menu() {
       <ListItem
         button
         className={classes.list_item}
-        onClick={() => changePage("account")}
+        onClick={() => {
+          changePage("account");
+          dispatch(CreatorsAccount.readAccountRequest());
+        }}
       >
         <ListItemIcon>
           <PersonOutlineOutlined className={classes.list_icon} />
@@ -102,7 +107,11 @@ export default function Menu() {
 
       <ListRelatorios />
 
-      <ListItem button className={classes.list_exit_item}>
+      <ListItem
+        button
+        className={classes.list_exit_item}
+        onClick={() => dispatch(AuthAction.signOut())}
+      >
         <ListItemIcon>
           <ExitToApp className={classes.list_exit_icon} />
         </ListItemIcon>

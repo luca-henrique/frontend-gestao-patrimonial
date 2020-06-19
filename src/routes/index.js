@@ -19,14 +19,8 @@ export default function Routes() {
         <Route path="/" exact component={License} />
         <Route path="/entrar" component={SignIn} isLicensed />
 
-        <Route
-          path="/admin"
-          component={AdminPage}
-          isPrivate
-          isLicensed
-          isAdmin
-        />
-        <Route path="/user" component={UserPage} isPrivate isLicensed />
+        <Route path="/admin" component={AdminPage} isLicensed isPrivate />
+        <Route path="/user" component={UserPage} isLicensed isPrivate />
       </Switch>
     </ConnectedRouter>
   );

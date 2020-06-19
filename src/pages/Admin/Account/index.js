@@ -7,15 +7,14 @@ import Create from "./components/create/";
 import Update from "./components/update/";
 import Password from "./components/change-password/";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsAccount } from "~/store/ducks/account";
 
 function View() {
   const [selectedRow, setSelectedRow] = useState("");
 
-  const data = [
-    { id: 1, nome: "Lucas", email: "lukas.paes18@gmail.com", admin: true },
-  ];
+  const data = useSelector((state) => state.account.read_accounts);
+  console.log(data);
 
   const dispatch = useDispatch();
 
@@ -40,7 +39,7 @@ function View() {
 
           {
             title: "Privilegio",
-            field: "admin",
+            field: "role",
             render: (rowData) => (
               <>
                 {rowData.admin === true ? (

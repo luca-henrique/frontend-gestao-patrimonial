@@ -27,8 +27,6 @@ export function* checkLicense() {
   try {
     const { data } = yield call(api.get, "license");
 
-    console.log(data);
-
     if (data.length >= 1) {
       const license = data[data.length - 1].license;
       yield put(LicenseActions.licenceCheckRequest(license));

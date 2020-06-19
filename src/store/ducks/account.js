@@ -16,6 +16,10 @@ export const Types = {
   HIDE_CHANGER_PASSWORD_ACCOUNT: "@account/HIDE_CHANGER_PASSWORD_ACCOUNT",
 
   /* -> REQUISIÇÔES [ CRUD+CHANGE PASSWORD ] <- */
+  READ_ACCOUNT_JOINED_REQUEST: "@account/READ_ACCOUNT_JOINED",
+
+  READ_ACCOUNT_JOINED_SUCCESS: "@account/READ_ACCOUNT_JOINED_SUCCESS",
+
   CREATE_ACCOUNT_REQUEST: "@account/CREATE_ACCOUNT_REQUEST",
   CREATE_ACCOUNT_SUCCESS: "@account/CREATE_ACCOUNT_SUCCESS",
 
@@ -36,6 +40,8 @@ const INITIAL_STATE = Immutable({
   create_account: false,
   update_account: { visible: false, data: [] },
   password_account: { visible: false },
+
+  account_joined: { role: null },
 
   create_account_request: {},
   read_accounts: [],
@@ -69,6 +75,9 @@ export default function User(state = INITIAL_STATE, action) {
 
     case Types.CREATE_ACCOUNT_REQUEST:
       return { ...state, account: action.payload.account };
+
+    case Types.READ_ACCOUNT_JOINED_SUCCESS:
+      return { ...state, account_joined: action.payload.account };
 
     case Types.READ_ACCOUNT_SUCCESS:
       return { ...state, read_accounts: action.payload.accounts };
@@ -114,6 +123,17 @@ export const Creators = {
 
   createAccountRequest: (account) => ({
     type: Types.CREATE_ACCOUNT_REQUEST,
+    payload: {
+      account,
+    },
+  }),
+
+  readAccountJoinedRequest: () => ({
+    type: Types.READ_ACCOUNT_JOINED_REQUEST,
+  }),
+
+  readAccountJoinedSuccess: (account) => ({
+    type: Types.READ_ACCOUNT_JOINED_SUCCESS,
     payload: {
       account,
     },

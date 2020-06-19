@@ -2,8 +2,8 @@ import { call, put } from "redux-saga/effects";
 import api from "~/service/api";
 
 import { push } from "connected-react-router";
-
 import AuthActions from "../ducks/auth";
+import { Creators as AccountCreators } from "../ducks/account";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -16,6 +16,7 @@ export function* signIn({ email, password }) {
 
     localStorage.setItem("@Omni:token", response.data.token);
     yield put(AuthActions.signInSuccess(response.data.token));
+    yield put(AccountCreators.readAccountJoinedRequest());
   } catch (err) {
     yield put(
       toastrActions.add({
@@ -28,12 +29,9 @@ export function* signIn({ email, password }) {
 }
 
 export function* signOut() {
-  /**
-   * Remover tudo quando sair
-   */
-
+  yield put(AccountCreators.readAccountSuccess({ token: null }));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
 
-  yield put(push("/"));
+  yield put(push("/entrar"));
 }

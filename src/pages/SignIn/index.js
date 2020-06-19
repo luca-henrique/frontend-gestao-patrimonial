@@ -4,7 +4,7 @@ import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import AuthActions from "~/store/ducks/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Form, Container } from "./components/";
 
