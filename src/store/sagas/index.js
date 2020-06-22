@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { all, takeLatest } from "redux-saga/effects";
 
+import { initSocket } from "./socket";
 import { startApplication } from "./start";
 
 import { LicenseTypes } from "../ducks/license";
@@ -14,6 +15,7 @@ import { readUserJoined, readAccounts } from "./account";
 
 export default function* rootSaga() {
   return yield all([
+    takeLatest("persist/REHYDRATE", initSocket),
     takeLatest("persist/REHYDRATE", startApplication),
     takeLatest("persist/REHYDRATE", checkLicense), //Checa a lincesa toda vez que acessa o sistema
 

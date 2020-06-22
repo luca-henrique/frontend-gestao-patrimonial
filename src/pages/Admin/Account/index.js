@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
 import { Lock, LockOpenOutlined } from "@material-ui/icons/";
@@ -10,11 +10,27 @@ import Password from "./components/change-password/";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsAccount } from "~/store/ducks/account";
 
+import { store } from "~/store/index";
+import ws from "~/service/socket";
+
 function View() {
   const [selectedRow, setSelectedRow] = useState("");
 
-  const data = useSelector((state) => state.account.read_accounts);
-  console.log(data);
+  const account = ws.getSubscription("user") || ws.subscribe("user");
+
+  console.log(account);
+
+  useEffect(() => {
+    dispatch(CreatorsAccount.readAccountRequest());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const data = store.getState().account.read_accounts;
+
+  account.on("newAccount", async (account) => {
+    console.log(account);
+  });
 
   const dispatch = useDispatch();
 

@@ -29,7 +29,7 @@ export function* signIn({ email, password }) {
 }
 
 export function* signOut() {
-  yield put(AccountCreators.readAccountSuccess({ token: null }));
+  yield put(AccountCreators.readAccountSuccess([]));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
 
