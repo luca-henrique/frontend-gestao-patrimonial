@@ -4,6 +4,7 @@ import api from "~/service/api";
 import { push } from "connected-react-router";
 import AuthActions from "../ducks/auth";
 import { Creators as AccountCreators } from "../ducks/account";
+import { Creators as NavigationPageCreators } from "../ducks/page";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -30,6 +31,7 @@ export function* signIn({ email, password }) {
 
 export function* signOut() {
   yield put(AccountCreators.readAccountSuccess([]));
+  yield put(NavigationPageCreators.changePageLocation("default"));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
 

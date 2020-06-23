@@ -54,6 +54,7 @@ export default function Menu() {
         className={classes.list_item}
         onClick={() => {
           changePage("account");
+          dispatch(CreatorsAccount.readAccountRequest());
         }}
       >
         <ListItemIcon>

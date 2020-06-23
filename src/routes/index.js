@@ -4,7 +4,7 @@ import { ConnectedRouter } from "connected-react-router";
 
 import history from "./history";
 
-import Route from "./route";
+import Route from "./Route";
 
 import License from "../pages/License";
 import SignIn from "../pages/SignIn";

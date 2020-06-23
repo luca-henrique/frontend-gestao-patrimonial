@@ -15,24 +15,34 @@ import ws from "~/service/socket";
 
 function View() {
   const [selectedRow, setSelectedRow] = useState("");
+  const dispatch = useDispatch();
 
   const account = ws.getSubscription("user") || ws.subscribe("user");
 
-  console.log(account);
+  const data = useSelector((state) => state.account.read_accounts);
 
   useEffect(() => {
-    dispatch(CreatorsAccount.readAccountRequest());
+    console.log(data);
+  }, [data]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const data = store.getState().account.read_accounts;
-
-  account.on("newAccount", async (account) => {
-    console.log(account);
+  account.on("newUser", async (account) => {
+    store.dispatch({
+      type: "@account/READ_ACCOUNT_SUCCESS",
+      payload: {
+        accounts: [...data, account],
+      },
+    });
   });
 
-  const dispatch = useDispatch();
+  account.on("deleteUser", async (account) => {
+    data.splice(account.id);
+    store.dispatch({
+      type: "@account/READ_ACCOUNT_SUCCESS",
+      payload: {
+        accounts: [...data],
+      },
+    });
+  });
 
   return (
     <div>
