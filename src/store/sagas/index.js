@@ -11,7 +11,12 @@ import { AuthTypes } from "../ducks/auth";
 import { signIn, signOut } from "./auth";
 
 import { Types as AccountTypes } from "../ducks/account";
-import { readUserJoined, readAccounts } from "./account";
+import {
+  readUserJoined,
+  readAccounts,
+  deleteAccount,
+  createAccount,
+} from "./account";
 
 export default function* rootSaga() {
   return yield all([
@@ -26,5 +31,7 @@ export default function* rootSaga() {
 
     takeLatest(AccountTypes.READ_ACCOUNT_JOINED_REQUEST, readUserJoined),
     takeLatest(AccountTypes.READ_ACCOUNT_REQUEST, readAccounts),
+    takeLatest(AccountTypes.CREATE_ACCOUNT_REQUEST, createAccount),
+    takeLatest(AccountTypes.DELETE_ACCOUNT_REQUEST, deleteAccount),
   ]);
 }

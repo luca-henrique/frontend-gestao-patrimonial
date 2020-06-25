@@ -21,25 +21,45 @@ function View() {
 
   const data = useSelector((state) => state.account.read_accounts);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   account.on("newUser", async (account) => {
+    let newArray = [...data, account];
     store.dispatch({
       type: "@account/READ_ACCOUNT_SUCCESS",
       payload: {
-        accounts: [...data, account],
+        accounts: await newArray,
       },
     });
   });
 
   account.on("deleteUser", async (account) => {
-    data.splice(account.id);
+    var lists = await data.filter((x) => {
+      return x.id !== account.id;
+    });
     store.dispatch({
       type: "@account/READ_ACCOUNT_SUCCESS",
       payload: {
-        accounts: [...data],
+        accounts: lists,
+      },
+    });
+  });
+
+  account.on("updateUser", async (account) => {
+    const users = [];
+
+    data.map((user) => {
+      if (user.id !== account.id) {
+        users.push(user);
+      } else {
+        users.push(account);
+      }
+    });
+
+    store.dispatch({
+      type: "@account/READ_ACCOUNT_SUCCESS",
+      payload: {
+        accounts: users,
       },
     });
   });

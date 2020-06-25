@@ -23,3 +23,19 @@ export function* readAccounts() {
     yield put(CreatorsAccount.readAccountSuccess(data));
   } catch (err) {}
 }
+
+export function* createAccount({ payload }) {
+  try {
+    const { account } = payload;
+
+    console.log(account);
+
+    const response = yield call(api.post, "/user", account);
+  } catch (err) {}
+}
+
+export function* deleteAccount({ payload }) {
+  try {
+    yield call(api.delete, `/user/${payload.id}`);
+  } catch (err) {}
+}

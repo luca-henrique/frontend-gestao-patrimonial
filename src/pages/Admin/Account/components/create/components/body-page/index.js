@@ -35,9 +35,9 @@ export default function Create() {
       e.preventDefault();
       var account = {
         nome,
-        role,
         email,
         password,
+        role,
       };
       dispatch(CreatorsAccount.createAccountRequest(account));
       handleClose();
