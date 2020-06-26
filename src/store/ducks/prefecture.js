@@ -17,13 +17,16 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  create_prefecture_visible: true,
+  create_prefecture: true,
 });
 
 export default function Prefecture(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.SHOW_NEW_MODAL_PREFECTURE:
+      return { ...state, create_prefecture: true };
+
     case Types.HIDE_NEW_MODAL_PREFECTURE:
-      return { ...state, create_prefecture_visible: false };
+      return { ...state, create_prefecture: false };
 
     default:
       return state;
@@ -31,7 +34,22 @@ export default function Prefecture(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  hideNewPrefecture: () => ({
+  showPrefectureCreate: () => ({
+    type: Types.SHOW_NEW_MODAL_PREFECTURE,
+  }),
+
+  hidePrefectureCreate: () => ({
     type: Types.HIDE_NEW_MODAL_PREFECTURE,
+  }),
+
+  readPrefecturePrefectureRequest: () => ({
+    type: Types.READ_PREFECTURE_REQUEST,
+  }),
+
+  readPrefecturePrefectureSuccess: (prefeture) => ({
+    type: Types.READ_PREFECTURE_SUCCESS,
+    payload: {
+      prefeture,
+    },
   }),
 };

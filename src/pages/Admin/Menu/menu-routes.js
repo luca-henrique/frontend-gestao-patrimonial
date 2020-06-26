@@ -2,8 +2,6 @@ import React from "react";
 
 import Account from "../Account/";
 
-import Prefecture from "../Prefecture/update/";
-
 // Listar todos os itens do patrimonio
 import ListPatrimony from "../Patrimony/list";
 import CreatePatrimony from "../Patrimony/create";
@@ -43,8 +41,33 @@ import StatementResponsibilityReport from "../Reports/statement-responsibility";
 
 import TransferReport from "../Reports/transfer";
 
+import { useSelector } from "react-redux";
+
+import PrefectureCreate from "../Prefecture/create/";
+import PrefectureUpdate from "../Prefecture/update/";
+
+function Start() {
+  const visible = useSelector((state) => state.prefecture.create_prefecture);
+
+  if (visible) {
+    return <PrefectureCreate />;
+  } else {
+    return <h1>Home</h1>;
+  }
+}
+
+function Prefecture() {
+  const visible = useSelector((state) => state.prefecture.create_prefecture);
+
+  if (visible) {
+    return <PrefectureCreate />;
+  } else {
+    return <PrefectureUpdate />;
+  }
+}
+
 export const Routes = {
-  default: <h2>Home</h2>,
+  default: <Start />,
   account: <Account />,
   prefecture: <Prefecture />,
 

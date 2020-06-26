@@ -22,6 +22,8 @@ import drawer from "./drawer-menu";
  */
 import account from "./account";
 
+import prefecture from "./prefecture";
+
 /* --> items <-- */
 
 import low from "./low-item";
@@ -53,6 +55,8 @@ export default (history) =>
     drawer,
 
     account,
+
+    prefecture,
 
     low,
     good,

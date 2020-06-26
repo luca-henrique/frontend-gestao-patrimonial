@@ -32,16 +32,15 @@ export default function Create() {
   const [email, setEmail] = useState(account.email);
 
   const handleSubmit = (e) => {
-    try {
-      e.preventDefault();
-      var account = {
-        nome,
-        role,
-        email,
-      };
-      console.log(account);
-      handleClose();
-    } catch (error) {}
+    e.preventDefault();
+    var user = {
+      id: account.id,
+      nome,
+      email,
+      role,
+    };
+    dispatch(CreatorsAccount.updateAccountRequest(user));
+    handleClose();
   };
 
   const handleClose = () => {
@@ -120,6 +119,7 @@ export default function Create() {
           <Button
             variant="contained"
             style={{ color: "#0174DF", width: "100%" }}
+            type="submit"
           >
             Atualizar
           </Button>

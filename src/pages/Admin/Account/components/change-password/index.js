@@ -19,7 +19,8 @@ export default function ChangerPassword() {
   const visible = useSelector(
     (state) => state.account.password_account.visible
   );
-  const id = useSelector((state) => state.account.password_account.id);
+
+  const id = useSelector((state) => state.account.account_joined.id);
 
   const dispatch = useDispatch();
 
@@ -43,7 +44,7 @@ export default function ChangerPassword() {
         id,
         password,
       };
-      //dispatch(CreatorsAccount.changerPasswordRequest(senha));
+      dispatch(CreatorsAccount.changerPasswordRequest(senha));
       hide();
     }
   }

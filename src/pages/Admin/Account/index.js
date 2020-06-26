@@ -21,20 +21,19 @@ function View() {
 
   const data = useSelector((state) => state.account.read_accounts);
 
-  useEffect(() => {}, [data]);
-
-  account.on("newUser", async (account) => {
+  /*
+  account.on("newUser", (account) => {
     let newArray = [...data, account];
     store.dispatch({
       type: "@account/READ_ACCOUNT_SUCCESS",
       payload: {
-        accounts: await newArray,
+        accounts: newArray,
       },
     });
   });
 
-  account.on("deleteUser", async (account) => {
-    var lists = await data.filter((x) => {
+  account.on("deleteUser", (account) => {
+    var lists = data.filter((x) => {
       return x.id !== account.id;
     });
     store.dispatch({
@@ -45,7 +44,7 @@ function View() {
     });
   });
 
-  account.on("updateUser", async (account) => {
+  account.on("updateUser", (account) => {
     const users = [];
 
     data.map((user) => {
@@ -63,6 +62,7 @@ function View() {
       },
     });
   });
+  */
 
   return (
     <div>
@@ -142,6 +142,7 @@ function View() {
             icon: "edit",
             tooltip: "Editar informações",
             onClick: (event, rowData) => {
+              console.log(rowData);
               dispatch(CreatorsAccount.showUpdateAccount(rowData));
             },
           },

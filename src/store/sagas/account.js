@@ -6,7 +6,7 @@ import { push } from "connected-react-router";
 
 export function* readUserJoined() {
   try {
-    const { data } = yield call(api.get, "/user_joined");
+    const { data } = yield call(api.get, "/user-joined");
     yield put(CreatorsAccount.readAccountJoinedSuccess(data));
 
     if (data.role) {
@@ -28,14 +28,28 @@ export function* createAccount({ payload }) {
   try {
     const { account } = payload;
 
-    console.log(account);
-
-    const response = yield call(api.post, "/user", account);
+    yield call(api.post, "/user", account);
   } catch (err) {}
 }
 
 export function* deleteAccount({ payload }) {
   try {
     yield call(api.delete, `/user/${payload.id}`);
+  } catch (err) {}
+}
+
+export function* updateAccount({ payload }) {
+  try {
+    const { account } = payload;
+
+    yield call(api.put, `/user/${account.id}`, account);
+  } catch (err) {}
+}
+
+export function* changerPasswordAccount({ payload }) {
+  try {
+    const { password } = payload;
+
+    yield call(api.put, "/change-password-user", password);
   } catch (err) {}
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
-export default function Components() {
+function Address(props) {
   const [cep, setCep] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
@@ -11,9 +11,8 @@ export default function Components() {
   const [complemento, setComplemento] = useState("");
   const [bairro, setBairro] = useState();
 
-  function handleSubmit() {
-    var addr = {
-      prefecture_id: 1,
+  function handleSubmitUpdate(e) {
+    var addrdress = {
       cep,
       cidade,
       estado,
@@ -51,17 +50,32 @@ export default function Components() {
   }
 
   return (
-    <form>
+    <form onBlur={handleSubmitUpdate}>
       <Grid
         container
         direction="row"
         justify="flex-start"
         alignItems="flex-start"
-        style={{ marginTop: "10px" }}
+        style={{ paddingLeft: "20px", paddingRight: "20px" }}
       >
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          style={{ marginTop: "15px", marginBottom: "15px" }}
+        >
+          <div>
+            <Typography variant="h5" style={{ color: "rgba(0, 0, 0, 0.7)" }}>
+              Endereço
+            </Typography>
+          </div>
+        </Grid>
         <Grid item xs={12} sm={2}>
           <div>
-            <Typography variant="button" style={{ color: "#BDBDBD" }}>
+            <Typography
+              variant="subtitle2"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            >
               CEP:
             </Typography>
             <TextField
@@ -80,7 +94,10 @@ export default function Components() {
 
         <Grid item xs={12} sm={6}>
           <div>
-            <Typography variant="button" style={{ color: "#BDBDBD" }}>
+            <Typography
+              variant="subtitle2"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            >
               Cidade:
             </Typography>
             <TextField
@@ -97,7 +114,10 @@ export default function Components() {
 
         <Grid item xs={12} sm={2}>
           <div>
-            <Typography variant="button" style={{ color: "#BDBDBD" }}>
+            <Typography
+              variant="subtitle2"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            >
               UF:
             </Typography>
             <TextField
@@ -114,7 +134,10 @@ export default function Components() {
 
         <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
           <div>
-            <Typography variant="button" style={{ color: "#BDBDBD" }}>
+            <Typography
+              variant="subtitle2"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            >
               Bairro:
             </Typography>
             <TextField
@@ -129,7 +152,10 @@ export default function Components() {
 
         <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
           <div>
-            <Typography variant="button" style={{ color: "#BDBDBD" }}>
+            <Typography
+              variant="subtitle2"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            >
               Rua:
             </Typography>
             <TextField
@@ -142,9 +168,12 @@ export default function Components() {
           </div>
         </Grid>
 
-        <Grid item xs={12} sm={10} style={{ marginTop: "10px" }}>
+        <Grid item xs={12} sm={9} style={{ marginTop: "10px" }}>
           <div>
-            <Typography variant="button" style={{ color: "#BDBDBD" }}>
+            <Typography
+              variant="subtitle2"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            >
               Complemento:
             </Typography>
             <TextField
@@ -159,9 +188,12 @@ export default function Components() {
 
         <Grid item xs={12} sm={1} />
 
-        <Grid item xs={12} sm={1} style={{ marginTop: "10px" }}>
+        <Grid item xs={12} sm={2} style={{ marginTop: "10px" }}>
           <div>
-            <Typography variant="button" style={{ color: "#BDBDBD" }}>
+            <Typography
+              variant="subtitle2"
+              style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            >
               Nº:
             </Typography>
             <TextField
@@ -177,3 +209,5 @@ export default function Components() {
     </form>
   );
 }
+
+export default Address;
