@@ -2,12 +2,18 @@ import React, { useState } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { cnpjMask } from "~/pages/util/maskCnpj";
+import { useDispatch, useSelector } from "react-redux";
+import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
 
 const Informacoes = (props) => {
   const [cnpj, setCnpj] = useState("");
   const [razao, setRazao] = useState("");
   const [nome, setNome] = useState("");
   const [numero, setNumero] = useState("");
+
+  const prefecture = useSelector((state) => state.prefecture);
+
+  console.log(prefecture);
 
   function handleSubmitUpdate() {
     var prefecture = {
@@ -89,7 +95,7 @@ const Informacoes = (props) => {
                 />
               </div>
             </Grid>
-            <Grid item xs={12} sm={8} style={{ marginTop: "15px" }}>
+            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
               <div>
                 <Typography
                   variant="subtitle2"

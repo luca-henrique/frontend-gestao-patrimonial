@@ -4,11 +4,12 @@ import Information from "./components/information/";
 import Address from "./components/address/";
 import Contact from "./components/contact/";
 
-import { useSelector } from "react-redux";
+import { Grid, Button } from "@material-ui/core/";
 
 const Index = () => {
-  const visible = useSelector((state) => state.prefecture.create_prefecture);
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <div>
       <Information />

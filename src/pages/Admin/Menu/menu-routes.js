@@ -48,7 +48,7 @@ import PrefectureUpdate from "../Prefecture/update/";
 
 function Start() {
   const visible = useSelector((state) => state.prefecture.create_prefecture);
-
+  console.log(visible);
   if (visible) {
     return <PrefectureCreate />;
   } else {
@@ -58,6 +58,7 @@ function Start() {
 
 function Prefecture() {
   const visible = useSelector((state) => state.prefecture.create_prefecture);
+  console.log(visible);
 
   if (visible) {
     return <PrefectureCreate />;

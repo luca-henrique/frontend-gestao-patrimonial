@@ -3,20 +3,28 @@ import React, { useState } from "react";
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { cnpjMask } from "~/pages/util/maskCnpj";
 
+import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
+import { useDispatch } from "react-redux";
+
 const Informacoes = (props) => {
   const [cnpj, setCnpj] = useState("");
   const [razao, setRazao] = useState("");
   const [nome, setNome] = useState("");
-  const [numero, setNumero] = useState("");
 
-  function handleSubmitUpdate() {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
     var prefecture = {
       cnpj,
       nome,
       razao,
-      numero,
     };
-  }
+
+    if (nome.length > 5 && cnpj.length > 5 && razao.length > 5) {
+      dispatch(CreatorsPrefecture.createPrefectureRequest(prefecture));
+      dispatch(CreatorsPrefecture.hidePrefectureCreate());
+    }
+  };
 
   function changerCnpj(e) {
     setCnpj(cnpjMask(e.target.value, cnpj));
@@ -36,7 +44,7 @@ const Informacoes = (props) => {
       }}
     >
       <Grid item xs={12}>
-        <form onBlur={handleSubmitUpdate}>
+        <form onBlur={handleSubmit}>
           <Grid
             container
             direction="row"
@@ -89,7 +97,7 @@ const Informacoes = (props) => {
                 />
               </div>
             </Grid>
-            <Grid item xs={12} sm={8} style={{ marginTop: "15px" }}>
+            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
               <div>
                 <Typography
                   variant="subtitle2"

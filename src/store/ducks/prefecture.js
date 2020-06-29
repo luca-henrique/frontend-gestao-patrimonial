@@ -6,6 +6,8 @@ export const Types = {
   SHOW_NEW_MODAL_PREFECTURE: "@prefecture/SHOW_NEW_MODAL_PREFECTURE",
   HIDE_NEW_MODAL_PREFECTURE: "@prefecture/HIDE_NEW_MODAL_PREFECTURE",
 
+  ONBLUR_PREFECTURE_REQUEST: "@prefecture/ONBLUR_PREFECTURE_REQUEST",
+
   CREATE_PREFECTURE_REQUEST: "@prefecture/CREATE_PREFECTURE_REQUEST",
   CREATE_PREFECTURE_SUCCESS: "@prefecture/CREATE_PREFECTURE_SUCCESS",
 
@@ -17,7 +19,9 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  create_prefecture: true,
+  create_prefecture: false,
+  read_prefecture: {},
+  create_prefecture_request: {},
 });
 
 export default function Prefecture(state = INITIAL_STATE, action) {
@@ -27,6 +31,9 @@ export default function Prefecture(state = INITIAL_STATE, action) {
 
     case Types.HIDE_NEW_MODAL_PREFECTURE:
       return { ...state, create_prefecture: false };
+
+    case Types.READ_PREFECTURE_SUCCESS:
+      return { ...state, read_prefecture: action.payload };
 
     default:
       return state;
@@ -48,6 +55,20 @@ export const Creators = {
 
   readPrefecturePrefectureSuccess: (prefeture) => ({
     type: Types.READ_PREFECTURE_SUCCESS,
+    payload: {
+      prefeture,
+    },
+  }),
+
+  onBlurPrefectureRequest: (prefeture) => ({
+    type: Types.ONBLUR_PREFECTURE_REQUEST,
+    payload: {
+      prefeture,
+    },
+  }),
+
+  createPrefectureRequest: (prefeture) => ({
+    type: Types.CREATE_PREFECTURE_REQUEST,
     payload: {
       prefeture,
     },

@@ -2,17 +2,23 @@ import React, { useState } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
-function Address(props) {
+import { Creators as CreatorsAddress } from "~/store/ducks/prefecture_address";
+import { useDispatch } from "react-redux";
+
+const Address = () => {
   const [cep, setCep] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [numero, setNumero] = useState("");
   const [rua, setRua] = useState("");
   const [complemento, setComplemento] = useState("");
-  const [bairro, setBairro] = useState();
+  const [bairro, setBairro] = useState("");
 
-  function handleSubmitUpdate(e) {
-    var addrdress = {
+  const dispatch = useDispatch();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    var address = {
       cep,
       cidade,
       estado,
@@ -21,6 +27,11 @@ function Address(props) {
       rua,
       numero,
     };
+
+    if (cep.length > 5 && numero.length > 1) {
+      console.log("foi");
+      dispatch(CreatorsAddress.createPrefectureAddressRequest(address));
+    }
   }
 
   function getCep(cep) {
@@ -50,7 +61,7 @@ function Address(props) {
   }
 
   return (
-    <form onBlur={handleSubmitUpdate}>
+    <form onBlur={handleSubmit}>
       <Grid
         container
         direction="row"
@@ -79,6 +90,7 @@ function Address(props) {
               CEP:
             </Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -101,6 +113,7 @@ function Address(props) {
               Cidade:
             </Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -121,6 +134,7 @@ function Address(props) {
               UF:
             </Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -144,8 +158,8 @@ function Address(props) {
               variant="outlined"
               size="small"
               fullWidth
-              onChange={(e) => setBairro(e.target.value)}
               value={bairro}
+              onChange={(e) => setBairro(e.target.value)}
             />
           </div>
         </Grid>
@@ -159,6 +173,7 @@ function Address(props) {
               Rua:
             </Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -197,6 +212,7 @@ function Address(props) {
               Nº:
             </Typography>
             <TextField
+              required
               variant="outlined"
               size="small"
               fullWidth
@@ -208,6 +224,6 @@ function Address(props) {
       </Grid>
     </form>
   );
-}
+};
 
 export default Address;

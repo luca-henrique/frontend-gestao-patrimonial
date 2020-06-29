@@ -21,14 +21,20 @@ import {
 } from "./account";
 
 import { Types as PrefectureTypes } from "../ducks/prefecture";
-import { readPrefecture } from "./prefecture";
+import { readPrefecture, createPrefecture } from "./prefecture";
+
+import { Types as PrefectureAddressTypes } from "../ducks/prefecture_address";
+import {
+  readPrefectureAddress,
+  createPrefectureAddress,
+} from "./prefecture_address";
 
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
     takeLatest("persist/REHYDRATE", startApplication),
     takeLatest("persist/REHYDRATE", readPrefecture),
-    takeLatest("persist/REHYDRATE", checkLicense), //Checa a lincesa toda vez que acessa o sistema
+    takeLatest("persist/REHYDRATE", checkLicense), //Checar a linceça toda vez que acessa o sistema
 
     takeLatest(LicenseTypes.LICENSE_REQUEST, updateToken),
 
@@ -43,6 +49,17 @@ export default function* rootSaga() {
     takeLatest(
       AccountTypes.ACCOUNT_CHANGE_PASSWORD_REQUEST,
       changerPasswordAccount
+    ),
+
+    takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
+
+    takeLatest(
+      PrefectureAddressTypes.READ_PREFECTURE_ADDRESS_REQUEST,
+      readPrefectureAddress
+    ),
+    takeLatest(
+      PrefectureAddressTypes.CREATE_PREFECTURE_ADDRESS_REQUEST,
+      createPrefectureAddress
     ),
   ]);
 }
