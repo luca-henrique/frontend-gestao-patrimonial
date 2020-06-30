@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
 import formatPhoneNumber from "~/pages/util/formatPhoneNumber";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Creators as CreatorsPrefectureContact } from "~/store/ducks/prefecture_contact";
+
 function Contact(props) {
+  const contact = useSelector(
+    (state) => state.prefecture_contact.read_prefecture_contact.contact
+  );
+  console.log(contact);
+
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    dispatch(CreatorsPrefectureContact.readPrefectureContactRequest());
+    setNumber(contact.numero);
+    setEmail(contact.email);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contact.email, contact.numero]);
+
+  const dispatch = useDispatch();
 
   function handleSubmitUpdate(e) {
     e.preventDefault();
@@ -15,6 +32,12 @@ function Contact(props) {
       numero: number,
       email: email,
     };
+
+    if (number.length > 5 && email.length > 5) {
+      dispatch(
+        CreatorsPrefectureContact.updatePrefectureContactRequest(contact)
+      );
+    }
   }
 
   return (

@@ -4,21 +4,30 @@ import { Grid, Typography, TextField } from "@material-ui/core/";
 
 import formatPhoneNumber from "~/pages/util/formatPhoneNumber";
 
-function Contact(props) {
-  const [number, setNumber] = useState("");
+import { useDispatch } from "react-redux";
+import { Creators as CreatorsContact } from "~/store/ducks/prefecture_contact";
+
+function Contact() {
+  const [number, setNumber] = useState(0);
   const [email, setEmail] = useState("");
 
-  function handleSubmitUpdate(e) {
+  const dispatch = useDispatch();
+
+  function handleSubmit(e) {
     e.preventDefault();
 
     var contact = {
       numero: number,
       email: email,
     };
+
+    if (number.length > 5 && email.length > 5) {
+      dispatch(CreatorsContact.createPrefectureContactRequest(contact));
+    }
   }
 
   return (
-    <form onBlur={handleSubmitUpdate}>
+    <form onBlur={handleSubmit}>
       <Grid
         container
         direction="row"

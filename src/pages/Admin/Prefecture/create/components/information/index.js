@@ -22,7 +22,6 @@ const Informacoes = (props) => {
 
     if (nome.length > 5 && cnpj.length > 5 && razao.length > 5) {
       dispatch(CreatorsPrefecture.createPrefectureRequest(prefecture));
-      dispatch(CreatorsPrefecture.hidePrefectureCreate());
     }
   };
 

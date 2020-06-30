@@ -73,4 +73,11 @@ export const Creators = {
       prefeture,
     },
   }),
+
+  updatePrefectureRequest: (prefecture) => ({
+    type: Types.UPDATE_PREFECTURE_REQUEST,
+    payload: {
+      prefecture,
+    },
+  }),
 };

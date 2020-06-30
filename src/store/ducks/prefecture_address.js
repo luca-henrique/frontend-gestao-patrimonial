@@ -11,7 +11,7 @@ export const Types = {
     "@prefecture_address/READ_PREFECTURE_ADDRESS_REQUEST",
 
   READ_PREFECTURE_ADDRESS_SUCCESS:
-    "@prefecture_address/READ_PREFECTURE_ADDRESS_REQUEST",
+    "@prefecture_address/READ_PREFECTURE_ADDRESS_SUCCESS",
 
   UPDATE_PREFECTURE_ADDRESS_REQUEST:
     "@prefecture_address/UPDATE_PREFECTURE_ADDRESS_REQUEST",
@@ -21,18 +21,18 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  read_prefecture: {},
-  create_prefeture: {},
-  update_prefecture: {},
+  read_prefecture_address: {},
+  create_prefecture_address: {},
+  update_prefecture_address: {},
 });
 
-export default function Prefecture(state = INITIAL_STATE, action) {
+export default function PrefectureAddress(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.CREATE_PREFECTURE_ADDRESS_REQUEST:
-      return { ...state, create_prefeture: action.payload };
+      return { ...state, create_prefecture_address: action.payload };
 
     case Types.READ_PREFECTURE_ADDRESS_SUCCESS:
-      return { ...state, read_prefecture: action.payload };
+      return { ...state, read_prefecture_address: action.payload };
 
     default:
       return state;
@@ -52,7 +52,14 @@ export const Creators = {
   }),
 
   readPrefectureAddressSuccess: (address) => ({
-    type: Types.CREATE_PREFECTURE_ADDRESS_SUCCESS,
+    type: Types.READ_PREFECTURE_ADDRESS_SUCCESS,
+    payload: {
+      address,
+    },
+  }),
+
+  updatePrefectureAddressRequest: (address) => ({
+    type: Types.UPDATE_PREFECTURE_ADDRESS_REQUEST,
     payload: {
       address,
     },

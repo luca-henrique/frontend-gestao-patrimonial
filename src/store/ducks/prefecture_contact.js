@@ -1,24 +1,38 @@
 import Immutable from "seamless-immutable";
 
 export const Types = {
-  CREATE_PREFECTURE_REQUEST: "@prefecture/CREATE_PREFECTURE_REQUEST",
-  CREATE_PREFECTURE_SUCCESS: "@prefecture/CREATE_PREFECTURE_SUCCESS",
+  CREATE_PREFECTURE_CONTACT_REQUEST:
+    "@prefecture_contact/CREATE_PREFECTURE_CONTACT_REQUEST",
 
-  READ_PREFECTURE_REQUEST: "@prefecture/READ_PREFECTURE_REQUEST",
-  READ_PREFECTURE_SUCCESS: "@prefecture/READ_PREFECTURE_SUCCESS",
+  CREATE_PREFECTURE_CONTACT_SUCCESS:
+    "@prefecture_contact/CREATE_PREFECTURE_CONTACT_SUCCESS",
 
-  UPDATE_PREFECTURE_REQUEST: "@prefecture/UPDATE_PREFECTURE_REQUEST",
-  UPDATE_PREFECTURE_SUCCESS: "@prefecture/UPDATE_PREFECTURE_SUCCESS",
+  READ_PREFECTURE_CONTACT_REQUEST:
+    "@prefecture_contact/READ_PREFECTURE_CONTACT_REQUEST",
+
+  READ_PREFECTURE_CONTACT_SUCCESS:
+    "@prefecture_contact/READ_PREFECTURE_CONTACT_SUCCESS",
+
+  UPDATE_PREFECTURE_CONTACT_REQUEST:
+    "@prefecture_contact/UPDATE_PREFECTURE_CONTACT_REQUEST",
+
+  UPDATE_PREFECTURE_CONTACT_SUCCESS:
+    "@prefecture_contact/UPDATE_PREFECTURE_CONTACT_SUCCESS",
 };
 
 const INITIAL_STATE = Immutable({
-  create_prefecture_visible: true,
+  read_prefecture_contact: {},
+  create_prefecture_contact: {},
+  update_prefecture_contact: {},
 });
 
-export default function Prefecture(state = INITIAL_STATE, action) {
+export default function PrefectureContact(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.HIDE_NEW_MODAL_PREFECTURE:
-      return { ...state, create_prefecture_visible: false };
+    case Types.CREATE_PREFECTURE_CONTACT_REQUEST:
+      return { ...state, create_prefecture_contact: action.payload };
+
+    case Types.READ_PREFECTURE_CONTACT_SUCCESS:
+      return { ...state, read_prefecture_contact: action.payload };
 
     default:
       return state;
@@ -26,7 +40,28 @@ export default function Prefecture(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  hideNewPrefecture: () => ({
-    type: Types.HIDE_NEW_MODAL_PREFECTURE,
+  createPrefectureContactRequest: (contact) => ({
+    type: Types.CREATE_PREFECTURE_CONTACT_REQUEST,
+    payload: {
+      contact,
+    },
+  }),
+
+  readPrefectureContactRequest: () => ({
+    type: Types.READ_PREFECTURE_CONTACT_REQUEST,
+  }),
+
+  readPrefectureContactSuccess: (contact) => ({
+    type: Types.READ_PREFECTURE_CONTACT_SUCCESS,
+    payload: {
+      contact,
+    },
+  }),
+
+  updatePrefectureContactRequest: (contact) => ({
+    type: Types.UPDATE_PREFECTURE_CONTACT_REQUEST,
+    payload: {
+      contact,
+    },
   }),
 };

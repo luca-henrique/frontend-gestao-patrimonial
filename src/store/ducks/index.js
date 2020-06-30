@@ -23,7 +23,7 @@ import drawer from "./drawer-menu";
 import account from "./account";
 
 import prefecture from "./prefecture";
-import prefecture_address from "./prefecture_contact";
+import prefecture_address from "./prefecture_address";
 import prefecture_contact from "./prefecture_contact";
 
 /* --> items <-- */

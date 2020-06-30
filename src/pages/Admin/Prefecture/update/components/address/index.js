@@ -1,18 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Creators as CreatorsPrefectureAddress } from "~/store/ducks/prefecture_address";
+
 function Address(props) {
+  const address = useSelector(
+    (state) => state.prefecture_address.read_prefecture_address.address
+  );
+
+  const dispatch = useDispatch();
+
   const [cep, setCep] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [numero, setNumero] = useState("");
   const [rua, setRua] = useState("");
   const [complemento, setComplemento] = useState("");
-  const [bairro, setBairro] = useState();
+  const [bairro, setBairro] = useState("");
 
-  function handleSubmitUpdate(e) {
-    var addrdress = {
+  useEffect(() => {
+    dispatch(CreatorsPrefectureAddress.readPrefectureAddressRequest());
+    setCep(address.cep);
+    setCidade(address.cidade);
+    setEstado(address.estado);
+    setBairro(address.bairro);
+    setRua(address.rua);
+    setComplemento(address.complemento || "");
+    setNumero(address.numero);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    address.bairro,
+    address.cep,
+    address.cidade,
+    address.complemento,
+    address.estado,
+    address.numero,
+    address.rua,
+  ]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    var addressUpdate = {
+      id: address.id,
       cep,
       cidade,
       estado,
@@ -21,6 +52,12 @@ function Address(props) {
       rua,
       numero,
     };
+
+    if (cep.length > 5 && numero > 0) {
+      dispatch(
+        CreatorsPrefectureAddress.updatePrefectureAddressRequest(addressUpdate)
+      );
+    }
   }
 
   function getCep(cep) {
@@ -50,7 +87,7 @@ function Address(props) {
   }
 
   return (
-    <form onBlur={handleSubmitUpdate}>
+    <form onBlur={handleSubmit}>
       <Grid
         container
         direction="row"
@@ -162,8 +199,8 @@ function Address(props) {
               variant="outlined"
               size="small"
               fullWidth
-              onChange={(e) => setRua(e.target.value)}
               value={rua}
+              onChange={(e) => setRua(e.target.value)}
             />
           </div>
         </Grid>

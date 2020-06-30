@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { cnpjMask } from "~/pages/util/maskCnpj";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
 
-const Informacoes = (props) => {
+const Informacoes = () => {
+  const prefecture = useSelector(
+    (state) => state.prefecture.read_prefecture.prefeture
+  );
+
+  const dispatch = useDispatch();
+
   const [cnpj, setCnpj] = useState("");
   const [razao, setRazao] = useState("");
   const [nome, setNome] = useState("");
-  const [numero, setNumero] = useState("");
-
-  const prefecture = useSelector((state) => state.prefecture);
 
   console.log(prefecture);
 
+  useEffect(() => {
+    dispatch(CreatorsPrefecture.readPrefecturePrefectureRequest());
+    setCnpj(prefecture.cnpj);
+    setRazao(prefecture.razao);
+    setNome(prefecture.nome);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefecture.cnpj, prefecture.nome, prefecture.razao]);
+
   function handleSubmitUpdate() {
-    var prefecture = {
+    var prefectureUpdate = {
+      id: prefecture.id,
       cnpj,
       nome,
       razao,
-      numero,
     };
+    if (cnpj.length > 5 && nome.length > 5 && razao.length > 5) {
+      dispatch(CreatorsPrefecture.updatePrefectureRequest(prefectureUpdate));
+    }
   }
 
   function changerCnpj(e) {

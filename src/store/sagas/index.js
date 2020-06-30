@@ -21,13 +21,25 @@ import {
 } from "./account";
 
 import { Types as PrefectureTypes } from "../ducks/prefecture";
-import { readPrefecture, createPrefecture } from "./prefecture";
+import {
+  readPrefecture,
+  createPrefecture,
+  updatePrefecture,
+} from "./prefecture";
 
 import { Types as PrefectureAddressTypes } from "../ducks/prefecture_address";
 import {
   readPrefectureAddress,
   createPrefectureAddress,
+  updatePrefectureAddress,
 } from "./prefecture_address";
+
+import { Types as PrefectureContactTypes } from "../ducks/prefecture_contact";
+import {
+  readPrefectureContact,
+  createPrefectureContact,
+  updatePrefectureContact,
+} from "./prefecture_contact";
 
 export default function* rootSaga() {
   return yield all([
@@ -52,6 +64,7 @@ export default function* rootSaga() {
     ),
 
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
+    takeLatest(PrefectureTypes.UPDATE_PREFECTURE_REQUEST, updatePrefecture),
 
     takeLatest(
       PrefectureAddressTypes.READ_PREFECTURE_ADDRESS_REQUEST,
@@ -60,6 +73,23 @@ export default function* rootSaga() {
     takeLatest(
       PrefectureAddressTypes.CREATE_PREFECTURE_ADDRESS_REQUEST,
       createPrefectureAddress
+    ),
+    takeLatest(
+      PrefectureAddressTypes.UPDATE_PREFECTURE_ADDRESS_REQUEST,
+      updatePrefectureAddress
+    ),
+
+    takeLatest(
+      PrefectureContactTypes.READ_PREFECTURE_CONTACT_REQUEST,
+      readPrefectureContact
+    ),
+    takeLatest(
+      PrefectureContactTypes.CREATE_PREFECTURE_CONTACT_REQUEST,
+      createPrefectureContact
+    ),
+    takeLatest(
+      PrefectureContactTypes.UPDATE_PREFECTURE_CONTACT_REQUEST,
+      updatePrefectureContact
     ),
   ]);
 }
