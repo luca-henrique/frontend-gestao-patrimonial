@@ -54,6 +54,7 @@ export default function User(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.SHOW_NEW_MODAL_ACCOUNT:
       return { ...state, create_account: true };
+
     case Types.HIDE_NEW_MODAL_ACCOUNT:
       return { ...state, create_account: false };
 
@@ -70,11 +71,9 @@ export default function User(state = INITIAL_STATE, action) {
         ...state,
         password_account: { visible: true },
       };
+
     case Types.HIDE_CHANGER_PASSWORD_ACCOUNT:
       return { ...state, password_account: { visible: false } };
-
-    case Types.CREATE_ACCOUNT_REQUEST:
-      return { ...state, account: action.payload.account };
 
     case Types.READ_ACCOUNT_JOINED_SUCCESS:
       return { ...state, account_joined: action.payload.account };
@@ -82,11 +81,50 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.READ_ACCOUNT_SUCCESS:
       return { ...state, read_accounts: action.payload.accounts };
 
+    case Types.CREATE_ACCOUNT_REQUEST:
+      return { ...state, account: action.payload.account };
+
+    case Types.CREATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        read_accounts: [...state.read_accounts, action.payload.account],
+      };
+
     case Types.UPDATE_ACCOUNT_REQUEST:
       return { ...state, update_account_request: action.payload.account };
 
+    case Types.UPDATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        read_accounts: [
+          ...state.read_accounts.map((account) => {
+            if (account.id === action.payload.account.id) {
+              console.log(account.tableData);
+              console.log(action.payload.account);
+              return {
+                ...action.payload.account,
+                tableData: account.tableData,
+              };
+            }
+          }),
+        ],
+      };
+
     case Types.DELETE_ACCOUNT_REQUEST:
-      return { ...state, delete_account_request: action.payload.id };
+      return {
+        ...state,
+        delete_account_request: action.payload.id,
+      };
+
+    case Types.DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        read_accounts: [
+          ...state.read_accounts.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
 
     default:
       return state;
@@ -128,6 +166,13 @@ export const Creators = {
     },
   }),
 
+  createAccountSuccess: (account) => ({
+    type: Types.CREATE_ACCOUNT_SUCCESS,
+    payload: {
+      account,
+    },
+  }),
+
   readAccountJoinedRequest: () => ({
     type: Types.READ_ACCOUNT_JOINED_REQUEST,
   }),
@@ -157,8 +202,22 @@ export const Creators = {
     },
   }),
 
+  updateAccountSuccess: (account) => ({
+    type: Types.UPDATE_ACCOUNT_SUCCESS,
+    payload: {
+      account,
+    },
+  }),
+
   deleteAccountRequest: (id) => ({
     type: Types.DELETE_ACCOUNT_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  deleteAccountSuccess: (id) => ({
+    type: Types.DELETE_ACCOUNT_SUCCESS,
     payload: {
       id,
     },

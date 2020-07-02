@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import MaterialTable from "material-table";
 import { Lock, LockOpenOutlined } from "@material-ui/icons/";
@@ -10,59 +10,11 @@ import Password from "./components/change-password/";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsAccount } from "~/store/ducks/account";
 
-import { store } from "~/store/index";
-import ws from "~/service/socket";
-
 function View() {
   const [selectedRow, setSelectedRow] = useState("");
   const dispatch = useDispatch();
 
-  const account = ws.getSubscription("user") || ws.subscribe("user");
-
   const data = useSelector((state) => state.account.read_accounts);
-
-  /*
-  account.on("newUser", (account) => {
-    let newArray = [...data, account];
-    store.dispatch({
-      type: "@account/READ_ACCOUNT_SUCCESS",
-      payload: {
-        accounts: newArray,
-      },
-    });
-  });
-
-  account.on("deleteUser", (account) => {
-    var lists = data.filter((x) => {
-      return x.id !== account.id;
-    });
-    store.dispatch({
-      type: "@account/READ_ACCOUNT_SUCCESS",
-      payload: {
-        accounts: lists,
-      },
-    });
-  });
-
-  account.on("updateUser", (account) => {
-    const users = [];
-
-    data.map((user) => {
-      if (user.id !== account.id) {
-        users.push(user);
-      } else {
-        users.push(account);
-      }
-    });
-
-    store.dispatch({
-      type: "@account/READ_ACCOUNT_SUCCESS",
-      payload: {
-        accounts: users,
-      },
-    });
-  });
-  */
 
   return (
     <div>
@@ -88,8 +40,8 @@ function View() {
             field: "role",
             render: (rowData) => (
               <>
-                {rowData.admin === true ? (
-                  <LockOpenOutlined style={{ color: "#a4a4a4" }} />
+                {rowData.role === true ? (
+                  <LockOpenOutlined style={{ color: "#0080FF" }} />
                 ) : (
                   <Lock style={{ color: "#a4a4a4" }} />
                 )}

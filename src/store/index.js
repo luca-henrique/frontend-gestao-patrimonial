@@ -5,6 +5,8 @@ import { routerMiddleware } from "connected-react-router";
 import { persistStore } from "redux-persist";
 import persistReducers from "./persistReducers";
 
+import logger from "redux-logger";
+
 import rootReducer from "./ducks";
 import rootSaga from "./sagas";
 import history from "../routes/history";
@@ -14,7 +16,7 @@ const sagaMonitor =
     : null;
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
-const middlewares = [sagaMiddleware, routerMiddleware(history)];
+const middlewares = [logger, sagaMiddleware, routerMiddleware(history)];
 
 const store = createStore(
   persistReducers(rootReducer(history)),

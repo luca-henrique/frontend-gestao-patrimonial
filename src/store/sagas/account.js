@@ -28,21 +28,23 @@ export function* createAccount({ payload }) {
   try {
     const { account } = payload;
 
-    yield call(api.post, "/user", account);
+    const { data } = yield call(api.post, "/user", account);
+    yield put(CreatorsAccount.createAccountSuccess(data));
   } catch (err) {}
 }
 
 export function* deleteAccount({ payload }) {
   try {
     yield call(api.delete, `/user/${payload.id}`);
+    yield put(CreatorsAccount.deleteAccountSuccess(payload.id));
   } catch (err) {}
 }
 
 export function* updateAccount({ payload }) {
   try {
     const { account } = payload;
-
-    yield call(api.put, `/user/${account.id}`, account);
+    const { data } = yield call(api.put, `/user/${account.id}`, account);
+    yield put(CreatorsAccount.updateAccountSuccess(data));
   } catch (err) {}
 }
 
