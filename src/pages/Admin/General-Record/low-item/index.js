@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import MaterialTable from "material-table";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
 
 import Create from "./create/";
@@ -10,13 +10,14 @@ import Update from "./update/";
 
 function LowItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Depredação" }];
+
+  const lowItems = useSelector((state) => state.low.low_items);
 
   const dispatch = useDispatch();
   return (
     <div>
       <MaterialTable
-        data={data}
+        data={lowItems}
         title="Baixa"
         columns={[
           {
@@ -25,7 +26,7 @@ function LowItem() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {

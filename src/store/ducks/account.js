@@ -81,6 +81,10 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.READ_ACCOUNT_SUCCESS:
       return { ...state, read_accounts: action.payload.accounts };
 
+    /*
+      CRUD 
+    */
+
     case Types.CREATE_ACCOUNT_REQUEST:
       return { ...state, account: action.payload.account };
 
@@ -96,18 +100,10 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.UPDATE_ACCOUNT_SUCCESS:
       return {
         ...state,
-        read_accounts: [
-          ...state.read_accounts.map((account) => {
-            if (account.id === action.payload.account.id) {
-              console.log(account.tableData);
-              console.log(action.payload.account);
-              return {
-                ...action.payload.account,
-                tableData: account.tableData,
-              };
-            }
-          }),
-        ],
+        read_accounts: updateAccount(
+          state.read_accounts,
+          action.payload.account
+        ),
       };
 
     case Types.DELETE_ACCOUNT_REQUEST:
@@ -129,6 +125,12 @@ export default function User(state = INITIAL_STATE, action) {
     default:
       return state;
   }
+}
+
+//Update conta
+function updateAccount(items, account) {
+  const index = items.findIndex((item) => item.id === account.id);
+  return [...items.slice(0, index), { ...account }, ...items.slice(index + 1)];
 }
 
 export const Creators = {

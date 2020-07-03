@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,25 +18,42 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "80%",
-      height: "50%",
+      width: "100%",
+      height: "35%",
     },
     [theme.breakpoints.up("md")]: {
       width: "20%",
-      height: "35%",
+      height: "30%",
     },
   },
 }));
 
 export default function Create() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.low.update_low_item.visible);
-
   const dispatch = useDispatch();
 
-  const [descricao, setDescricao] = useState("");
+  const lowItem = useSelector((state) => state.low.update_low_item.data);
+  const visible = useSelector((state) => state.low.update_low_item.visible);
+
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    setDescription(lowItem.description);
+  }, [lowItem.description]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var lowItemObj = {
+      id: lowItem.id,
+      description,
+    };
+    setDescription("");
+    dispatch(CreatorsLowItem.updateLowItemRequest(lowItemObj));
+    handleOnClose();
+  };
 
   const handleOnClose = () => {
+    setDescription("");
     dispatch(CreatorsLowItem.hideUpdateLowItem());
   };
 
@@ -66,80 +83,82 @@ export default function Create() {
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={12}>
-              <Typography
-                variant="h4"
-                style={{
-                  color: "#a4a4a4",
-                }}
-              >
-                Baixa
-              </Typography>
-            </Grid>
+          <form onSubmit={handleSubmit}>
             <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
             >
-              <div>
+              <Grid item xs={12} sm={12}>
                 <Typography
-                  variant="button"
+                  variant="h4"
                   style={{
                     color: "#a4a4a4",
                   }}
                 >
-                  Descrição:
+                  Baixa
                 </Typography>
-                <TextField
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-              </div>
-            </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <div>
+                  <Typography
+                    variant="button"
+                    style={{
+                      color: "#a4a4a4",
+                    }}
+                  >
+                    Descrição:
+                  </Typography>
+                  <TextField
+                    required
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    value={description || ""}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+              </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{
-                  width: "100%",
-                }}
-                onClick={handleOnClose}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Fechar
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                variant="contained"
-                style={{ color: "#0174DF", width: "100%" }}
-                type="submit"
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleOnClose}
+                >
+                  Fechar
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Atualizar
-              </Button>
+                <Button
+                  variant="contained"
+                  style={{ color: "#0174DF", width: "100%" }}
+                  type="submit"
+                >
+                  Atualizar
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>

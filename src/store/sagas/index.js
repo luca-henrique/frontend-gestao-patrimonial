@@ -41,6 +41,14 @@ import {
   updatePrefectureContact,
 } from "./prefecture_contact";
 
+import { Types as LowItemTypes } from "../ducks/low-item";
+import {
+  readLowItem,
+  createLowItem,
+  deleteLowItem,
+  updateLowItem,
+} from "./low-item";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
@@ -91,5 +99,10 @@ export default function* rootSaga() {
       PrefectureContactTypes.UPDATE_PREFECTURE_CONTACT_REQUEST,
       updatePrefectureContact
     ),
+
+    takeLatest(LowItemTypes.READ_LOW_ITEM_REQUEST, readLowItem),
+    takeLatest(LowItemTypes.CREATE_LOW_ITEM_REQUEST, createLowItem),
+    takeLatest(LowItemTypes.DELETE_LOW_ITEM_REQUEST, deleteLowItem),
+    takeLatest(LowItemTypes.UPDATE_LOW_ITEM_REQUEST, updateLowItem),
   ]);
 }

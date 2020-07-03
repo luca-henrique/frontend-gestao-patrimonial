@@ -27,6 +27,8 @@ export const Types = {
 const INITIAL_STATE = Immutable({
   create_low_item: false,
   update_low_item: { visible: false, data: [] },
+
+  low_items: [],
 });
 
 export default function LowItem(state = INITIAL_STATE, action) {
@@ -47,9 +49,33 @@ export default function LowItem(state = INITIAL_STATE, action) {
     case Types.HIDE_UPDATE_MODAL_LOW_ITEM:
       return { ...state, update_low_item: { visible: false, data: [] } };
 
+    case Types.CREATE_LOW_ITEM_SUCCESS:
+      return { ...state, low_items: [...state.low_items, action.payload.low] };
+
+    case Types.UPDATE_LOW_ITEM_SUCCESS:
+      return {
+        ...state,
+        low_items: updateItem(state.low_items, action.payload.low),
+      };
+
+    case Types.DELETE_LOW_ITEM_SUCCESS:
+      return {
+        ...state,
+        low_items: [
+          ...state.low_items.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
+
     default:
       return state;
   }
+}
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
 }
 
 export const Creators = {
@@ -71,8 +97,54 @@ export const Creators = {
   }),
   /* --> Modal <-- */
 
+  createLowItemRequest: (low) => ({
+    type: Types.CREATE_LOW_ITEM_REQUEST,
+    payload: {
+      low,
+    },
+  }),
+
+  createLowItemSuccess: (low) => ({
+    type: Types.CREATE_LOW_ITEM_SUCCESS,
+    payload: {
+      low,
+    },
+  }),
+
+  updateLowItemRequest: (low) => ({
+    type: Types.UPDATE_LOW_ITEM_REQUEST,
+    payload: {
+      low,
+    },
+  }),
+
+  updateLowItemSuccess: (low) => ({
+    type: Types.UPDATE_LOW_ITEM_SUCCESS,
+    payload: {
+      low,
+    },
+  }),
+
+  readLowItemRequest: () => ({
+    type: Types.READ_LOW_ITEM_REQUEST,
+  }),
+
+  readLowItemSuccess: (low) => ({
+    type: Types.READ_LOW_ITEM_SUCCESS,
+    payload: {
+      low,
+    },
+  }),
+
   deleteLowItemRequest: (id) => ({
     type: Types.DELETE_LOW_ITEM_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  deleteLowItemSuccess: (id) => ({
+    type: Types.DELETE_LOW_ITEM_SUCCESS,
     payload: {
       id,
     },
