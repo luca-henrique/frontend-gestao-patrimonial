@@ -3,12 +3,9 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
+import { Creators as CreatorsOriginItem } from "~/store/ducks/origin-item";
 
-import Create from "./create/";
-import Update from "./update/";
-
-function StateItem() {
+function GoodItem() {
   const [selectedRow, setSelectedRow] = useState("");
   const data = [{ id: 1, descricao: "Maquinas" }];
 
@@ -17,7 +14,7 @@ function StateItem() {
     <div>
       <MaterialTable
         data={data}
-        title="Estado"
+        title="Origem"
         columns={[
           {
             title: "Código",
@@ -65,7 +62,7 @@ function StateItem() {
             tooltip: "Cadastrar",
             isFreeAction: true,
             onClick: (event) => {
-              dispatch(CreatorsStateItem.showNewStateItem());
+              dispatch(CreatorsOriginItem.showNewOriginItem());
             },
           },
 
@@ -73,7 +70,7 @@ function StateItem() {
             icon: "edit",
             tooltip: "Editar informações",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.showUpdateStateItem(rowData));
+              dispatch(CreatorsOriginItem.showUpdateOriginItem(rowData));
             },
           },
 
@@ -81,15 +78,13 @@ function StateItem() {
             icon: "delete",
             tooltip: "Deletar",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.deleteStateItemRequest(rowData.id));
+              dispatch(CreatorsOriginItem.deleteOriginItemRequest(rowData.id));
             },
           },
         ]}
       />
-      <Create />
-      <Update />
     </div>
   );
 }
 
-export default StateItem;
+export default GoodItem;

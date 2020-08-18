@@ -42,6 +42,7 @@ const INITIAL_STATE = Immutable({
   password_account: { visible: false },
 
   account_joined: { role: null },
+  loading_account_joined: false,
 
   create_account_request: {},
   read_accounts: [],
@@ -75,8 +76,15 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.HIDE_CHANGER_PASSWORD_ACCOUNT:
       return { ...state, password_account: { visible: false } };
 
+    case Types.READ_ACCOUNT_JOINED_REQUEST:
+      return { ...state, loading_account_joined: true };
+
     case Types.READ_ACCOUNT_JOINED_SUCCESS:
-      return { ...state, account_joined: action.payload.account };
+      return {
+        ...state,
+        account_joined: action.payload.account,
+        loading_account_joined: false,
+      };
 
     case Types.READ_ACCOUNT_SUCCESS:
       return { ...state, read_accounts: action.payload.accounts };

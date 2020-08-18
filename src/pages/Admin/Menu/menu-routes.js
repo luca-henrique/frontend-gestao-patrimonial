@@ -1,27 +1,10 @@
-import React from "react";
-
-import Account from "../Account/";
+import React, { lazy, Suspense } from "react";
 
 // Listar todos os itens do patrimonio
 import ListPatrimony from "../Patrimony/list";
 import CreatePatrimony from "../Patrimony/create";
 import UpdatePatrimony from "../Patrimony/update";
-
-/* --> List Item Create [Cadastros Gerais] <-- */
-
-import LowPage from "../General-Record/low-item/";
-
-import GoodPage from "../General-Record/good-item/";
-
-import StatePage from "../General-Record/state-item";
-
-import NaturePage from "../General-Record/nature-item/";
-
-import OriginPage from "../General-Record/origin-item/";
-
-import OccurrencePage from "../General-Record/occurrence-item";
-
-import LocalePage from "../General-Record/locale-item/index";
+import Perfil from "../Account/perfil";
 
 /* --> Log [Alterações feitas no sistema] <-- */
 
@@ -46,6 +29,28 @@ import { useSelector } from "react-redux";
 import PrefectureCreate from "../Prefecture/create/";
 import PrefectureUpdate from "../Prefecture/update/";
 
+import Loader from "~/components/Loader";
+
+const Account = lazy(() => import("../Account/list"));
+
+/* --> List Item Create [Cadastros Gerais] <-- */
+
+const LowPage = lazy(() => import("../General-Record/low-item/list"));
+
+const GoodPage = lazy(() => import("../General-Record/good-item/list"));
+
+const StatePage = lazy(() => import("../General-Record/state-item/list"));
+
+const NaturePage = lazy(() => import("../General-Record/nature-item//list"));
+
+const OriginPage = lazy(() => import("../General-Record/origin-item/list"));
+
+const OccurrencePage = lazy(() =>
+  import("../General-Record/occurrence-item/list")
+);
+
+const LocalePage = lazy(() => import("../General-Record/locale-item/list"));
+
 function Start() {
   const visible = useSelector((state) => state.prefecture.create_prefecture);
   console.log(visible);
@@ -58,7 +63,6 @@ function Start() {
 
 function Prefecture() {
   const visible = useSelector((state) => state.prefecture.create_prefecture);
-  console.log(visible);
 
   if (visible) {
     return <PrefectureCreate />;
@@ -67,10 +71,17 @@ function Prefecture() {
   }
 }
 
-export const Routes = {
+export default () => {
+  const pageLocation = useSelector(({ page }) => page.location);
+
+  return <Suspense fallback={<Loader />}>{Routes[pageLocation]}</Suspense>;
+};
+
+const Routes = {
   default: <Start />,
   account: <Account />,
   prefecture: <Prefecture />,
+  perfil: <Perfil />,
 
   /* [Patrimony] */
   patrimony_list: <ListPatrimony />,

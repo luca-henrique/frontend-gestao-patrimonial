@@ -5,9 +5,6 @@ import MaterialTable from "material-table";
 import { useDispatch } from "react-redux";
 import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
 
-import Create from "./create/";
-import Update from "./update/";
-
 function StateItem() {
   const [selectedRow, setSelectedRow] = useState("");
   const data = [{ id: 1, descricao: "Maquinas" }];
@@ -86,8 +83,6 @@ function StateItem() {
           },
         ]}
       />
-      <Create />
-      <Update />
     </div>
   );
 }

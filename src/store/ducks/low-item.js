@@ -29,6 +29,7 @@ const INITIAL_STATE = Immutable({
   update_low_item: { visible: false, data: [] },
 
   low_items: [],
+  loading_low_items: false,
 });
 
 export default function LowItem(state = INITIAL_STATE, action) {
@@ -48,6 +49,16 @@ export default function LowItem(state = INITIAL_STATE, action) {
 
     case Types.HIDE_UPDATE_MODAL_LOW_ITEM:
       return { ...state, update_low_item: { visible: false, data: [] } };
+
+    case Types.READ_LOW_ITEM_REQUEST:
+      return { ...state, loading_low_items: true };
+
+    case Types.READ_LOW_ITEM_SUCCESS:
+      return {
+        ...state,
+        loading_low_items: false,
+        low_items: action.payload.low,
+      };
 
     case Types.CREATE_LOW_ITEM_SUCCESS:
       return { ...state, low_items: [...state.low_items, action.payload.low] };

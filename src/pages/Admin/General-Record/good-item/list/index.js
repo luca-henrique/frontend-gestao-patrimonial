@@ -3,21 +3,18 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
+import { Creators as CreatorsGoodItem } from "~/store/ducks/good-item";
 
-import Create from "./create/";
-import Update from "./update/";
-
-function StateItem() {
+function GoodItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas" }];
+  const data = [{ id: 1, descricao: "Maquinas", depreciacao: "10%" }];
 
   const dispatch = useDispatch();
   return (
     <div>
       <MaterialTable
         data={data}
-        title="Estado"
+        title="Bem"
         columns={[
           {
             title: "Código",
@@ -26,6 +23,10 @@ function StateItem() {
           {
             title: "Descrição",
             field: "descricao",
+          },
+          {
+            title: "Depreciação",
+            field: "depreciacao",
           },
         ]}
         onRowClick={(evt, selectedRow) => {
@@ -65,7 +66,7 @@ function StateItem() {
             tooltip: "Cadastrar",
             isFreeAction: true,
             onClick: (event) => {
-              dispatch(CreatorsStateItem.showNewStateItem());
+              dispatch(CreatorsGoodItem.showNewGoodItem());
             },
           },
 
@@ -73,7 +74,7 @@ function StateItem() {
             icon: "edit",
             tooltip: "Editar informações",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.showUpdateStateItem(rowData));
+              dispatch(CreatorsGoodItem.showUpdateGoodItem(rowData));
             },
           },
 
@@ -81,15 +82,13 @@ function StateItem() {
             icon: "delete",
             tooltip: "Deletar",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.deleteStateItemRequest(rowData.id));
+              dispatch(CreatorsGoodItem.deleteGoodItemRequest(rowData.id));
             },
           },
         ]}
       />
-      <Create />
-      <Update />
     </div>
   );
 }
 
-export default StateItem;
+export default GoodItem;

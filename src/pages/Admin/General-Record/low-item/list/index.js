@@ -1,23 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { useDispatch } from "react-redux";
-import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
+import { useDispatch, useSelector } from "react-redux";
+import { Creators as CreatorsLowItem } from "~/store/ducks/low-item";
 
-import Create from "./create/";
-import Update from "./update/";
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "500px ",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+    },
+  },
+}));
 
-function StateItem() {
+function LowItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas" }];
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CreatorsLowItem.readLowItemRequest());
+  }, [dispatch]);
+
+  const lowItems = useSelector((state) => state.low.low_items);
+  const loading = useSelector((state) => state.low.loading_low_items);
+
+  const classes = useStyles();
+
   return (
-    <div>
+    <div className={classes.modal}>
       <MaterialTable
-        data={data}
-        title="Estado"
+        data={lowItems}
+        loading={loading}
+        title="Baixa"
         columns={[
           {
             title: "Código",
@@ -25,7 +43,7 @@ function StateItem() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {
@@ -65,7 +83,7 @@ function StateItem() {
             tooltip: "Cadastrar",
             isFreeAction: true,
             onClick: (event) => {
-              dispatch(CreatorsStateItem.showNewStateItem());
+              dispatch(CreatorsLowItem.showNewLowItem());
             },
           },
 
@@ -73,7 +91,7 @@ function StateItem() {
             icon: "edit",
             tooltip: "Editar informações",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.showUpdateStateItem(rowData));
+              dispatch(CreatorsLowItem.showUpdateLowItem(rowData));
             },
           },
 
@@ -81,15 +99,13 @@ function StateItem() {
             icon: "delete",
             tooltip: "Deletar",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.deleteStateItemRequest(rowData.id));
+              dispatch(CreatorsLowItem.deleteLowItemRequest(rowData.id));
             },
           },
         ]}
       />
-      <Create />
-      <Update />
     </div>
   );
 }
 
-export default StateItem;
+export default LowItem;

@@ -1,36 +1,36 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../service/api";
-import { Creators as CreatorsLowItem } from "../ducks/units";
+import { Creators as CreatorsLowItem } from "../ducks/occurrence-item";
 import { toastr } from "react-redux-toastr";
 
-export function* readUnit() {
+export function* readOccurrenceItem() {
   try {
-    const { data } = yield call(api.get, "/units");
-    //yield put(CreatorsLowItem.readLowItemSuccess(data));
+    const { data } = yield call(api.get, "/occurrence-item");
+    yield put(CreatorsLowItem.readLowItemSuccess(data));
   } catch (err) {}
 }
 
-export function* createUnit({ payload }) {
+export function* createOccurrenceItem({ payload }) {
   try {
     const { low } = payload;
-    const { data } = yield call(api.post, "/units", low);
+    const { data } = yield call(api.post, "/occurrence-item", low);
     //yield put(CreatorsLowItem.createLowItemSuccess(data));
     toastr.success("A baixa foi criada.");
   } catch (err) {}
 }
 
-export function* deleteUnit({ payload }) {
+export function* deleteOccurrenceItem({ payload }) {
   try {
-    yield call(api.delete, `/units/${payload.id}`);
+    yield call(api.delete, `/occurrence-item/${payload.id}`);
     // yield put(CreatorsLowItem.deleteLowItemSuccess(payload.id));
     toastr.error("A baixa foi removida");
   } catch (err) {}
 }
 
-export function* updateUnit({ payload }) {
+export function* updateOccurenceItem({ payload }) {
   try {
     const { low } = payload;
-    yield call(api.put, `/units/${low.id}`, low);
+    yield call(api.put, `/occurrence-item/${low.id}`, low);
     //yield put(CreatorsLowItem.updateLowItemSuccess(low));
     toastr.success("A baixa foi atualizada.");
   } catch (err) {}

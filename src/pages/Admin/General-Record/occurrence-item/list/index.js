@@ -3,21 +3,18 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 
 import { useDispatch } from "react-redux";
-import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
+import { Creators as CreatorsOccurrenceItem } from "~/store/ducks/occurrence-item";
 
-import Create from "./create/";
-import Update from "./update/";
-
-function StateItem() {
+function OcurrenceItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas" }];
+  const data = [{ id: 1, descricao: "Maquinas", depreciacao: "10%" }];
 
   const dispatch = useDispatch();
   return (
     <div>
       <MaterialTable
         data={data}
-        title="Estado"
+        title="Ocorrência"
         columns={[
           {
             title: "Código",
@@ -65,7 +62,7 @@ function StateItem() {
             tooltip: "Cadastrar",
             isFreeAction: true,
             onClick: (event) => {
-              dispatch(CreatorsStateItem.showNewStateItem());
+              dispatch(CreatorsOccurrenceItem.showNewOccurrenceItem());
             },
           },
 
@@ -73,7 +70,9 @@ function StateItem() {
             icon: "edit",
             tooltip: "Editar informações",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.showUpdateStateItem(rowData));
+              dispatch(
+                CreatorsOccurrenceItem.showUpdateOccurrenceItem(rowData)
+              );
             },
           },
 
@@ -81,15 +80,15 @@ function StateItem() {
             icon: "delete",
             tooltip: "Deletar",
             onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.deleteStateItemRequest(rowData.id));
+              dispatch(
+                CreatorsOccurrenceItem.deleteOccurrenceItemRequest(rowData.id)
+              );
             },
           },
         ]}
       />
-      <Create />
-      <Update />
     </div>
   );
 }
 
-export default StateItem;
+export default OcurrenceItem;

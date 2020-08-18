@@ -13,6 +13,8 @@ import {
   Button,
 } from "@material-ui/core/";
 
+import { Close } from "@material-ui/icons";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
       height: "35%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "20%",
-      height: "30%",
+      width: "30%",
     },
   },
 }));
@@ -70,38 +71,67 @@ export default function Create() {
         <div
           style={{
             backgroundColor: "#fff",
-            padding: "20px",
-            border: "2px solid #a4a4a4",
             borderRadius: "5px",
           }}
           className={classes.modal}
         >
-          <form onSubmit={handleSubmit}>
-            <Grid
-              container
-              direction="column"
-              justify="center"
-              alignItems="center"
-            >
-              <Grid item xs={12} sm={12}>
-                <Typography
-                  variant="h4"
+          <Grid
+            container
+            direction="column"
+            justify="flex-start"
+            alignItems="flex
+            -start"
+          >
+            <Grid item xs={12} sm={12} style={{ width: "100%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Close
+                  color="secondary"
                   style={{
-                    color: "#a4a4a4",
+                    padding: "0px",
                   }}
-                >
-                  Baixa
-                </Typography>
-              </Grid>
+                  onClick={handleOnClose}
+                  fontSize="large"
+                />
+              </div>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              style={{
+                marginTop: "30px",
+                marginBottom: "30px",
+                marginLeft: "60px",
+              }}
+            >
+              <Typography
+                variant="h4"
+                style={{
+                  color: "#a4a4a4",
+                }}
+              >
+                Criar uma baixa
+              </Typography>
+            </Grid>
+            <form
+              onSubmit={handleSubmit}
+              style={{ paddingLeft: "60px", paddingRight: "60px" }}
+            >
               <Grid
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginTop: "10px", width: "100%" }}
               >
                 <div>
                   <Typography
-                    variant="button"
+                    variant="legend"
                     style={{
                       color: "#a4a4a4",
                     }}
@@ -123,24 +153,7 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
-              >
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  style={{
-                    width: "100%",
-                  }}
-                  onClick={handleOnClose}
-                >
-                  Fechar
-                </Button>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginTop: "10px", marginBottom: "60px" }}
               >
                 <Button
                   variant="contained"
@@ -150,8 +163,8 @@ export default function Create() {
                   Criar
                 </Button>
               </Grid>
-            </Grid>
-          </form>
+            </form>
+          </Grid>
         </div>
       </Fade>
     </Modal>
