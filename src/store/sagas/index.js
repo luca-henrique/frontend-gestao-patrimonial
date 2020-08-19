@@ -49,6 +49,14 @@ import {
   updateLowItem,
 } from "./low-item";
 
+import { Types as GoodItemTypes } from "../ducks/good-item";
+import {
+  readGoodItem,
+  deleteGoodItem,
+  updateGoodItem,
+  createGoodItem,
+} from "./good-item";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
@@ -104,5 +112,10 @@ export default function* rootSaga() {
     takeLatest(LowItemTypes.CREATE_LOW_ITEM_REQUEST, createLowItem),
     takeLatest(LowItemTypes.DELETE_LOW_ITEM_REQUEST, deleteLowItem),
     takeLatest(LowItemTypes.UPDATE_LOW_ITEM_REQUEST, updateLowItem),
+
+    takeLatest(GoodItemTypes.READ_GOOD_ITEM_REQUEST, readGoodItem),
+    takeLatest(GoodItemTypes.CREATE_GOOD_ITEM_REQUEST, createGoodItem),
+    takeLatest(GoodItemTypes.DELETE_GOOD_ITEM_REQUEST, deleteGoodItem),
+    takeLatest(GoodItemTypes.UPDATE_GOOD_ITEM_REQUEST, updateGoodItem),
   ]);
 }

@@ -17,6 +17,13 @@ const UpdateLowItemModal = lazy(() =>
   import("./pages/Admin/General-Record/low-item/update")
 );
 
+const CreateGoodItemModal = lazy(() =>
+  import("./pages/Admin/General-Record/good-item/create")
+);
+const UpdateGoodItemModal = lazy(() =>
+  import("./pages/Admin/General-Record/good-item/update")
+);
+
 const Main = () => {
   const ChangerPassword = () => create(<ChangerPasswordModal />);
   const CreateAccount = () => create(<CreateAccountModal />);
@@ -24,6 +31,9 @@ const Main = () => {
 
   const CreateLowItem = () => create(<CreateLowItemModal />);
   const UpdateLowItem = () => create(<UpdateLowItemModal />);
+
+  const CreateGoodItem = () => create(<CreateGoodItemModal />);
+  const UpdateGoodItem = () => create(<UpdateGoodItemModal />);
 
   return (
     <Suspense fallback={<Loader />}>
@@ -33,6 +43,9 @@ const Main = () => {
 
       <CreateLowItem />
       <UpdateLowItem />
+
+      <CreateGoodItem />
+      <UpdateGoodItem />
     </Suspense>
   );
 };

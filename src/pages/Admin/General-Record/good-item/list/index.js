@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsGoodItem } from "~/store/ducks/good-item";
 
 function GoodItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas", depreciacao: "10%" }];
 
   const dispatch = useDispatch();
+
+  const data = useSelector((state) => state.good.good_items);
+
+  const loading = useSelector((state) => state.good.loading_good_items);
+
+  useEffect(() => {
+    dispatch(CreatorsGoodItem.readGoodItemRequest());
+  }, [dispatch]);
+
   return (
     <div>
       <MaterialTable
         data={data}
         title="Bem"
+        loading={loading}
         columns={[
           {
             title: "Código",
@@ -22,11 +31,11 @@ function GoodItem() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
           {
             title: "Depreciação",
-            field: "depreciacao",
+            field: "depreciation",
           },
         ]}
         onRowClick={(evt, selectedRow) => {

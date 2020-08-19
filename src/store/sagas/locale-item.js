@@ -1,12 +1,12 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../service/api";
-import { Creators as CreatorsLowItem } from "../ducks/locale-item";
+import { Creators as CreatorsLocaleItem } from "../ducks/locale-item";
 import { toastr } from "react-redux-toastr";
 
 export function* readLocaleItem() {
   try {
     const { data } = yield call(api.get, "/locale-item");
-    //yield put(CreatorsLowItem.readLowItemSuccess(data));
+    yield put(CreatorsLocaleItem.readLolcaleItemSuccess(data));
   } catch (err) {}
 }
 

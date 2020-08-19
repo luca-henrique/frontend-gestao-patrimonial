@@ -30,6 +30,9 @@ export const Types = {
 const INITIAL_STATE = Immutable({
   create_locale_item: false,
   update_locale_item: { visible: false, data: [] },
+
+  locale_items: [],
+  locale_item_loading: false,
 });
 
 export default function LocaleItem(state = INITIAL_STATE, action) {
@@ -79,5 +82,14 @@ export const Creators = {
     payload: {
       id,
     },
+  }),
+
+  readLocaleItemRequest: () => ({
+    type: Types.READ_LOCALE_ITEM_REQUEST,
+  }),
+
+  readLocaleItemSuccess: (locale) => ({
+    type: Types.READ_LOCALE_ITEM_SUCCESS,
+    payload: { locale },
   }),
 };
