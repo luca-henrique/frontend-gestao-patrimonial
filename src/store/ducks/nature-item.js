@@ -27,6 +27,9 @@ export const Types = {
 const INITIAL_STATE = Immutable({
   create_nature_item: false,
   update_nature_item: { visible: false, data: [] },
+
+  nature_items: [],
+  loading_nature_items: false,
 });
 
 export default function NatureItem(state = INITIAL_STATE, action) {
@@ -46,6 +49,38 @@ export default function NatureItem(state = INITIAL_STATE, action) {
 
     case Types.HIDE_UPDATE_MODAL_NATURE_ITEM:
       return { ...state, update_nature_item: { visible: false, data: [] } };
+
+    case Types.READ_NATURE_ITEM_REQUEST:
+      return { ...state, loading_nature_items: true };
+
+    case Types.READ_NATURE_ITEM_SUCCESS:
+      return {
+        ...state,
+        nature_items: action.payload.data,
+        loading_nature_items: false,
+      };
+
+    case Types.DELETE_NATURE_ITEM_SUCCESS:
+      return {
+        ...state,
+        nature_items: [
+          ...state.nature_items.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
+
+    case Types.CREATE_NATURE_ITEM_SUCCESS:
+      return {
+        ...state,
+        nature_items: [...state.nature_items, action.payload.data],
+      };
+
+    case Types.UPDATE_NATURE_ITEM_SUCCESS:
+      return {
+        ...state,
+        nature_items: updateItem(state.nature_items, action.payload.data),
+      };
 
     default:
       return state;
@@ -70,4 +105,62 @@ export const Creators = {
     type: Types.HIDE_UPDATE_MODAL_NATURE_ITEM,
   }),
   /* --> Modal <-- */
+
+  readNatureItemRequest: () => ({
+    type: Types.READ_NATURE_ITEM_REQUEST,
+  }),
+
+  readNatureItemSuccess: (data) => ({
+    type: Types.READ_NATURE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  createNatureItemRequest: (data) => ({
+    type: Types.CREATE_NATURE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  createNatureItemSuccess: (data) => ({
+    type: Types.CREATE_NATURE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  updateNatureItemRequest: (data) => ({
+    type: Types.UPDATE_NATURE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  updateNatureItemSuccess: (data) => ({
+    type: Types.UPDATE_NATURE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  deleteNatureItemRequest: (id) => ({
+    type: Types.DELETE_NATURE_ITEM_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  deleteNatureItemSuccess: (id) => ({
+    type: Types.DELETE_NATURE_ITEM_SUCCESS,
+    payload: {
+      id,
+    },
+  }),
 };
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}

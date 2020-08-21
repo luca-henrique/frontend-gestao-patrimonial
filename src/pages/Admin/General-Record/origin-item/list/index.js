@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsOriginItem } from "~/store/ducks/origin-item";
 
 function GoodItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas" }];
-
   const dispatch = useDispatch();
+
+  const data = useSelector((state) => state.origin.origin_items);
+  const loading = useSelector((state) => state.origin.origin_items);
+
+  useEffect(() => {
+    dispatch(CreatorsOriginItem.readOriginItemRequest());
+  }, [dispatch]);
+
   return (
     <div>
       <MaterialTable
         data={data}
         title="Origem"
+        loading={loading}
         columns={[
           {
             title: "Código",
@@ -22,7 +29,7 @@ function GoodItem() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {

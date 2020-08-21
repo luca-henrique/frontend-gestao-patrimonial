@@ -6,32 +6,31 @@ import { toastr } from "react-redux-toastr";
 export function* readLocaleItem() {
   try {
     const { data } = yield call(api.get, "/locale-item");
-    yield put(CreatorsLocaleItem.readLolcaleItemSuccess(data));
+    yield put(CreatorsLocaleItem.readLocaleItemSuccess(data));
   } catch (err) {}
 }
 
 export function* createLocaleItem({ payload }) {
   try {
-    const { low } = payload;
-    const { data } = yield call(api.post, "/locale-item", low);
-    //yield put(CreatorsLowItem.createLowItemSuccess(data));
-    toastr.success("A baixa foi criada.");
+    const { data } = yield call(api.post, "/locale-item", payload.data);
+    yield put(CreatorsLocaleItem.createLocaleItemSuccess(data));
+    toastr.success("O local foi criado");
   } catch (err) {}
 }
 
 export function* deleteLocaleItem({ payload }) {
   try {
     yield call(api.delete, `/locale-item/${payload.id}`);
-    // yield put(CreatorsLowItem.deleteLowItemSuccess(payload.id));
-    toastr.error("A baixa foi removida");
+    yield put(CreatorsLocaleItem.deleteLocaleItemSuccess(payload.id));
+    toastr.error("O local foi removido");
   } catch (err) {}
 }
 
 export function* updateLocaleItem({ payload }) {
   try {
-    const { low } = payload;
-    yield call(api.put, `/locale-item/${low.id}`, low);
-    //yield put(CreatorsLowItem.updateLowItemSuccess(low));
+    const { data } = payload;
+    yield call(api.put, `/locale-item/${data.id}`, data);
+    yield put(CreatorsLocaleItem.updateLocaleItemSuccess(data));
     toastr.success("A baixa foi atualizada.");
   } catch (err) {}
 }

@@ -1,95 +1,166 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import MaterialTable from "material-table";
-
-import { useDispatch } from "react-redux";
 import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
+import { useSelector, useDispatch } from "react-redux";
 
-import Create from "./create/";
-import Update from "./update/";
+import {
+  Typography,
+  Modal,
+  Backdrop,
+  Fade,
+  Grid,
+  TextField,
+  Button,
+} from "@material-ui/core/";
 
-function StateItem() {
-  const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas" }];
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "80%",
+      height: "45%",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "20%",
+      height: "35%",
+    },
+  },
+}));
+
+export default function Create() {
+  const classes = useStyles();
+  const visible = useSelector((state) => state.state.update_state_item.visible);
+  const data = useSelector((state) => state.state.update_state_item.data);
 
   const dispatch = useDispatch();
+
+  const [descricao, setDescricao] = useState("");
+
+  const handleOnClose = () => {
+    setDescricao("");
+    dispatch(CreatorsStateItem.hideUpdateStateItem());
+  };
+
+  useEffect(() => {
+    setDescricao(data.description);
+  }, [data]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var obj = {
+      id: data.id,
+      description: descricao,
+    };
+
+    dispatch(CreatorsStateItem.updateStateItemRequest(obj));
+    handleOnClose();
+  };
+
   return (
-    <div>
-      <MaterialTable
-        data={data}
-        title="Estado"
-        columns={[
-          {
-            title: "Código",
-            field: "id",
-          },
-          {
-            title: "Descrição",
-            field: "descricao",
-          },
-        ]}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow);
-        }}
-        options={{
-          headerStyle: {
-            color: "#a4a4a4",
-          },
-          actionsCellStyle: { color: "#a4a4a4" },
-          rowStyle: (rowData) => ({
-            backgroundColor:
-              selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#58ACFA"
-                : "#FFF",
-          }),
-        }}
-        localization={{
-          header: {
-            actions: "Ações",
-          },
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      open={visible}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={visible}>
+        <div
+          style={{
+            backgroundColor: "#fff",
+            padding: "20px",
+            border: "2px solid #a4a4a4",
+            borderRadius: "5px",
+          }}
+          className={classes.modal}
+        >
+          <form onSubmit={handleSubmit}>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <Grid item xs={12} sm={12}>
+                <Typography
+                  variant="h4"
+                  style={{
+                    color: "#a4a4a4",
+                  }}
+                >
+                  Estado
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <div>
+                  <Typography
+                    variant="button"
+                    style={{
+                      color: "#a4a4a4",
+                    }}
+                  >
+                    Descrição:
+                  </Typography>
+                  <TextField
+                    required
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                  />
+                </div>
+              </Grid>
 
-          body: {
-            emptyDataSourceMessage: "Não existe",
-            filterRow: {
-              filterTooltip: "Procurar",
-            },
-          },
-          toolbar: {
-            searchTooltip: "Procurar",
-            searchPlaceholder: "Procurar",
-          },
-        }}
-        actions={[
-          {
-            icon: "add",
-            tooltip: "Cadastrar",
-            isFreeAction: true,
-            onClick: (event) => {
-              dispatch(CreatorsStateItem.showNewStateItem());
-            },
-          },
-
-          {
-            icon: "edit",
-            tooltip: "Editar informações",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.showUpdateStateItem(rowData));
-            },
-          },
-
-          {
-            icon: "delete",
-            tooltip: "Deletar",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsStateItem.deleteStateItemRequest(rowData.id));
-            },
-          },
-        ]}
-      />
-      <Create />
-      <Update />
-    </div>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleOnClose}
+                >
+                  Fechar
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <Button
+                  variant="contained"
+                  style={{ color: "#0174DF", width: "100%" }}
+                  type="submit"
+                >
+                  Atualizar
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Fade>
+    </Modal>
   );
 }
-
-export default StateItem;

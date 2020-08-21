@@ -57,6 +57,46 @@ import {
   createGoodItem,
 } from "./good-item";
 
+import { Types as StateItemTypes } from "../ducks/state-item";
+import {
+  readStateItem,
+  createStateItem,
+  deleteStateItem,
+  updateStateItem,
+} from "./state-item";
+
+import { Types as NatureItemTypes } from "../ducks/nature-item";
+import {
+  readNatureItem,
+  deleteNatureItem,
+  createNatureItem,
+  updateNatureItem,
+} from "./nature-item";
+
+import { Types as OriginItemTypes } from "../ducks/origin-item";
+import {
+  readOriginItem,
+  createOriginItem,
+  updateOriginItem,
+  deleteOriginItem,
+} from "./origin-item";
+
+import { Types as OccurenceItemTypes } from "../ducks/occurrence-item";
+import {
+  readOccurrenceItem,
+  createOccurrenceItem,
+  deleteOccurrenceItem,
+  updateOccurenceItem,
+} from "./occurrence-item";
+
+import { Types as LocaleItemTypes } from "../ducks/locale-item";
+import {
+  readLocaleItem,
+  createLocaleItem,
+  updateLocaleItem,
+  deleteLocaleItem,
+} from "./locale-item";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
@@ -117,5 +157,42 @@ export default function* rootSaga() {
     takeLatest(GoodItemTypes.CREATE_GOOD_ITEM_REQUEST, createGoodItem),
     takeLatest(GoodItemTypes.DELETE_GOOD_ITEM_REQUEST, deleteGoodItem),
     takeLatest(GoodItemTypes.UPDATE_GOOD_ITEM_REQUEST, updateGoodItem),
+
+    takeLatest(StateItemTypes.READ_STATE_ITEM_REQUEST, readStateItem),
+    takeLatest(StateItemTypes.CREATE_STATE_ITEM_REQUEST, createStateItem),
+    takeLatest(StateItemTypes.UPDATE_STATE_ITEM_REQUEST, updateStateItem),
+    takeLatest(StateItemTypes.DELETE_STATE_ITEM_REQUEST, deleteStateItem),
+
+    takeLatest(NatureItemTypes.READ_NATURE_ITEM_REQUEST, readNatureItem),
+    takeLatest(NatureItemTypes.CREATE_NATURE_ITEM_REQUEST, createNatureItem),
+    takeLatest(NatureItemTypes.UPDATE_NATURE_ITEM_REQUEST, updateNatureItem),
+    takeLatest(NatureItemTypes.DELETE_NATURE_ITEM_REQUEST, deleteNatureItem),
+
+    takeLatest(OriginItemTypes.READ_ORIGIN_ITEM_REQUEST, readOriginItem),
+    takeLatest(OriginItemTypes.CREATE_ORIGIN_ITEM_REQUEST, createOriginItem),
+    takeLatest(OriginItemTypes.UPDATE_ORIGIN_ITEM_REQUEST, updateOriginItem),
+    takeLatest(OriginItemTypes.DELETE_ORIGIN_ITEM_REQUEST, deleteOriginItem),
+
+    takeLatest(
+      OccurenceItemTypes.READ_OCCURRENCE_ITEM_REQUEST,
+      readOccurrenceItem
+    ),
+    takeLatest(
+      OccurenceItemTypes.CREATE_OCCURRENCE_ITEM_REQUEST,
+      createOccurrenceItem
+    ),
+    takeLatest(
+      OccurenceItemTypes.UPDATE_OCCURRENCE_ITEM_REQUEST,
+      updateOccurenceItem
+    ),
+    takeLatest(
+      OccurenceItemTypes.DELETE_OCCURRENCE_ITEM_REQUEST,
+      deleteOccurrenceItem
+    ),
+
+    takeLatest(LocaleItemTypes.READ_LOCALE_ITEM_REQUEST, readLocaleItem),
+    takeLatest(LocaleItemTypes.CREATE_LOCALE_ITEM_REQUEST, createLocaleItem),
+    takeLatest(LocaleItemTypes.UPDATE_LOCALE_ITEM_REQUEST, updateLocaleItem),
+    takeLatest(LocaleItemTypes.DELETE_LOCALE_ITEM_REQUEST, deleteLocaleItem),
   ]);
 }

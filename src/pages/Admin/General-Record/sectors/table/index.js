@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
 
@@ -8,20 +8,19 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Paper } from "@material-ui/core/";
 
-import CreatePage from "./create";
-import UpdatePage from "./update";
-
 export default function Sectors() {
   const [selectedRow, setSelectedRow] = useState("");
 
-  const data = [
-    { id: 1, descricao: "DEPARTAMENTO DE OBRAS E INFRA ESTRUTURA" },
-    { id: 2, descricao: "DEPARTAMENTO DE SERVIÇOS PUBLICOS PERMANENTE" },
-  ];
+  const data = useSelector((state) => state.sectors.sectors);
+  const loading = useSelector((state) => state.sectors.loading);
 
   const dispatch = useDispatch();
 
   const visible = useSelector((state) => state.units.units_list.visible);
+
+  const id = useSelector((state) => state.sectors.sectors_list.id_institution);
+
+  console.log(id);
 
   const handleShowAccordingUnits = (id) => {
     dispatch(CreatorsUnits.showAccordingUnits(id));
@@ -35,11 +34,16 @@ export default function Sectors() {
     dispatch(CreatorsSectors.showUpdateSector(data));
   };
 
+  useEffect(() => {
+    //dispatch(CreatorsSectors.readSectorsRequest(id));
+  }, [dispatch]);
+
   return (
     <div style={{ width: "100%" }}>
       <MaterialTable
         data={data}
         title={null}
+        loading={loading}
         components={{
           Container: (props) => <Paper {...props} elevation={0} />,
         }}
@@ -117,8 +121,6 @@ export default function Sectors() {
           },
         ]}
       />
-      <CreatePage />
-      <UpdatePage />
     </div>
   );
 }

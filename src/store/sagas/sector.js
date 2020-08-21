@@ -1,12 +1,12 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../service/api";
-import { Creators as CreatorsLowItem } from "../ducks/sectors";
+import { Creators as CreatorsSector } from "../ducks/sectors";
 import { toastr } from "react-redux-toastr";
 
-export function* readSector() {
+export function* readSector({ payload }) {
   try {
-    const { data } = yield call(api.get, "/sector");
-    //yield put(CreatorsLowItem.readLowItemSuccess(data));
+    const { data } = yield call(api.get, `/sector/${payload.id}`);
+    yield put(CreatorsSector.readSectorsSuccess(data));
   } catch (err) {}
 }
 

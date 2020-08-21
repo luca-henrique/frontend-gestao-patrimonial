@@ -26,7 +26,7 @@ export const Types = {
   UPDATE_OCCURRENCE_ITEM_REQUEST:
     "@occurrenceItem/UPDATE_OCCURRENCE_ITEM_REQUEST",
   UPDATE_OCCURRENCE_ITEM_SUCCESS:
-    "@occurrenceItem/UPDATE_LOCCURRENCE_ITEM_SUCCESS",
+    "@occurrenceItem/UPDATE_OCCURRENCE_ITEM_SUCCESS",
 
   DELETE_OCCURRENCE_ITEM_REQUEST:
     "@occurrenceItem/DELETE_OCCURRENCE_ITEM_REQUEST",
@@ -37,6 +37,9 @@ export const Types = {
 const INITIAL_STATE = Immutable({
   create_occurrence_item: false,
   update_occurrence_item: { visible: false, data: [] },
+
+  occurrence_items: [],
+  loading_occurrence_items: false,
 });
 
 export default function occurrenceItem(state = INITIAL_STATE, action) {
@@ -56,6 +59,41 @@ export default function occurrenceItem(state = INITIAL_STATE, action) {
 
     case Types.HIDE_UPDATE_MODAL_OCCURRENCE_ITEM:
       return { ...state, update_occurrence_item: { visible: false, data: [] } };
+
+    case Types.READ_OCCURRENCE_ITEM_REQUEST:
+      return { ...state, loading_occurrence_items: true };
+
+    case Types.READ_OCCURRENCE_ITEM_SUCCESS:
+      return {
+        ...state,
+        occurrence_items: action.payload.data,
+        loading_occurrence_items: false,
+      };
+
+    case Types.DELETE_OCCURRENCE_ITEM_SUCCESS:
+      return {
+        ...state,
+        occurrence_items: [
+          ...state.occurrence_items.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
+
+    case Types.CREATE_OCCURRENCE_ITEM_SUCCESS:
+      return {
+        ...state,
+        occurrence_items: [...state.occurrence_items, action.payload.data],
+      };
+
+    case Types.UPDATE_OCCURRENCE_ITEM_SUCCESS:
+      return {
+        ...state,
+        occurrence_items: updateItem(
+          state.occurrence_items,
+          action.payload.data
+        ),
+      };
 
     default:
       return state;
@@ -80,4 +118,61 @@ export const Creators = {
     type: Types.HIDE_UPDATE_MODAL_OCCURRENCE_ITEM,
   }),
   /* --> Modal <-- */
+  readOccurrenceItemRequest: () => ({
+    type: Types.READ_OCCURRENCE_ITEM_REQUEST,
+  }),
+
+  readOccurrenceItemSuccess: (data) => ({
+    type: Types.READ_OCCURRENCE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  createOccurrenceItemRequest: (data) => ({
+    type: Types.CREATE_OCCURRENCE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  createOccurrenceItemSuccess: (data) => ({
+    type: Types.CREATE_OCCURRENCE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  updateOccurrenceItemRequest: (data) => ({
+    type: Types.UPDATE_OCCURRENCE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  updateOccurrenceItemSuccess: (data) => ({
+    type: Types.UPDATE_OCCURRENCE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  deleteOccurrenceItemRequest: (id) => ({
+    type: Types.DELETE_OCCURRENCE_ITEM_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  deleteOccurrenceItemSuccess: (id) => ({
+    type: Types.DELETE_OCCURRENCE_ITEM_SUCCESS,
+    payload: {
+      id,
+    },
+  }),
 };
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}

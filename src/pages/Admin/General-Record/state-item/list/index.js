@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
 
 function StateItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas" }];
+  const data = useSelector((state) => state.state.state_items);
+
+  const loading = useSelector((state) => state.state.loading_state_items);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CreatorsStateItem.readStateItemRequest());
+  }, [dispatch]);
+
   return (
     <div>
       <MaterialTable
         data={data}
+        loading={loading}
         title="Estado"
         columns={[
           {
@@ -22,7 +30,7 @@ function StateItem() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {

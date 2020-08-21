@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Creators as CreatorsLocaleItem } from "~/store/ducks/locale-item";
 
@@ -7,15 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "material-table";
 
-import AccordingSectors from "./according/sectors/";
-import AccordingUnits from "./according/units/";
+import AccordingSectors from "../../sectors/";
+import AccordingUnits from "../../units/";
 
 export default function LocalItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [
-    { id: 1, nome: "SECRETARIA DE ADMINISTRAÇÃO" },
-    { id: 2, nome: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS" },
-  ];
+  const data = useSelector((state) => state.locale.locale_items);
+  const loading = useSelector((state) => state.locale.locale_item_loading);
 
   const visible = useSelector((state) => state.sectors.sectors_list.visible);
 
@@ -32,12 +30,18 @@ export default function LocalItem() {
   };
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CreatorsLocaleItem.readLocaleItemRequest());
+  }, [dispatch]);
+
   return (
     <div>
       <MaterialTable
         style={{ boxShadow: "#fff" }}
         data={data}
-        title="Localidades"
+        title="Local"
+        loading={loading}
         columns={[
           {
             title: "Código",
@@ -45,7 +49,7 @@ export default function LocalItem() {
           },
           {
             title: "Descrição",
-            field: "nome",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {

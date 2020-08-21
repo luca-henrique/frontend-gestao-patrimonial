@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsOccurrenceItem } from "~/store/ducks/occurrence-item";
 
 function OcurrenceItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas", depreciacao: "10%" }];
+  const data = useSelector((state) => state.occurrence.occurrence_items);
+
+  const loading = useSelector(
+    (state) => state.occurrence.loading_occurrence_items
+  );
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CreatorsOccurrenceItem.readOccurrenceItemRequest());
+  }, [dispatch]);
+
   return (
     <div>
       <MaterialTable
         data={data}
         title="Ocorrência"
+        loading={loading}
         columns={[
           {
             title: "Código",
@@ -22,7 +32,7 @@ function OcurrenceItem() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {

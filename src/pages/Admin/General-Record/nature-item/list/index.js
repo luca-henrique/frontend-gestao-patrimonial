@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MaterialTable from "material-table";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsNatureItem } from "~/store/ducks/nature-item";
 
 function GoodItem() {
   const [selectedRow, setSelectedRow] = useState("");
-  const data = [{ id: 1, descricao: "Maquinas", depreciacao: "10%" }];
-
+  const data = useSelector((state) => state.nature.nature_items);
+  const loading = useSelector((state) => state.nature.loading_nature_items);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CreatorsNatureItem.readNatureItemRequest());
+  }, [dispatch]);
+
   return (
     <div>
       <MaterialTable
         data={data}
         title="Natureza"
+        loading={loading}
         columns={[
           {
             title: "Código",
@@ -22,11 +28,7 @@ function GoodItem() {
           },
           {
             title: "Descrição",
-            field: "descricao",
-          },
-          {
-            title: "Depreciação",
-            field: "depreciacao",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {

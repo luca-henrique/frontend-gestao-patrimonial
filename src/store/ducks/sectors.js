@@ -31,6 +31,9 @@ const INITIAL_STATE = Immutable({
   sectors_list: { visible: true, data: [], id_institution: 0 },
   create_sector: false,
   update_sector: { visible: false, data: [] },
+
+  sector: [],
+  loading_sectors: false,
 });
 
 export default function Sector(state = INITIAL_STATE, action) {
@@ -99,4 +102,18 @@ export const Creators = {
   }),
 
   /* --> Modal <-- */
+
+  readSectorsRequest: (id) => ({
+    type: Types.READ_SECTORS_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  readSectorsSuccess: (data) => ({
+    type: Types.READ_SECTORS_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
 };

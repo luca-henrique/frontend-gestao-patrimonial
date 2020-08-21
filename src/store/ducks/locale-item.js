@@ -53,6 +53,38 @@ export default function LocaleItem(state = INITIAL_STATE, action) {
     case Types.HIDE_UPDATE_MODAL_LOCALE_ITEM:
       return { ...state, update_locale_item: { visible: false, data: [] } };
 
+    case Types.READ_LOCALE_ITEM_REQUEST:
+      return { ...state, locale_item_loading: true };
+
+    case Types.READ_LOCALE_ITEM_SUCCESS:
+      return {
+        ...state,
+        locale_items: action.payload.data,
+        locale_item_loading: false,
+      };
+
+    case Types.DELETE_LOCALE_ITEM_SUCCESS:
+      return {
+        ...state,
+        locale_items: [
+          ...state.locale_items.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
+
+    case Types.CREATE_LOCALE_ITEM_SUCCESS:
+      return {
+        ...state,
+        locale_items: [...state.locale_items, action.payload.data],
+      };
+
+    case Types.UPDATE_LOCALE_ITEM_SUCCESS:
+      return {
+        ...state,
+        locale_items: updateItem(state.locale_items, action.payload.data),
+      };
+
     default:
       return state;
   }
@@ -77,6 +109,43 @@ export const Creators = {
   }),
   /* --> Modal <-- */
 
+  readLocaleItemRequest: () => ({
+    type: Types.READ_LOCALE_ITEM_REQUEST,
+  }),
+
+  readLocaleItemSuccess: (data) => ({
+    type: Types.READ_LOCALE_ITEM_SUCCESS,
+    payload: { data },
+  }),
+
+  createLocaleItemRequest: (data) => ({
+    type: Types.CREATE_LOCALE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  createLocaleItemSuccess: (data) => ({
+    type: Types.CREATE_LOCALE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  updateLocaleItemRequest: (data) => ({
+    type: Types.UPDATE_LOCALE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  updateLocaleItemSuccess: (data) => ({
+    type: Types.UPDATE_LOCALE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
   deleteLocaleItemRequest: (id) => ({
     type: Types.DELETE_LOCALE_ITEM_REQUEST,
     payload: {
@@ -84,12 +153,15 @@ export const Creators = {
     },
   }),
 
-  readLocaleItemRequest: () => ({
-    type: Types.READ_LOCALE_ITEM_REQUEST,
-  }),
-
-  readLocaleItemSuccess: (locale) => ({
-    type: Types.READ_LOCALE_ITEM_SUCCESS,
-    payload: { locale },
+  deleteLocaleItemSuccess: (id) => ({
+    type: Types.DELETE_LOCALE_ITEM_SUCCESS,
+    payload: {
+      id,
+    },
   }),
 };
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}
