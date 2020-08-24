@@ -5,33 +5,32 @@ import { toastr } from "react-redux-toastr";
 
 export function* readSector({ payload }) {
   try {
-    const { data } = yield call(api.get, `/sector/${payload.id}`);
+    const { data } = yield call(api.get, `/sectors/${payload.id}`);
     yield put(CreatorsSector.readSectorsSuccess(data));
   } catch (err) {}
 }
 
 export function* createSector({ payload }) {
   try {
-    const { low } = payload;
-    const { data } = yield call(api.post, "/sector", low);
-    //yield put(CreatorsLowItem.createLowItemSuccess(data));
-    toastr.success("A baixa foi criada.");
+    const { data } = yield call(api.post, "/sector", payload.data);
+    yield put(CreatorsSector.createSectorSuccess(data));
+    toastr.success("O setor foi criado.");
   } catch (err) {}
 }
 
 export function* deleteSector({ payload }) {
   try {
     yield call(api.delete, `/sector/${payload.id}`);
-    // yield put(CreatorsLowItem.deleteLowItemSuccess(payload.id));
-    toastr.error("A baixa foi removida");
+    yield put(CreatorsSector.deleteSectorSuccess(payload.id));
+    toastr.error("O setor foi removido");
   } catch (err) {}
 }
 
 export function* updateSector({ payload }) {
   try {
-    const { low } = payload;
-    yield call(api.put, `/sector/${low.id}`, low);
-    //yield put(CreatorsLowItem.updateLowItemSuccess(low));
-    toastr.success("A baixa foi atualizada.");
+    const { data } = payload;
+    yield call(api.put, `/sector/${data.id}`, data);
+    yield put(CreatorsSector.updateSectorSuccess(data));
+    toastr.success("O setor foi atualizado.");
   } catch (err) {}
 }

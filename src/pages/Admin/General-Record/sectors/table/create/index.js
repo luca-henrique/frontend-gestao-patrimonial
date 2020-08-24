@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Create() {
   const classes = useStyles();
   const visible = useSelector((state) => state.sectors.create_sector);
+  const locale_item_id = useSelector(
+    (state) => state.sectors.sectors_list.id_institution
+  );
 
   const dispatch = useDispatch();
 
@@ -38,6 +41,20 @@ export default function Create() {
 
   const handleOnClose = () => {
     dispatch(CreatorsSector.hideNewSector());
+    setDescricao("");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    var obj = {
+      locale_item_id,
+      description: descricao,
+    };
+
+    dispatch(CreatorsSector.createSectorRequest(obj));
+
+    handleOnClose();
   };
 
   return (
@@ -66,80 +83,82 @@ export default function Create() {
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={12}>
-              <Typography
-                variant="h4"
-                style={{
-                  color: "#a4a4a4",
-                }}
-              >
-                Setor
-              </Typography>
-            </Grid>
+          <form onSubmit={handleSubmit}>
             <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
             >
-              <div>
+              <Grid item xs={12} sm={12}>
                 <Typography
-                  variant="button"
+                  variant="h4"
                   style={{
                     color: "#a4a4a4",
                   }}
                 >
-                  Descrição:
+                  Setor
                 </Typography>
-                <TextField
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-              </div>
-            </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <div>
+                  <Typography
+                    variant="button"
+                    style={{
+                      color: "#a4a4a4",
+                    }}
+                  >
+                    Descrição:
+                  </Typography>
+                  <TextField
+                    required
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                  />
+                </div>
+              </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{
-                  width: "100%",
-                }}
-                onClick={handleOnClose}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Fechar
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                variant="contained"
-                style={{ color: "#0174DF", width: "100%" }}
-                type="submit"
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleOnClose}
+                >
+                  Fechar
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Criar
-              </Button>
+                <Button
+                  variant="contained"
+                  style={{ color: "#0174DF", width: "100%" }}
+                  type="submit"
+                >
+                  Criar
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>

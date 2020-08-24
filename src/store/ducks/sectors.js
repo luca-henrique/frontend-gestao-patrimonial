@@ -63,7 +63,35 @@ export default function Sector(state = INITIAL_STATE, action) {
       };
 
     case Types.HIDE_UPDATE_MODAL_SECTOR:
-      return { ...state, update_sector: { visible: false } };
+      return { ...state, update_sector: { visible: false, data: [] } };
+
+    case Types.READ_SECTORS_REQUEST:
+      return { ...state, loading_sectors: true };
+
+    case Types.READ_SECTORS_SUCCESS:
+      return { ...state, loading_sectors: false, sector: action.payload.data };
+
+    case Types.DELETE_SECTOR_SUCCESS:
+      return {
+        ...state,
+        sector: [
+          ...state.sector.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
+
+    case Types.CREATE_SECTOR_SUCCESS:
+      return {
+        ...state,
+        sector: [...state.sector, action.payload.data],
+      };
+
+    case Types.UPDATE_SECTOR_SUCCESS:
+      return {
+        ...state,
+        sector: updateItem(state.sector, action.payload.data),
+      };
 
     default:
       return state;
@@ -116,4 +144,51 @@ export const Creators = {
       data,
     },
   }),
+
+  createSectorRequest: (data) => ({
+    type: Types.CREATE_SECTOR_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  createSectorSuccess: (data) => ({
+    type: Types.CREATE_SECTOR_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  updateSectorRequest: (data) => ({
+    type: Types.UPDATE_SECTOR_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  updateSectorSuccess: (data) => ({
+    type: Types.UPDATE_SECTOR_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  deleteSectorRequest: (id) => ({
+    type: Types.DELETE_SECTOR_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  deleteSectorSuccess: (id) => ({
+    type: Types.DELETE_SECTOR_SUCCESS,
+    payload: {
+      id,
+    },
+  }),
 };
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}

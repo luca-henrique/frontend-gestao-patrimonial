@@ -11,8 +11,8 @@ import { Paper } from "@material-ui/core/";
 export default function Sectors() {
   const [selectedRow, setSelectedRow] = useState("");
 
-  const data = useSelector((state) => state.sectors.sectors);
-  const loading = useSelector((state) => state.sectors.loading);
+  const data = useSelector((state) => state.sectors.sector);
+  const loading = useSelector((state) => state.sectors.loading_sectors);
 
   const dispatch = useDispatch();
 
@@ -20,7 +20,9 @@ export default function Sectors() {
 
   const id = useSelector((state) => state.sectors.sectors_list.id_institution);
 
-  console.log(id);
+  const visible_sectors = useSelector(
+    (state) => state.sectors.sectors_list.visible
+  );
 
   const handleShowAccordingUnits = (id) => {
     dispatch(CreatorsUnits.showAccordingUnits(id));
@@ -35,8 +37,10 @@ export default function Sectors() {
   };
 
   useEffect(() => {
-    //dispatch(CreatorsSectors.readSectorsRequest(id));
-  }, [dispatch]);
+    if (!visible_sectors) {
+      dispatch(CreatorsSectors.readSectorsRequest(id));
+    }
+  }, [dispatch, id, visible_sectors]);
 
   return (
     <div style={{ width: "100%" }}>
@@ -54,7 +58,7 @@ export default function Sectors() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
         ]}
         onRowClick={(evt, selectedRow) => {
@@ -109,7 +113,9 @@ export default function Sectors() {
           {
             icon: "delete",
             tooltip: "Deletar",
-            onClick: (event) => {},
+            onClick: (event, rowData) => {
+              dispatch(CreatorsSectors.deleteSectorRequest(rowData.id));
+            },
           },
 
           {

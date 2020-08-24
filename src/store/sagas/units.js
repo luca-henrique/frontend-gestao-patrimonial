@@ -1,37 +1,38 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../service/api";
-import { Creators as CreatorsLowItem } from "../ducks/units";
+import { Creators as CreatorsUnit } from "../ducks/units";
 import { toastr } from "react-redux-toastr";
 
-export function* readUnit() {
+export function* readUnit({ payload }) {
   try {
-    const { data } = yield call(api.get, "/units");
-    //yield put(CreatorsLowItem.readLowItemSuccess(data));
+    console.log(payload);
+    const { data } = yield call(api.get, `/units/${payload.id}`);
+    yield put(CreatorsUnit.readUnitSuccess(data));
   } catch (err) {}
 }
 
 export function* createUnit({ payload }) {
   try {
-    const { low } = payload;
-    const { data } = yield call(api.post, "/units", low);
-    //yield put(CreatorsLowItem.createLowItemSuccess(data));
-    toastr.success("A baixa foi criada.");
+    console.log(payload.data);
+    const { data } = yield call(api.post, "/unit", payload.data);
+    yield put(CreatorsUnit.createUnitSuccess(data));
+    toastr.success("A únidade foi criada.");
   } catch (err) {}
 }
 
 export function* deleteUnit({ payload }) {
   try {
-    yield call(api.delete, `/units/${payload.id}`);
-    // yield put(CreatorsLowItem.deleteLowItemSuccess(payload.id));
-    toastr.error("A baixa foi removida");
+    yield call(api.delete, `/unit/${payload.id}`);
+    yield put(CreatorsUnit.deleteUnitSuccess(payload.id));
+    toastr.error("A únidade foi removida");
   } catch (err) {}
 }
 
 export function* updateUnit({ payload }) {
   try {
-    const { low } = payload;
-    yield call(api.put, `/units/${low.id}`, low);
-    //yield put(CreatorsLowItem.updateLowItemSuccess(low));
-    toastr.success("A baixa foi atualizada.");
+    const { data } = payload;
+    yield call(api.put, `/unit/${data.id}`, data);
+    yield put(CreatorsUnit.updateUnitSuccess(data));
+    toastr.success("A únidade foi atualizada.");
   } catch (err) {}
 }

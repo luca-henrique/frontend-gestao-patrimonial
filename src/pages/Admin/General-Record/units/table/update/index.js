@@ -37,21 +37,21 @@ export default function Create() {
 
   const dispatch = useDispatch();
 
-  const [descricao, setDescricao] = useState("");
-  const [responsavel, setResponsavel] = useState("");
+  const [description, setDescription] = useState("");
+  const [responsible, setResponsible] = useState("");
 
   React.useEffect(() => {
-    setDescricao(data.descricao);
-    setResponsavel(data.responsavel);
-  }, [data.descricao, data.responsavel]);
+    setDescription(data.description);
+    setResponsible(data.responsible);
+  }, [data.description, data.responsible]);
 
   const handleOnSubmitUpdate = (e) => {
     e.preventDefault();
 
     var unit = {
       id: data.id,
-      descricao,
-      responsavel,
+      description,
+      responsible,
     };
 
     dispatch(CreatorsUnits.updateUnitRequest(unit));
@@ -59,8 +59,8 @@ export default function Create() {
   };
 
   const handleOnClose = () => {
-    setDescricao("");
-    setResponsavel("");
+    setDescription("");
+    setResponsible("");
     dispatch(CreatorsUnits.hideUpdateUnits());
   };
 
@@ -128,8 +128,8 @@ export default function Create() {
                     size="small"
                     type="text"
                     fullWidth
-                    value={descricao || ""}
-                    onChange={(e) => setDescricao(e.target.value)}
+                    value={description || ""}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -155,8 +155,8 @@ export default function Create() {
                     size="small"
                     type="text"
                     fullWidth
-                    value={responsavel || ""}
-                    onChange={(e) => setResponsavel(e.target.value)}
+                    value={responsible || ""}
+                    onChange={(e) => setResponsible(e.target.value)}
                   />
                 </div>
               </Grid>

@@ -1,29 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsUnits } from "~/store/ducks/units";
 
 import MaterialTable from "material-table";
 import { Paper } from "@material-ui/core/";
 
-import CreatePage from "./create";
-import UpdatePage from "./update";
-
 export default function Units() {
   const [selectedRow, setSelectedRow] = useState("");
 
-  const data = [
-    {
-      id: 1,
-      descricao: "DEPARTAMENTO DE OBRAS E INFRA ESTRUTURA",
-      responsavel: "Henrique Paes",
-    },
-    {
-      id: 2,
-      descricao: "DEPARTAMENTO DE SERVIÇOS PUBLICOS PERMANENTE",
-      responsavel: "Lucas Henrique Paes de Carvalho",
-    },
-  ];
+  const data = useSelector((state) => state.units.units);
+
+  const loading = useSelector((state) => state.units.loading_units);
 
   const dispatch = useDispatch();
 
@@ -34,11 +22,22 @@ export default function Units() {
   const handleShowUpdate = (data) => {
     dispatch(CreatorsUnits.showUpdateUnits(data));
   };
+
+  const id = useSelector((state) => state.units.units_list.id_sector);
+  const visible_unit = useSelector((state) => state.units.units_list.visible);
+
+  useEffect(() => {
+    if (!visible_unit) {
+      dispatch(CreatorsUnits.readUnitRequest(id));
+    }
+  }, [dispatch, id, visible_unit]);
+
   return (
     <div style={{ width: "100%" }}>
       <MaterialTable
         data={data}
         title={null}
+        loading={loading}
         components={{
           Container: (props) => <Paper {...props} elevation={0} />,
         }}
@@ -49,11 +48,11 @@ export default function Units() {
           },
           {
             title: "Descrição",
-            field: "descricao",
+            field: "description",
           },
           {
             title: "Responsavel",
-            field: "responsavel",
+            field: "responsible",
           },
         ]}
         onRowClick={(evt, selectedRow) => {
@@ -114,8 +113,6 @@ export default function Units() {
           },
         ]}
       />
-      <CreatePage />
-      <UpdatePage />
     </div>
   );
 }

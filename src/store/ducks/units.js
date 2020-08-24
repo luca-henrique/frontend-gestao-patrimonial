@@ -29,13 +29,13 @@ export const Types = {
 
 const INITIAL_STATE = Immutable({
   units_list: { visible: true, id_sector: 0 },
+
   create_units: false,
+
   update_units: { visible: false, data: [] },
 
-  create_unit_resquest: {},
-  read_units_request: 0,
-  update_unit_resquest: {},
-  delete_unit_request: 0,
+  units: [],
+  loading_units: false,
 });
 
 export default function Units(state = INITIAL_STATE, action) {
@@ -69,17 +69,33 @@ export default function Units(state = INITIAL_STATE, action) {
 
     /* CRUD[REQUEST] */
 
-    case Types.CREATE_UNITS_REQUEST:
-      return { ...state, create_unit_request: action.payload.unit };
-
     case Types.READ_UNITS_REQUEST:
-      return { ...state, read_units_request: action.payload.id };
+      return { ...state, loading_units: true };
 
-    case Types.UPDATE_UNITS_REQUEST:
-      return { ...state, update_unit_request: action.payload.unit };
+    case Types.READ_UNITS_SUCCESS:
+      return { ...state, loading_units: false, units: action.payload.data };
 
-    case Types.DELETE_UNITS_REQUEST:
-      return { ...state, delete_unit_request: action.payload.id };
+    case Types.DELETE_UNITS_SUCCESS:
+      return {
+        ...state,
+        units: [
+          ...state.units.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
+
+    case Types.CREATE_UNITS_SUCCESS:
+      return {
+        ...state,
+        units: [...state.units, action.payload.data],
+      };
+
+    case Types.UPDATE_UNITS_SUCCESS:
+      return {
+        ...state,
+        units: updateItem(state.units, action.payload.data),
+      };
 
     default:
       return state;
@@ -119,13 +135,6 @@ export const Creators = {
 
   /* --> Modal <-- */
 
-  createUnitRequest: (unit) => ({
-    type: Types.CREATE_UNITS_REQUEST,
-    payload: {
-      unit,
-    },
-  }),
-
   readUnitRequest: (id) => ({
     type: Types.READ_UNITS_REQUEST,
     payload: {
@@ -133,10 +142,38 @@ export const Creators = {
     },
   }),
 
-  updateUnitRequest: (unit) => ({
+  readUnitSuccess: (data) => ({
+    type: Types.READ_UNITS_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  createUnitRequest: (data) => ({
+    type: Types.CREATE_UNITS_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  createUnitSuccess: (data) => ({
+    type: Types.CREATE_UNITS_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  updateUnitRequest: (data) => ({
     type: Types.UPDATE_UNITS_REQUEST,
     payload: {
-      unit,
+      data,
+    },
+  }),
+
+  updateUnitSuccess: (data) => ({
+    type: Types.UPDATE_UNITS_SUCCESS,
+    payload: {
+      data,
     },
   }),
 
@@ -146,4 +183,16 @@ export const Creators = {
       id,
     },
   }),
+
+  deleteUnitSuccess: (id) => ({
+    type: Types.DELETE_UNITS_SUCCESS,
+    payload: {
+      id,
+    },
+  }),
 };
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}

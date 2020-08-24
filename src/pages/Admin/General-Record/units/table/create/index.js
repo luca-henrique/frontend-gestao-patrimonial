@@ -32,7 +32,7 @@ export default function Create() {
   const classes = useStyles();
   const visible = useSelector((state) => state.units.create_units);
 
-  const id_sector = useSelector((state) => state.units.units_list.id_sector);
+  const sector_id = useSelector((state) => state.units.units_list.id_sector);
 
   const dispatch = useDispatch();
 
@@ -43,9 +43,9 @@ export default function Create() {
     e.preventDefault();
 
     var unit = {
-      id_sector,
-      descricao,
-      responsavel,
+      sector_id,
+      description: descricao,
+      responsible: responsavel,
     };
 
     dispatch(CreatorsUnits.createUnitRequest(unit));

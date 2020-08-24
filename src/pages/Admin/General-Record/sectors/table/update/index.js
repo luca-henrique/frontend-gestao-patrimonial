@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Creators as CreatorsSector } from "~/store/ducks/sectors";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Create() {
   const classes = useStyles();
   const visible = useSelector((state) => state.sectors.update_sector.visible);
+  const data = useSelector((state) => state.sectors.update_sector.data);
 
   const dispatch = useDispatch();
 
@@ -38,6 +39,21 @@ export default function Create() {
 
   const handleOnClose = () => {
     dispatch(CreatorsSector.hideUpdateSector());
+    setDescricao("");
+  };
+
+  useEffect(() => {
+    setDescricao(data.description);
+  }, [data.description]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var obj = {
+      id: data.id,
+      description: descricao,
+    };
+    dispatch(CreatorsSector.updateSectorRequest(obj));
+    handleOnClose();
   };
 
   return (
@@ -66,80 +82,82 @@ export default function Create() {
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={12}>
-              <Typography
-                variant="h4"
-                style={{
-                  color: "#a4a4a4",
-                }}
-              >
-                Setor
-              </Typography>
-            </Grid>
+          <form onSubmit={handleSubmit}>
             <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
             >
-              <div>
+              <Grid item xs={12} sm={12}>
                 <Typography
-                  variant="button"
+                  variant="h4"
                   style={{
                     color: "#a4a4a4",
                   }}
                 >
-                  Descrição:
+                  Setor
                 </Typography>
-                <TextField
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-              </div>
-            </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <div>
+                  <Typography
+                    variant="button"
+                    style={{
+                      color: "#a4a4a4",
+                    }}
+                  >
+                    Descrição:
+                  </Typography>
+                  <TextField
+                    required
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                  />
+                </div>
+              </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{
-                  width: "100%",
-                }}
-                onClick={handleOnClose}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Fechar
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                variant="contained"
-                style={{ color: "#0174DF", width: "100%" }}
-                type="submit"
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleOnClose}
+                >
+                  Fechar
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Atualizar
-              </Button>
+                <Button
+                  variant="contained"
+                  style={{ color: "#0174DF", width: "100%" }}
+                  type="submit"
+                >
+                  Atualizar
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>
