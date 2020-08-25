@@ -4,7 +4,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
-import { Creators as CreatorsAccount } from "~/store/ducks/account";
 import AuthAction from "~/store/ducks/auth";
 
 /* -> fica verificando se é desktop ou mobile <- */
@@ -54,7 +53,6 @@ export default function Menu() {
         className={classes.list_item}
         onClick={() => {
           changePage("account");
-          dispatch(CreatorsAccount.readAccountRequest());
         }}
       >
         <ListItemIcon>

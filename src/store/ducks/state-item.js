@@ -27,6 +27,9 @@ export const Types = {
 const INITIAL_STATE = Immutable({
   create_state_item: false,
   update_state_item: { visible: false, data: [] },
+
+  state_items: [],
+  loading_state_items: false,
 });
 
 export default function StateItem(state = INITIAL_STATE, action) {
@@ -46,6 +49,38 @@ export default function StateItem(state = INITIAL_STATE, action) {
 
     case Types.HIDE_UPDATE_MODAL_STATE_ITEM:
       return { ...state, update_state_item: { visible: false, data: [] } };
+
+    case Types.READ_STATE_ITEM_REQUEST:
+      return { ...state, loading_state_items: true };
+
+    case Types.READ_STATE_ITEM_SUCCESS:
+      return {
+        ...state,
+        state_items: action.payload.data,
+        loading_state_items: false,
+      };
+
+    case Types.DELETE_STATE_ITEM_SUCCESS:
+      return {
+        ...state,
+        state_items: [
+          ...state.state_items.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
+
+    case Types.CREATE_STATE_ITEM_SUCCESS:
+      return {
+        ...state,
+        state_items: [...state.state_items, action.payload.data],
+      };
+
+    case Types.UPDATE_STATE_ITEM_SUCCESS:
+      return {
+        ...state,
+        state_items: updateItem(state.state_items, action.payload.data),
+      };
 
     default:
       return state;
@@ -70,4 +105,62 @@ export const Creators = {
     type: Types.HIDE_UPDATE_MODAL_STATE_ITEM,
   }),
   /* --> Modal <-- */
+
+  readStateItemRequest: () => ({
+    type: Types.READ_STATE_ITEM_REQUEST,
+  }),
+
+  readStateItemSuccess: (data) => ({
+    type: Types.READ_STATE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  createStateItemRequest: (data) => ({
+    type: Types.CREATE_STATE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  createStateItemSuccess: (data) => ({
+    type: Types.CREATE_STATE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  updateStateItemRequest: (data) => ({
+    type: Types.UPDATE_STATE_ITEM_REQUEST,
+    payload: {
+      data,
+    },
+  }),
+
+  updateStateItemSuccess: (data) => ({
+    type: Types.UPDATE_STATE_ITEM_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  deleteStateItemRequest: (id) => ({
+    type: Types.DELETE_STATE_ITEM_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  deleteStateItemSuccess: (id) => ({
+    type: Types.DELETE_STATE_ITEM_SUCCESS,
+    payload: {
+      id,
+    },
+  }),
 };
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}

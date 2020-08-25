@@ -38,6 +38,18 @@ export default function Create() {
 
   const handleOnClose = () => {
     dispatch(CreatorsOriginItem.hideNewOriginItem());
+    setDescricao("");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var obj = {
+      description: descricao,
+    };
+
+    dispatch(CreatorsOriginItem.createOriginItemRequest(obj));
+
+    handleOnClose();
   };
 
   return (
@@ -66,80 +78,82 @@ export default function Create() {
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={12}>
-              <Typography
-                variant="h4"
-                style={{
-                  color: "#a4a4a4",
-                }}
-              >
-                Origem
-              </Typography>
-            </Grid>
+          <form onSubmit={handleSubmit}>
             <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
             >
-              <div>
+              <Grid item xs={12} sm={12}>
                 <Typography
-                  variant="button"
+                  variant="h4"
                   style={{
                     color: "#a4a4a4",
                   }}
                 >
-                  Descrição:
+                  Origem
                 </Typography>
-                <TextField
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-              </div>
-            </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
+              >
+                <div>
+                  <Typography
+                    variant="button"
+                    style={{
+                      color: "#a4a4a4",
+                    }}
+                  >
+                    Descrição:
+                  </Typography>
+                  <TextField
+                    required
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                  />
+                </div>
+              </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{
-                  width: "100%",
-                }}
-                onClick={handleOnClose}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Fechar
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{ marginTop: "25px", width: "100%" }}
-            >
-              <Button
-                variant="contained"
-                style={{ color: "#0174DF", width: "100%" }}
-                type="submit"
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleOnClose}
+                >
+                  Fechar
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{ marginTop: "25px", width: "100%" }}
               >
-                Criar
-              </Button>
+                <Button
+                  variant="contained"
+                  style={{ color: "#0174DF", width: "100%" }}
+                  type="submit"
+                >
+                  Criar
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>

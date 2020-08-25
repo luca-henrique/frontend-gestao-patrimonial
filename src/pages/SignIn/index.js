@@ -56,13 +56,18 @@ export default function SignUp() {
             </Typography>
           </div>
           <div className={classes.input}>
-            <Typography variant="button" className={classes.typography}>
+            <Typography
+              variant="button"
+              className={classes.typography}
+              id="email"
+            >
               Email:
             </Typography>
             <ValidationTextField
               required
               variant="outlined"
               size="small"
+              for="email"
               fullWidth
               type="email"
               value={email}
@@ -70,13 +75,18 @@ export default function SignUp() {
             />
           </div>
           <div className={classes.input}>
-            <Typography variant="button" className={classes.typography}>
+            <Typography
+              variant="button"
+              className={classes.typography}
+              id="password"
+            >
               Senha:
             </Typography>
             <ValidationTextField
               required
               variant="outlined"
               size="small"
+              for="password"
               fullWidth
               type="password"
               value={password}

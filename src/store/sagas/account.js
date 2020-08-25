@@ -2,18 +2,18 @@ import { call, put } from "redux-saga/effects";
 import api from "../../service/api";
 import { Creators as CreatorsAccount } from "../ducks/account";
 
+import { store } from "~/store/index";
+
 import { push } from "connected-react-router";
+
+import { toastr } from "react-redux-toastr";
 
 export function* readUserJoined() {
   try {
     const { data } = yield call(api.get, "/user-joined");
     yield put(CreatorsAccount.readAccountJoinedSuccess(data));
 
-    if (data.role) {
-      yield put(push("/admin"));
-    } else {
-      yield put(push("/user"));
-    }
+    yield put(push("/admin"));
   } catch (err) {}
 }
 
@@ -45,7 +45,14 @@ export function* updateAccount({ payload }) {
     const { account } = payload;
     const { data } = yield call(api.put, `/user/${account.id}`, account);
     yield put(CreatorsAccount.updateAccountSuccess(data));
-  } catch (err) {}
+    if (store.getState().account.account_joined.id === account.id) {
+      toastr.success("Suas informações foram atualizadas.");
+    } else {
+      toastr.success("As informações foram do úsuario atualizadas.");
+    }
+  } catch (err) {
+    toastr.error("Erro ao atualiza as informações.");
+  }
 }
 
 export function* changerPasswordAccount({ payload }) {
