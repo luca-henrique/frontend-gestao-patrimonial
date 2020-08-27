@@ -103,6 +103,15 @@ import { readSector, createSector, updateSector, deleteSector } from "./sector";
 import { Types as UnitsTypes } from "../ducks/units";
 import { readUnit, createUnit, deleteUnit, updateUnit } from "./units";
 
+import { Types as PatrimonyTypes } from "../ducks/patrimony";
+import {
+  readPatrimony,
+  createPatrimony,
+  updatePatrimony,
+  deletePatrimony,
+  duplicatePatrimony,
+} from "./patrimony";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
@@ -210,5 +219,11 @@ export default function* rootSaga() {
     takeLatest(UnitsTypes.CREATE_UNITS_REQUEST, createUnit),
     takeLatest(UnitsTypes.UPDATE_UNITS_REQUEST, updateUnit),
     takeLatest(UnitsTypes.DELETE_UNITS_REQUEST, deleteUnit),
+
+    takeLatest(PatrimonyTypes.READ_PATRIMONY_REQUEST, readPatrimony),
+    takeLatest(PatrimonyTypes.CREATE_PATRIMONY_REQUEST, createPatrimony),
+    takeLatest(PatrimonyTypes.UPDATE_PATRIMONY_REQUEST, updatePatrimony),
+    takeLatest(PatrimonyTypes.DELETE_PATRIMONY_REQUEST, deletePatrimony),
+    takeLatest(PatrimonyTypes.DELETE_PATRIMONY_REQUEST, duplicatePatrimony),
   ]);
 }

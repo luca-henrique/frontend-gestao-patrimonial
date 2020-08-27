@@ -25,6 +25,8 @@ export const Types = {
 
   DELETE_UNITS_REQUEST: "@UNITS/DELETE_UNITS_REQUEST",
   DELETE_UNITS_SUCCESS: "@UNITS/DELETE_UNITS_SUCCESS",
+
+  CHANGER_LOADING_UNIT: "@UNITS/CHANGER_LOADING_UNIT",
 };
 
 const INITIAL_STATE = Immutable({
@@ -95,6 +97,13 @@ export default function Units(state = INITIAL_STATE, action) {
       return {
         ...state,
         units: updateItem(state.units, action.payload.data),
+      };
+
+    case Types.CHANGER_LOADING_UNIT:
+      return {
+        ...state,
+        loading_units: true,
+        units: [],
       };
 
     default:
@@ -189,6 +198,10 @@ export const Creators = {
     payload: {
       id,
     },
+  }),
+
+  changerLoadingUnits: () => ({
+    type: Types.CHANGER_LOADING_UNIT,
   }),
 };
 

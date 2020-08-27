@@ -5,6 +5,7 @@ import { toastr } from "react-redux-toastr";
 
 export function* readSector({ payload }) {
   try {
+    console.log(payload);
     const { data } = yield call(api.get, `/sectors/${payload.id}`);
     yield put(CreatorsSector.readSectorsSuccess(data));
   } catch (err) {}

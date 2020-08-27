@@ -25,6 +25,8 @@ export const Types = {
 
   DELETE_SECTOR_REQUEST: "@sector/DELETE_SECTOR_REQUEST",
   DELETE_SECTOR_SUCCESS: "@sector/DELETE_SECTOR_SUCCESS",
+
+  CHANGER_LOAGIND_SECTOR: "@sector/CHANGER_LOAGIND_SECTOR",
 };
 
 const INITIAL_STATE = Immutable({
@@ -91,6 +93,12 @@ export default function Sector(state = INITIAL_STATE, action) {
       return {
         ...state,
         sector: updateItem(state.sector, action.payload.data),
+      };
+
+    case Types.CHANGER_LOAGIND_SECTOR:
+      return {
+        ...state,
+        loading_sectors: true,
       };
 
     default:
@@ -185,6 +193,10 @@ export const Creators = {
     payload: {
       id,
     },
+  }),
+
+  changerLoadingSector: () => ({
+    type: Types.CHANGER_LOAGIND_SECTOR,
   }),
 };
 

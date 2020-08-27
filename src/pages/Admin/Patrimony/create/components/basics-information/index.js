@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { useSelector } from "react-redux";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,13 +20,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BasicsInformations = () => {
+const BasicsInformations = React.memo(({ basicsInformations }) => {
   const classes = useStyles();
 
   const [tipping, setTipping] = useState("");
   const [discrimination, setDisrimination] = useState("");
   const [dateEntry, setDateEntry] = useState("");
   const [specification, setSpecification] = useState("");
+
+  const pageLocaton = useSelector((state) => state.page.location);
+
+  let today = new Date().toISOString().slice(0, 10);
+
+  useEffect(() => {
+    setDateEntry(today);
+    if (pageLocaton === "patrimony_list") {
+      setTipping("");
+      setDisrimination("");
+      setSpecification("");
+    }
+  }, [today, pageLocaton]);
+
+  basicsInformations({ tipping, discrimination, dateEntry, specification });
 
   return (
     <>
@@ -36,6 +53,7 @@ const BasicsInformations = () => {
         <div>
           <Typography variant="button">Tombamento:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -49,6 +67,7 @@ const BasicsInformations = () => {
         <div>
           <Typography variant="button">Descriminação do bem:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -62,6 +81,7 @@ const BasicsInformations = () => {
         <div>
           <Typography variant="button">Data de entrada:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -76,6 +96,7 @@ const BasicsInformations = () => {
         <div>
           <Typography variant="button">Especificação:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -89,6 +110,6 @@ const BasicsInformations = () => {
       </Grid>
     </>
   );
-};
+});
 
 export default BasicsInformations;
