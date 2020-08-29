@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import MaterialTable from "material-table";
 
 import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import WarningIcon from "@material-ui/icons/Warning";
 import Typography from "@material-ui/core/Typography";
@@ -12,52 +12,21 @@ import Typography from "@material-ui/core/Typography";
 function View() {
   const date = new Date().toISOString().slice(0, 10);
 
-  const data = [
-    {
-      id: 214,
-      tipping: 1,
-      discrimination: "CHAVE PRT MN PDWM 10,0CV",
-      situation: "ativo",
-      commit: "okfgoekr",
-      buy_date: date,
-      invoice: "1565444",
-      institution: "SECRETARIA DE SAUDE",
-      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-    },
-    {
-      id: 332,
-      tipping: 1,
-      discrimination: "CHAVE PRT MN PDWM 10,0CV",
-      situation: "transferido",
-      commit: "okfgoekr",
-      buy_date: date,
-      invoice: "1565444",
-      institution: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-    },
-    {
-      id: 5456,
-      tipping: 1,
-      discrimination: "CHAVE PRT MN PDWM 10,0CV",
-      situation: "baixa",
-      commit: "okfgoekr",
-      buy_date: date,
-      invoice: "1565444",
-      institution: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-    },
-  ];
+  const dispatch = useDispatch();
+
+  const data = useSelector((state) => state.patrimony_item.patrimonies);
+
+  useEffect(() => {
+    dispatch(CreatorsPatrimony.readPatrimonyRequest());
+  }, [dispatch]);
+
+  console.log(data);
 
   const colors = {
     ativo: "#088A08",
     transferido: "#FF8000",
     baixa: "#DF0101",
   };
-
-  const dispatch = useDispatch();
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -85,30 +54,30 @@ function View() {
 
           {
             title: "Empenho",
-            field: "commit",
+            field: "effort",
           },
 
           {
             title: "Data da Compra",
-            field: "buy_date",
+            field: "dateBuy",
             type: "date",
           },
 
           {
             title: "Nota fiscal",
-            field: "invoice",
+            field: "numberInvoice",
           },
           {
             title: "Orgão",
-            field: "institution",
+            field: "local.description",
           },
           {
             title: "Setor",
-            field: "sector",
+            field: "sector.description",
           },
           {
             title: "Únidade",
-            field: "unit",
+            field: "unit.description",
           },
         ]}
         options={{

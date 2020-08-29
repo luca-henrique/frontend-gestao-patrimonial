@@ -19,6 +19,7 @@
     "history": "^4.10.1",
     "immer": "^6.0.2",
     "material-table": "^1.57.2",
+    "moment": "^2.27.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-device-detect": "^1.13.1",

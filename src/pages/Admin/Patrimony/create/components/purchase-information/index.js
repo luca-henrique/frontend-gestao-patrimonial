@@ -34,6 +34,27 @@ const Purchase = React.memo(({ purchaseInformation }) => {
 
   const classes = useStyles();
 
+  function convertToReal(valor) {
+    const v = ((valor.replace(/\D/g, "") / 100).toFixed(2) + "").split(".");
+
+    const m = v[0]
+      .split("")
+      .reverse()
+      .join("")
+      .match(/.{1,3}/g);
+
+    for (let i = 0; i < m.length; i++)
+      m[i] =
+        m[i]
+          .split("")
+          .reverse()
+          .join("") + ".";
+
+    const r = m.reverse().join("");
+
+    return r.substring(0, r.lastIndexOf(".")) + "," + v[1];
+  }
+
   purchaseInformation({
     bidding,
     effort,
@@ -102,7 +123,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
             variant="outlined"
             size="small"
             fullWidth
-            value={value}
+            value={convertToReal(value)}
             onChange={(e) => setValue(e.target.value)}
             InputProps={{
               startAdornment: (

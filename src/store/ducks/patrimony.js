@@ -30,6 +30,12 @@ export const Types = {
 
 const INITIAL_STATE = Immutable({
   show_patrimony: {},
+
+  create_low_item: false,
+  update_low_item: { visible: false, data: [] },
+
+  patrimonies: [],
+  loading_patrimony: false,
 });
 
 export default function User(state = INITIAL_STATE, action) {
@@ -38,6 +44,38 @@ export default function User(state = INITIAL_STATE, action) {
       return { ...state, show_patrimony: action.payload.item };
     case Types.HIDE_PATRIMONY:
       return { ...state, show_patrimony: {} };
+
+    case Types.READ_PATRIMONY_REQUEST:
+      return { ...state, loading_patrimony: true };
+
+    case Types.READ_PATRIMONY_SUCCESS:
+      return {
+        ...state,
+        loading_patrimony: false,
+        patrimonies: action.payload.data,
+      };
+
+    case Types.CREATE_PATRIMONY_SUCCESS:
+      return {
+        ...state,
+        patrimonies: [...state.patrimonies, action.payload.data],
+      };
+
+    case Types.UPDATE_PATRIMONY_SUCCESS:
+      return {
+        ...state,
+        patrimonies: updateItem(state.patrimonies, action.payload.data),
+      };
+
+    case Types.DELETE_PATRIMONY_SUCCESS:
+      return {
+        ...state,
+        patrimonies: [
+          ...state.patrimonies.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
 
     default:
       return state;
@@ -126,3 +164,8 @@ export const Creators = {
     },
   }),
 };
+
+function updateItem(items, item) {
+  const index = items.findIndex((itemArray) => itemArray.id === item.id);
+  return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}

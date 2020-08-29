@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -21,10 +25,29 @@ const useStyles = makeStyles((theme) => ({
 const BasicsInformations = () => {
   const classes = useStyles();
 
+  const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
+
   const [tipping, setTipping] = useState("");
   const [discrimination, setDisrimination] = useState("");
   const [dateEntry, setDateEntry] = useState("");
   const [specification, setSpecification] = useState("");
+
+  useEffect(() => {
+    setTipping(patrimony.tipping);
+    setDisrimination(patrimony.discrimination);
+    setDateEntry(patrimony.dateEntry);
+    setSpecification(patrimony.specification);
+  }, [
+    patrimony.dateEntry,
+    patrimony.discrimination,
+    patrimony.specification,
+    patrimony.tipping,
+  ]);
+
+  function formatDate(data) {
+    const date = moment(data).format("YYYY-MM-DD");
+    return date;
+  }
 
   return (
     <>
@@ -66,7 +89,7 @@ const BasicsInformations = () => {
             size="small"
             fullWidth
             type="date"
-            value={dateEntry}
+            value={formatDate(dateEntry)}
             onChange={(e) => setDateEntry(e.target.value)}
           />
         </div>
