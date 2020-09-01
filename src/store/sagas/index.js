@@ -112,6 +112,12 @@ import {
   duplicatePatrimony,
 } from "./patrimony";
 
+import { Types as LowPatrimony } from "../ducks/low-patrimony-item";
+import {
+  readLowItemPatrimony,
+  createLowItemPatrimony,
+} from "./low-patrimony-item";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
@@ -225,5 +231,11 @@ export default function* rootSaga() {
     takeLatest(PatrimonyTypes.UPDATE_PATRIMONY_REQUEST, updatePatrimony),
     takeLatest(PatrimonyTypes.DELETE_PATRIMONY_REQUEST, deletePatrimony),
     takeLatest(PatrimonyTypes.DELETE_PATRIMONY_REQUEST, duplicatePatrimony),
+
+    takeLatest(
+      LowPatrimony.CREATE_LOW_PATRIMONY_REQUEST,
+      createLowItemPatrimony
+    ),
+    takeLatest(LowPatrimony.READ_LOW_PATRIMONY_REQUEST, readLowItemPatrimony),
   ]);
 }

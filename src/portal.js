@@ -73,6 +73,21 @@ const UpdateUnitModal = lazy(() =>
   import("./pages/Admin/General-Record/units/table/update")
 );
 
+const CreateLowItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-low/create")
+);
+
+const RemoveLowItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-low/remove")
+);
+
+const CreateOccurrenceItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-occurrence/create")
+);
+const UpdateOccurrenceItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-occurrence/update")
+);
+
 const Main = () => {
   const ChangerPassword = () => create(<ChangerPasswordModal />);
   const CreateAccount = () => create(<CreateAccountModal />);
@@ -104,6 +119,14 @@ const Main = () => {
 
   const CreateUnit = () => create(<CreateUnitModal />);
   const UpdateUnit = () => create(<UpdateUnitModal />);
+
+  const CreateLowItemPatrimony = () => create(<CreateLowItemPatrimonyModal />);
+  const RemoveLowItemPatrimony = () => create(<RemoveLowItemPatrimonyModal />);
+
+  const CreateOccurrenceItemPatrimony = () =>
+    create(<CreateOccurrenceItemPatrimonyModal />);
+  const RemoveOccurrenceItemPatrimony = () =>
+    create(<UpdateOccurrenceItemPatrimonyModal />);
 
   return (
     <Suspense fallback={<Loader />}>
@@ -137,6 +160,12 @@ const Main = () => {
 
       <CreateUnit />
       <UpdateUnit />
+
+      <CreateLowItemPatrimony />
+      <RemoveLowItemPatrimony />
+
+      <CreateOccurrenceItemPatrimony />
+      <RemoveOccurrenceItemPatrimony />
     </Suspense>
   );
 };

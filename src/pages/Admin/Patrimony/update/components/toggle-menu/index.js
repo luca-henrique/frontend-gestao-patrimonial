@@ -41,7 +41,10 @@ const actions = [
     name: "Ocorrência",
   }, // Modal com uma lista de ocorrências
   { icon: <SyncAltIcon style={{ color: "#a4a4a4" }} />, name: "Transferência" }, // Modal com uma lista de transferências
-  { icon: <img src={Icon} alt="Baixa" />, name: "Baixa" },
+  {
+    icon: <img src={Icon} alt="Baixa" />,
+    name: "Baixa",
+  },
   { icon: <LoopIcon style={{ color: "#a4a4a4" }} />, name: "Duplicar" }, //Duplicar o item mudando o numero de tombamento
   {
     icon: <DeleteOutlineIcon style={{ color: "#FF0040" }} />,

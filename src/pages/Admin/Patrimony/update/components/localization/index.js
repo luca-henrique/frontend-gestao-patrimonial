@@ -37,10 +37,18 @@ const Localization = () => {
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
 
   useEffect(() => {
-    dispatch(CreatorsLocale.readLocaleItemRequest());
-    dispatch(CreatorsUnit.changerLoadingUnits());
-    dispatch(CreatorsSectors.changerLoadingSector());
-  }, [dispatch]);
+    setInstitution(patrimony.locale_item_id);
+    setSector(patrimony.sector_id);
+    setUnit(patrimony.unit_id);
+
+    dispatch(CreatorsSectors.readSectorsRequest(patrimony.locale_item_id));
+    dispatch(CreatorsUnit.readUnitRequest(patrimony.sector_id));
+  }, [
+    dispatch,
+    patrimony.locale_item_id,
+    patrimony.sector_id,
+    patrimony.unit_id,
+  ]);
 
   const locals = useSelector((state) => state.locale.locale_items);
   const loading_locale = useSelector(
@@ -75,7 +83,7 @@ const Localization = () => {
           disabled={loading_locale}
         >
           <Typography variant="button">Orgão:</Typography>
-          <Select native size="small" fullWidth>
+          <Select native size="small" fullWidth value={institution}>
             <option value="" />
             {locals.map((local) => (
               <option value={local.id} key={local.id}>
@@ -92,6 +100,7 @@ const Localization = () => {
           style={{ width: "100%" }}
           size="small"
           fullWidth
+          value={sector}
           onChange={(e) => {
             setSector(e.target.value);
             dispatch(CreatorsUnit.readUnitRequest(e.target.value));
@@ -99,7 +108,7 @@ const Localization = () => {
           disabled={loading_sectors}
         >
           <Typography variant="button">Setor:</Typography>
-          <Select native size="small" fullWidth>
+          <Select native size="small" fullWidth value={sector}>
             <option value="" />
             {sectors.map((sector) => (
               <option value={sector.id} key={sector.id}>
@@ -121,7 +130,7 @@ const Localization = () => {
           disabled={loading_units}
         >
           <Typography variant="button">Únidade:</Typography>
-          <Select native size="small" fullWidth>
+          <Select native size="small" fullWidth value={unit}>
             <option value="" />
             {units.map((unit) => (
               <option value={unit.id} key={unit.id}>
@@ -136,3 +145,23 @@ const Localization = () => {
 };
 
 export default Localization;
+
+/*
+
+ onChange={(e) => {
+            setInstitution(e.target.value);
+            dispatch(CreatorsSectors.readSectorsRequest(e.target.value));
+            dispatch(CreatorsUnit.changerLoadingUnits());
+            setUnit("");
+          }}
+
+onChange={(e) => setUnit(e.target.value)}
+
+
+ onChange={(e) => {
+            setSector(e.target.value);
+            dispatch(CreatorsUnit.readUnitRequest(e.target.value));
+          }}
+
+
+*/

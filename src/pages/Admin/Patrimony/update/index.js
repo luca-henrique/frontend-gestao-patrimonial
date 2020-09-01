@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Creators as CreatorsPage } from "~/store/ducks/page";
-import { useDispatch } from "react-redux";
+import { Creators as CreaatosLowPatrimony } from "~/store/ducks/low-patrimony-item";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Grid,
@@ -29,19 +30,6 @@ import Low from "./components/low/";
 import ToggleMenu from "./components/toggle-menu";
 
 import { makeStyles } from "@material-ui/core/styles";
-
-import DeleteDialogPatrimonyAdmin from "./components/modal-delete-admin";
-import DeleteDialogPatrimonyUser from "./components/modal-delete-user/";
-
-import DuplicateDialogPatrimony from "./components/modal-duplicate/";
-
-import TransferModalPatrimony from "./components/modal-transfer/list";
-
-import LowDialogPatrimonyCreate from "./components/modal-low/create";
-import LowDialogPatrimonyRemove from "./components/modal-low/remove";
-
-import OccurrenceDialogPatrimonyCreate from "./components/modal-occurrence/create";
-import OccurrenceDialogPatrimonyUpdate from "./components/modal-occurrence/update";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -74,6 +62,10 @@ const PatrimonyItem = () => {
   const [edit, setEdit] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const exist = useSelector(
+    (state) => state.low_patrimony_item.low_item_patrimony_exist
+  );
+
   function updateRequestPatrimonyItem(e) {
     e.preventDefault();
     changeEdit();
@@ -101,6 +93,12 @@ const PatrimonyItem = () => {
     }
     setOpen(false);
   };
+
+  const id = useSelector((state) => state.patrimony_item.show_patrimony.id);
+
+  useEffect(() => {
+    dispatch(CreaatosLowPatrimony.readLowPatrimonyRequest(id));
+  }, [dispatch, id]);
 
   return (
     <Grid
@@ -218,14 +216,19 @@ const PatrimonyItem = () => {
         </Grid>
 
         {/* Baixa */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Low />
-        </Grid>
+
+        {exist === true ? (
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <Low />
+          </Grid>
+        ) : (
+          <></>
+        )}
 
         <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
           <ToggleMenu />
@@ -255,19 +258,6 @@ const PatrimonyItem = () => {
           </Alert>
         </Snackbar>
       </form>
-
-      <DeleteDialogPatrimonyAdmin />
-      <DeleteDialogPatrimonyUser />
-
-      <DuplicateDialogPatrimony />
-
-      <TransferModalPatrimony />
-
-      <LowDialogPatrimonyCreate />
-      <LowDialogPatrimonyRemove />
-
-      <OccurrenceDialogPatrimonyCreate />
-      <OccurrenceDialogPatrimonyUpdate />
     </Grid>
   );
 };
