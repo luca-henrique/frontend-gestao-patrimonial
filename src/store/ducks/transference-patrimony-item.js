@@ -34,25 +34,17 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  show_modal_list_transference_patrimony: { visible: false, id_patrimony: 0 },
+  transference_patrimony: { visible: false, id_patrimony: 0 },
 
-  show_modal_create_transference_patrimony: { visible: false, id_patrimony: 0 },
+  create_transference_patrimony: { visible: false, id_patrimony: 0 },
 
-  show_modal_update_transference_patrimony: {
+  update_transference_patrimony: {
     visible: false,
     transference: {},
   },
 
-  create_transference_patrimony_request: { id_patrimony: 0, transference: {} },
-
-  read_transference_patrimony: { id_patrimony: 0, transferences: [] },
-
-  update_transference_patrimony_request: {
-    id_transference: 0,
-    transference: {},
-  },
-
-  delete_transference_patrimony_request: { id_transference: 0 },
+  read_transference_patrimony: [],
+  loading_transference_patrimony: false,
 });
 
 export default function transferencePatrimony(state = INITIAL_STATE, action) {
@@ -60,7 +52,7 @@ export default function transferencePatrimony(state = INITIAL_STATE, action) {
     case Types.SHOW_MODAL_LIST_TRANSFERENCE_PATRIMONY:
       return {
         ...state,
-        show_modal_list_transference_patrimony: {
+        transference_patrimony: {
           visible: true,
           id_patrimony: action.payload.id,
         },
@@ -68,7 +60,7 @@ export default function transferencePatrimony(state = INITIAL_STATE, action) {
     case Types.HIDE_MODAL_LIST_TRANSFERENCE_PATRIMONY:
       return {
         ...state,
-        show_modal_list_transference_patrimony: {
+        transference_patrimony: {
           visible: false,
           id_patrimony: 0,
         },
@@ -77,7 +69,7 @@ export default function transferencePatrimony(state = INITIAL_STATE, action) {
     case Types.SHOW_MODAL_CREATE_TRANSFERENCE_PATRIMONY:
       return {
         ...state,
-        show_modal_create_transference_patrimony: {
+        create_transference_patrimony: {
           visible: true,
           id_patrimony: action.payload.id,
         },
@@ -85,26 +77,9 @@ export default function transferencePatrimony(state = INITIAL_STATE, action) {
     case Types.HIDE_MODAL_CREATE_TRANSFERENCE_PATRIMONY:
       return {
         ...state,
-        show_modal_create_transference_patrimony: {
+        create_transference_patrimony: {
           visible: false,
           id_patrimony: 0,
-        },
-      };
-
-    case Types.SHOW_MODAL_UPDATE_TRANSFERENCE_PATRIMONY:
-      return {
-        ...state,
-        show_modal_update_transference_patrimony: {
-          visible: true,
-          transference: action.payload.data,
-        },
-      };
-    case Types.HIDE_MODAL_UPDATE_TRANSFERENCE_PATRIMONY:
-      return {
-        ...state,
-        show_modal_update_transference_patrimony: {
-          visible: false,
-          transference: {},
         },
       };
 

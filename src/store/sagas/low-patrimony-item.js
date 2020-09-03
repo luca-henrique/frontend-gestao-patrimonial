@@ -19,15 +19,14 @@ export function* createLowItemPatrimony({ payload }) {
   try {
     const { low } = payload;
     const { data } = yield call(api.post, "/low-patrimony", low);
-    yield put(CreatorsLowItem.createLowItemSuccess(data));
+    yield put(CreatorsLowItem.createLowPatrimonySuccess(data));
     toastr.success("A baixa foi criada.");
   } catch (err) {}
 }
 
-export function* deleteLowItem({ payload }) {
+export function* deleteLowPatrimonyItem({ payload }) {
   try {
     yield call(api.delete, `/low-patrimony/${payload.id}`);
-    yield put(CreatorsLowItem.deleteLowItemSuccess(payload.id));
     toastr.error("A baixa foi removida");
   } catch (err) {}
 }

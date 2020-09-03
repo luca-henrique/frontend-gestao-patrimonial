@@ -36,11 +36,16 @@ const Localization = () => {
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
 
+  const edit = useSelector(
+    (state) => state.patrimony_item.edit_patrimony_visible
+  );
+
   useEffect(() => {
     setInstitution(patrimony.locale_item_id);
     setSector(patrimony.sector_id);
     setUnit(patrimony.unit_id);
 
+    dispatch(CreatorsLocale.readLocaleItemRequest());
     dispatch(CreatorsSectors.readSectorsRequest(patrimony.locale_item_id));
     dispatch(CreatorsUnit.readUnitRequest(patrimony.sector_id));
   }, [
@@ -80,11 +85,10 @@ const Localization = () => {
             dispatch(CreatorsUnit.changerLoadingUnits());
             setUnit("");
           }}
-          disabled={loading_locale}
+          disabled={edit || loading_locale}
         >
           <Typography variant="button">Orgão:</Typography>
           <Select native size="small" fullWidth value={institution}>
-            <option value="" />
             {locals.map((local) => (
               <option value={local.id} key={local.id}>
                 {local.description}
@@ -105,7 +109,7 @@ const Localization = () => {
             setSector(e.target.value);
             dispatch(CreatorsUnit.readUnitRequest(e.target.value));
           }}
-          disabled={loading_sectors}
+          disabled={edit || loading_sectors}
         >
           <Typography variant="button">Setor:</Typography>
           <Select native size="small" fullWidth value={sector}>
@@ -127,7 +131,7 @@ const Localization = () => {
           fullWidth
           value={unit}
           onChange={(e) => setUnit(e.target.value)}
-          disabled={loading_units}
+          disabled={edit || loading_units}
         >
           <Typography variant="button">Únidade:</Typography>
           <Select native size="small" fullWidth value={unit}>

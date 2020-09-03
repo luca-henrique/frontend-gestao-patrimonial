@@ -116,6 +116,7 @@ import { Types as LowPatrimony } from "../ducks/low-patrimony-item";
 import {
   readLowItemPatrimony,
   createLowItemPatrimony,
+  deleteLowPatrimonyItem,
 } from "./low-patrimony-item";
 
 export default function* rootSaga() {
@@ -237,5 +238,9 @@ export default function* rootSaga() {
       createLowItemPatrimony
     ),
     takeLatest(LowPatrimony.READ_LOW_PATRIMONY_REQUEST, readLowItemPatrimony),
+    takeLatest(
+      LowPatrimony.DELETE_LOW_PATRIMONY_REQUEST,
+      deleteLowPatrimonyItem
+    ),
   ]);
 }

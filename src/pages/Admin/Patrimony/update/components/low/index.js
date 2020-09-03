@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Typography, TextField } from "@material-ui/core/";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Select,
+  FormControl,
+} from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -30,9 +36,15 @@ const Low = () => {
     (state) => state.low_patrimony_item.low_item_patrimony
   );
 
+  const edit = useSelector(
+    (state) => state.patrimony_item.edit_patrimony_visible
+  );
+
   const [type, setType] = useState("");
   const [reason, setReason] = useState("");
   const [date, setDate] = useState();
+
+  const lows = useSelector((state) => state.low.low_items);
 
   useEffect(() => {
     setType(low.low_item_id);
@@ -47,10 +59,27 @@ const Low = () => {
       </Grid>
 
       <Grid item xs={12} sm={6} className={classes.input}>
-        <div>
+        <FormControl
+          variant="outlined"
+          style={{ width: "100%" }}
+          size="small"
+          fullWidth
+          value={type}
+          onChange={(e) => {
+            setType(e.target.value);
+          }}
+          disabled={edit}
+        >
           <Typography variant="button">Tipo de baixa:</Typography>
-          <TextField variant="outlined" size="small" fullWidth value={type} />
-        </div>
+          <Select native size="small" fullWidth value={type}>
+            <option value="" />
+            {lows.map((local) => (
+              <option value={local.id} key={local.id}>
+                {local.description}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
       </Grid>
 
       <Grid item xs={12} sm={6} className={classes.input}>
@@ -62,6 +91,7 @@ const Low = () => {
             fullWidth
             type="date"
             value={formatDate(date)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -77,6 +107,7 @@ const Low = () => {
             multiline
             rows="2"
             value={reason}
+            disabled={edit}
           />
         </div>
       </Grid>

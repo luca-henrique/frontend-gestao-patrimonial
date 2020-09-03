@@ -88,6 +88,20 @@ const UpdateOccurrenceItemPatrimonyModal = lazy(() =>
   import("./pages/Admin/Patrimony/update/components/modal-occurrence/update")
 );
 
+const DialogRemoveLowPatrimony = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/low-remove-confirmation/")
+);
+
+const ListTransferenceModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-transfer/list")
+);
+const CreateTransferenceModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-transfer/create")
+);
+const UpdateTransferenceModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-transfer/update")
+);
+
 const Main = () => {
   const ChangerPassword = () => create(<ChangerPasswordModal />);
   const CreateAccount = () => create(<CreateAccountModal />);
@@ -128,6 +142,12 @@ const Main = () => {
   const RemoveOccurrenceItemPatrimony = () =>
     create(<UpdateOccurrenceItemPatrimonyModal />);
 
+  const RemoveLowPatrimony = () => create(<DialogRemoveLowPatrimony />);
+
+  const ListTransfers = () => create(<ListTransferenceModal />);
+  const CreateTransfers = () => create(<CreateTransferenceModal />);
+  const UpdateTransfers = () => create(<UpdateTransferenceModal />);
+
   return (
     <Suspense fallback={<Loader />}>
       <ChangerPassword />
@@ -166,6 +186,12 @@ const Main = () => {
 
       <CreateOccurrenceItemPatrimony />
       <RemoveOccurrenceItemPatrimony />
+
+      <RemoveLowPatrimony />
+
+      <ListTransfers />
+      <CreateTransfers />
+      <UpdateTransfers />
     </Suspense>
   );
 };

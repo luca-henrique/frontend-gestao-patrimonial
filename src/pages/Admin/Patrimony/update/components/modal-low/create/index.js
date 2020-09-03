@@ -122,7 +122,9 @@ export default function AlertDialog() {
             />
           </DialogContent>
           <DialogActions>
-            <Button color="primary">Fechar</Button>
+            <Button color="primary" onClick={handleClose}>
+              Fechar
+            </Button>
             <Button color="primary" type="submit">
               Dar baixa
             </Button>

@@ -26,6 +26,9 @@ export const Types = {
 
   DUPLICATE_PATRIMONY_REQUEST: "@patrimony/DUPLICATE_PATRIMONY_REQUEST",
   DUPLICATE_PATRIMONY_SUCCESS: "@patrimony/DUPLICATE_PATRIMONY_SUCCESS",
+
+  ENABLE_PATRIMONY_EDIT: "@patrimony/ENABLE_PATRIMONY_EDIT",
+  DISABLE_PATRIMONY_EDIT: "@patrimony/DISABLE_PATRIMONY_EDIT",
 };
 
 const INITIAL_STATE = Immutable({
@@ -36,10 +39,18 @@ const INITIAL_STATE = Immutable({
 
   patrimonies: [],
   loading_patrimony: false,
+
+  edit_patrimony_visible: true,
 });
 
-export default function User(state = INITIAL_STATE, action) {
+export default function Patrimony(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.DISABLE_PATRIMONY_EDIT:
+      return { ...state, edit_patrimony_visible: true };
+
+    case Types.ENABLE_PATRIMONY_EDIT:
+      return { ...state, edit_patrimony_visible: false };
+
     case Types.SHOW_PATRIMONY:
       return { ...state, show_patrimony: action.payload.item };
     case Types.HIDE_PATRIMONY:
@@ -162,6 +173,13 @@ export const Creators = {
     pyaload: {
       data,
     },
+  }),
+
+  enablePatrimonyEdit: () => ({
+    type: Types.ENABLE_PATRIMONY_EDIT,
+  }),
+  disablePatrimonyEdit: () => ({
+    type: Types.DISABLE_PATRIMONY_EDIT,
   }),
 };
 

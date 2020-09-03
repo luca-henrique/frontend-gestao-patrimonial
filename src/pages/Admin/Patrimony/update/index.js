@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import { Creators as CreatorsPage } from "~/store/ducks/page";
-import { Creators as CreaatosLowPatrimony } from "~/store/ducks/low-patrimony-item";
+import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
+import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -59,7 +60,10 @@ const PatrimonyItem = () => {
   // eslint-disable-next-line no-unused-vars
   const [invoice, setInvoice] = useState(false);
 
-  const [edit, setEdit] = useState(false);
+  const edit = useSelector(
+    (state) => state.patrimony_item.edit_patrimony_visible
+  );
+
   const [open, setOpen] = useState(false);
 
   const exist = useSelector(
@@ -71,8 +75,14 @@ const PatrimonyItem = () => {
     changeEdit();
   }
 
+  console.log(edit);
+
   const changeEdit = () => {
-    setEdit(!edit);
+    if (edit) {
+      dispatch(CreatorsPatrimony.enablePatrimonyEdit());
+    } else {
+      dispatch(CreatorsPatrimony.disablePatrimonyEdit());
+    }
   };
 
   const backForListPatrimony = () => {
@@ -97,7 +107,7 @@ const PatrimonyItem = () => {
   const id = useSelector((state) => state.patrimony_item.show_patrimony.id);
 
   useEffect(() => {
-    dispatch(CreaatosLowPatrimony.readLowPatrimonyRequest(id));
+    dispatch(CreatorsLowPatrimony.readLowPatrimonyRequest(id));
   }, [dispatch, id]);
 
   return (
@@ -161,7 +171,7 @@ const PatrimonyItem = () => {
               <IconButton onClick={changeEdit}>
                 <EditIcon
                   style={
-                    edit === false ? { color: "#a4a4a4" } : { color: "#FF0040" }
+                    edit === true ? { color: "#a4a4a4" } : { color: "#FF0040" }
                   }
                 />
               </IconButton>
@@ -234,7 +244,7 @@ const PatrimonyItem = () => {
           <ToggleMenu />
         </Grid>
 
-        {edit === true ? (
+        {edit === false ? (
           <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
             <Button
               variant="outlined"

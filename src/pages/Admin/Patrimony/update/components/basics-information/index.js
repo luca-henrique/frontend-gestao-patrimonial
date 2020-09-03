@@ -27,6 +27,10 @@ const BasicsInformations = () => {
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
 
+  const edit = useSelector(
+    (state) => state.patrimony_item.edit_patrimony_visible
+  );
+
   const [tipping, setTipping] = useState("");
   const [discrimination, setDisrimination] = useState("");
   const [dateEntry, setDateEntry] = useState("");
@@ -64,6 +68,7 @@ const BasicsInformations = () => {
             fullWidth
             value={tipping}
             onChange={(e) => setTipping(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -77,6 +82,7 @@ const BasicsInformations = () => {
             fullWidth
             value={discrimination}
             onChange={(e) => setDisrimination(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -91,6 +97,7 @@ const BasicsInformations = () => {
             type="date"
             value={formatDate(dateEntry)}
             onChange={(e) => setDateEntry(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -107,6 +114,7 @@ const BasicsInformations = () => {
             rows="2"
             value={specification}
             onChange={(e) => setSpecification(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>

@@ -26,8 +26,8 @@ export const Types = {
   UPDATE_LOW_PATRIMONY_REQUEST: "@low-patrimony/UPDATE_LOW_PATRIMONY_REQUEST",
   UPDATE_LOW_PATRIMONY_SUCCESS: "@low-patrimony/UPDATE_LOW_PATRIMONY_SUCCESS",
 
-  DELETE_LOW_PATRIMONY_REQUEST: "@low-patrimony/UPDATE_LOW_PATRIMONY_REQUEST",
-  DELETE_LOW_PATRIMONY_SUCCESS: "@low-patrimony/UPDATE_LOW_PATRIMONY_SUCCESS",
+  DELETE_LOW_PATRIMONY_REQUEST: "@low-patrimony/DELETE_LOW_PATRIMONY_REQUEST",
+  DELETE_LOW_PATRIMONY_SUCCESS: "@low-patrimony/DELETE_LOW_PATRIMONY_SUCCESS",
 
   EXIST_LOW_PATRIMONY: "@low-patrimony/EXIST_LOW_PATRIMONY",
   NOT_EXIST_LOW_PATRIMONY: "@low-patrimony/NOT_EXIST_LOW_PATRIMONY",
@@ -43,6 +43,8 @@ const INITIAL_STATE = Immutable({
   low_item_patrimony: {},
 
   loading_low_item_patrimony: false,
+
+  remove_low_patrimony: { visible: false, id_low: 0 },
 });
 
 export default function lowPatrimony(state = INITIAL_STATE, action) {
@@ -72,6 +74,20 @@ export default function lowPatrimony(state = INITIAL_STATE, action) {
       return {
         ...state,
         update_low_patrimony: { visible: false, low_id: 0 },
+      };
+
+    case Types.SHOW_MODAL_REMOVE_LOW_PATRIMONY:
+      return {
+        ...state,
+        remove_low_patrimony: {
+          visible: true,
+          id_low: action.payload.id,
+        },
+      };
+    case Types.HIDE_MODAL_REMOVE_LOW_PATRIMONY:
+      return {
+        ...state,
+        remove_low_patrimony: { visible: false, id_low: 0 },
       };
 
     case Types.CREATE_LOW_PATRIMONY_SUCCESS: {
@@ -131,6 +147,17 @@ export const Creators = {
     type: Types.HIDE_MODAL_UPDATE_LOW_PATRIMONY,
   }),
 
+  showModalRemoveLowPatrimony: (id) => ({
+    type: Types.SHOW_MODAL_REMOVE_LOW_PATRIMONY,
+    payload: {
+      id,
+    },
+  }),
+
+  hideModalRemoveLowPatrimony: () => ({
+    type: Types.HIDE_MODAL_REMOVE_LOW_PATRIMONY,
+  }),
+
   readLowPatrimonyRequest: (id) => ({
     type: Types.READ_LOW_PATRIMONY_REQUEST,
     payload: {
@@ -179,5 +206,12 @@ export const Creators = {
 
   lowPatrimonyNotExist: () => ({
     type: Types.NOT_EXIST_LOW_PATRIMONY,
+  }),
+
+  deleteLowPatrimonyRequest: (id) => ({
+    type: Types.DELETE_LOW_PATRIMONY_REQUEST,
+    payload: {
+      id,
+    },
   }),
 };

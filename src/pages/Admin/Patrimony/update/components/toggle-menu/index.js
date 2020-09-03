@@ -8,7 +8,7 @@ import { Creators as CreatorsTransfer } from "~/store/ducks/transference-patrimo
 import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
 import { Creators as CreatorsOccurrencePatrimony } from "~/store/ducks/occurrence-patrimony-item";
 
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from "@material-ui/lab/";
 
@@ -16,6 +16,7 @@ import SyncAltIcon from "@material-ui/icons/SyncAlt";
 import LoopIcon from "@material-ui/icons/Loop";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Icon from "~/assets/icons/danger.png";
+import Icon2 from "~/assets/icons/danger-exist.png";
 
 const useStyles = makeStyles((theme) => ({
   speedDial: {
@@ -34,23 +35,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const actions = [
-  {
-    icon: <img src={Icon} alt="Ocorrência" style={{ color: "#a4a4a4" }} />,
-    name: "Ocorrência",
-  }, // Modal com uma lista de ocorrências
-  { icon: <SyncAltIcon style={{ color: "#a4a4a4" }} />, name: "Transferência" }, // Modal com uma lista de transferências
-  {
-    icon: <img src={Icon} alt="Baixa" />,
-    name: "Baixa",
-  },
-  { icon: <LoopIcon style={{ color: "#a4a4a4" }} />, name: "Duplicar" }, //Duplicar o item mudando o numero de tombamento
-  {
-    icon: <DeleteOutlineIcon style={{ color: "#FF0040" }} />,
-    name: "Deletar",
-  },
-];
 
 export default function SpeedDials() {
   const classes = useStyles();
@@ -73,7 +57,9 @@ export default function SpeedDials() {
     (state) => state.occurrente_patrimony_item.read_occurrence_patrimony.exist
   );
 
-  console.log(patrimony);
+  const exist_low = useSelector(
+    (state) => state.low_patrimony_item.low_item_patrimony_exist
+  );
 
   console.log("Lembre que falta configurar os ids de cada item");
 
@@ -105,20 +91,43 @@ export default function SpeedDials() {
     }
   };
 
+  const role = useSelector((state) => state.account.account_joined.role);
+  const exist_low_patrimony = useSelector(
+    (state) => state.low_patrimony_item.low_item_patrimony_exist
+  );
+
+  const notify = () => {
+    toast.error("Já foi realizada uma baixa nesse item.", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+    toast.error("Você não é administrador.", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const low = () => {
-    if (patrimony.situation === "baixa") {
-      toast.error("Já foi realizada uma baixa nesse item.", {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
+    // if (patrimony.situation === "baixa")
+
+    if (role && exist_low_patrimony) {
       dispatch(CreatorsLowPatrimony.showModalRemoveLowPatrimony(patrimony.id));
-    } else {
+    } else if (role && exist_low_patrimony === false) {
       dispatch(CreatorsLowPatrimony.showModalCreateLowPatrimony(patrimony.id));
+    } else if (role === false && exist_low_patrimony === false) {
+      dispatch(CreatorsLowPatrimony.showModalCreateLowPatrimony(patrimony.id));
+    } else {
+      notify();
     }
   };
 
@@ -148,6 +157,26 @@ export default function SpeedDials() {
     }
   };
 
+  const actions = [
+    {
+      icon: <img src={Icon} alt="Ocorrência " />,
+      name: "Ocorrência",
+    }, // Modal com uma lista de ocorrências
+    {
+      icon: <SyncAltIcon style={{ color: "#a4a4a4" }} />,
+      name: "Transferência",
+    }, // Modal com uma lista de transferências
+    {
+      icon: <img src={exist_low ? Icon2 : Icon} alt="Baixa" />,
+      name: "Baixa",
+    },
+    { icon: <LoopIcon style={{ color: "#a4a4a4" }} />, name: "Duplicar" }, //Duplicar o item mudando o numero de tombamento
+    {
+      icon: <DeleteOutlineIcon style={{ color: "#FF0040" }} />,
+      name: "Deletar",
+    },
+  ];
+
   return (
     <SpeedDial
       ariaLabel="SpeedDial example"
@@ -169,6 +198,7 @@ export default function SpeedDials() {
           }}
         />
       ))}
+      <ToastContainer />
     </SpeedDial>
   );
 }

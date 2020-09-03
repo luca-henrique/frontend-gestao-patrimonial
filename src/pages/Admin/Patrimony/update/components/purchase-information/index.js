@@ -41,6 +41,10 @@ const Purchase = () => {
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
 
+  const edit = useSelector(
+    (state) => state.patrimony_item.edit_patrimony_visible
+  );
+
   const classes = useStyles();
 
   function convertToReal(valor) {
@@ -107,6 +111,7 @@ const Purchase = () => {
             fullWidth
             value={bidding}
             onChange={(e) => setBidding(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -120,6 +125,7 @@ const Purchase = () => {
             fullWidth
             value={effort}
             onChange={(e) => setEffort(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -134,6 +140,7 @@ const Purchase = () => {
             type="date"
             value={buyDate}
             onChange={(e) => setBuyDate(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -142,6 +149,7 @@ const Purchase = () => {
         <div>
           <Typography variant="button">Valor da aquisição:</Typography>
           <TextField
+            disabled={edit}
             variant="outlined"
             size="small"
             fullWidth
@@ -164,6 +172,7 @@ const Purchase = () => {
             fullWidth
             value={numberInvoice}
             onChange={(e) => setNumberInvoice(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>
@@ -177,6 +186,7 @@ const Purchase = () => {
             type="date"
             value={dateInvoice}
             onChange={(e) => setDateInvoice(e.target.value)}
+            disabled={edit}
           />
         </div>
       </Grid>

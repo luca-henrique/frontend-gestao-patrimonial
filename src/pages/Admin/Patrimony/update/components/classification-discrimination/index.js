@@ -32,6 +32,10 @@ const Classification = () => {
   const [state, setState] = useState("");
   const [type, setType] = useState("");
 
+  const edit = useSelector(
+    (state) => state.patrimony_item.edit_patrimony_visible
+  );
+
   const dispatch = useDispatch();
 
   const states = useSelector((state) => state.state.state_items);
@@ -88,7 +92,7 @@ const Classification = () => {
           fullWidth
           value={nature}
           onChange={(e) => setNature(e.target.value)}
-          disable={loading_nature}
+          disabled={edit || loading_nature}
         >
           <Typography variant="button">Natureza:</Typography>
           <Select native size="small" fullWidth value={nature}>
@@ -109,7 +113,7 @@ const Classification = () => {
           fullWidth
           value={origin}
           onChange={(e) => setOrigin(e.target.value)}
-          disabled={loading_origin}
+          disabled={edit || loading_origin}
         >
           <Typography variant="button">Origem do bem:</Typography>
           <Select native size="small" fullWidth value={origin}>
@@ -130,7 +134,7 @@ const Classification = () => {
           fullWidth
           value={state}
           onChange={(e) => setState(e.target.value)}
-          disabled={loading_states}
+          disabled={edit || loading_states}
         >
           <Typography variant="button">Estado de conservação:</Typography>
           <Select native size="small" fullWidth value={state}>
@@ -151,7 +155,7 @@ const Classification = () => {
           fullWidth
           value={type}
           onChange={(e) => setType(e.target.value)}
-          disabled={loading_good}
+          disabled={edit || loading_good}
         >
           <Typography variant="button">Tipo do bem:</Typography>
           <Select native size="small" fullWidth value={type}>
