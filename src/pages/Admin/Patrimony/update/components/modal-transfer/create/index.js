@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as CreatorsTransfer } from "~/store/ducks/transference-patrimony-item";
 
 import { Typography, Modal, Backdrop, Fade, Grid } from "@material-ui/core/";
 
+import { Creators as CreatorsSectors } from "~/store/ducks/sectors";
+import { Creators as CreatorsLocale } from "~/store/ducks/locale-item";
+import { Creators as CreatorsUnit } from "~/store/ducks/units";
+
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -56,16 +61,16 @@ const Create = () => {
   const [sector, setSector] = useState("");
   const [unit, setUnit] = useState("");
 
+  const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
+
   const visible = useSelector(
     (state) =>
-      state.transfer_patrimony_item.show_modal_create_transference_patrimony
-        .visible
+      state.transfer_patrimony_item.create_transference_patrimony.visible
   );
 
   const id_patrimony = useSelector(
     (state) =>
-      state.transfer_patrimony_item.show_modal_create_transference_patrimony
-        .id_patrimony
+      state.transfer_patrimony_item.create_transference_patrimony.id_patrimony
   );
 
   function create(e) {
@@ -85,6 +90,35 @@ const Create = () => {
   const hide = () => {
     dispatch(CreatorsTransfer.hideModalCreateTransferencePatrimony());
   };
+
+  useEffect(() => {
+    dispatch(CreatorsLocale.readLocaleItemRequest());
+    dispatch(CreatorsSectors.readSectorsRequest(patrimony.locale_item_id));
+    dispatch(CreatorsUnit.readUnitRequest(patrimony.sector_id));
+  }, [dispatch, patrimony.locale_item_id, patrimony.sector_id]);
+
+  const locals = useSelector((state) => state.locale.locale_items);
+  const loading_locale = useSelector(
+    (state) => state.locale.locale_item_loading
+  );
+
+  const sectors = useSelector((state) => state.sectors.sector);
+  const loading_sectors = useSelector((state) => state.sectors.loading_sectors);
+
+  const units = useSelector((state) => state.units.units);
+  const loading_units = useSelector((state) => state.units.loading_units);
+
+  const local = locals.filter(
+    (single) => parseInt(single.id) === parseInt(patrimony.locale_item_id)
+  );
+
+  const sector_atual = sectors.filter(
+    (single) => parseInt(single.id) === parseInt(patrimony.sector_id)
+  );
+
+  const unit_atual = units.filter(
+    (single) => parseInt(single.id) === parseInt(patrimony.unit_id)
+  );
 
   return (
     <Modal
@@ -116,7 +150,19 @@ const Create = () => {
               <Grid item xs={12} sm={5} style={{ marginTop: "10px" }}>
                 <Grid container direction="column">
                   <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
-                    <Typography variant="button">local de origem</Typography>
+                    <Typography variant="subtitle2">Local de origem</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
+                    <div>
+                      <Typography variant="button">Orgão:</Typography>
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        value={local[0].description}
+                        disabled
+                      />
+                    </div>
                   </Grid>
                   <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                     <div>
@@ -126,10 +172,14 @@ const Create = () => {
                         size="small"
                         fullWidth
                       >
-                        <Typography variant="button">Orgão:</Typography>
-                        <Select native size="small" fullWidth disabled>
-                          <option value="" />
-                        </Select>
+                        <Typography variant="subtitle2">Setor:</Typography>
+                        <TextField
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          value={sector_atual[0].description}
+                          disabled
+                        />
                       </FormControl>
                     </div>
                   </Grid>
@@ -141,25 +191,14 @@ const Create = () => {
                         size="small"
                         fullWidth
                       >
-                        <Typography variant="button">Setor:</Typography>
-                        <Select native size="small" fullWidth disabled>
-                          <option value="" />
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
-                    <div>
-                      <FormControl
-                        variant="outlined"
-                        style={{ width: "100%" }}
-                        size="small"
-                        fullWidth
-                      >
-                        <Typography variant="button">Únidade:</Typography>
-                        <Select native size="small" fullWidth disabled>
-                          <option value="" />
-                        </Select>
+                        <Typography variant="subtitle2">Únidade:</Typography>
+                        <TextField
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          value={unit_atual[0].description}
+                          disabled
+                        />
                       </FormControl>
                     </div>
                   </Grid>
@@ -171,7 +210,7 @@ const Create = () => {
               <Grid item xs={12} sm={5} style={{ marginTop: "10px" }}>
                 <Grid container direction="column">
                   <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
-                    <Typography variant="button">novo local</Typography>
+                    <Typography variant="subtitle2">Novo local</Typography>
                   </Grid>
                   <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                     <div>
@@ -180,11 +219,28 @@ const Create = () => {
                         size="small"
                         fullWidth
                         value={institution}
-                        onChange={(e) => setInstitution(e.target.value)}
+                        onChange={(e) => {
+                          setInstitution(e.target.value);
+                          dispatch(
+                            CreatorsSectors.readSectorsRequest(e.target.value)
+                          );
+                          dispatch(CreatorsUnit.changerLoadingUnits());
+                          setUnit("");
+                        }}
+                        disabled={loading_locale}
                       >
-                        <Typography variant="button">Orgão:</Typography>
-                        <Select native size="small" fullWidth>
-                          <option value="" />
+                        <Typography variant="subtitle2">Orgão:</Typography>
+                        <Select
+                          native
+                          size="small"
+                          fullWidth
+                          value={institution}
+                        >
+                          {locals.map((local) => (
+                            <option value={local.id} key={local.id}>
+                              {local.description}
+                            </option>
+                          ))}
                         </Select>
                       </FormControl>
                     </div>
@@ -196,11 +252,22 @@ const Create = () => {
                         size="small"
                         fullWidth
                         value={sector}
-                        onChange={(e) => setSector(e.target.value)}
+                        onChange={(e) => {
+                          setSector(e.target.value);
+                          dispatch(
+                            CreatorsUnit.readUnitRequest(e.target.value)
+                          );
+                        }}
+                        disabled={loading_sectors}
                       >
-                        <Typography variant="button">Setor:</Typography>
-                        <Select native size="small" fullWidth>
+                        <Typography variant="subtitle2">Setor:</Typography>
+                        <Select native size="small" fullWidth value={sector}>
                           <option value="" />
+                          {sectors.map((sector) => (
+                            <option value={sector.id} key={sector.id}>
+                              {sector.description}
+                            </option>
+                          ))}
                         </Select>
                       </FormControl>
                     </div>
@@ -213,10 +280,16 @@ const Create = () => {
                         fullWidth
                         value={unit}
                         onChange={(e) => setUnit(e.target.value)}
+                        disabled={loading_units}
                       >
-                        <Typography variant="button">Únidade:</Typography>
-                        <Select native size="small" fullWidth>
+                        <Typography variant="subtitle2">Únidade:</Typography>
+                        <Select native size="small" fullWidth value={unit}>
                           <option value="" />
+                          {units.map((unit) => (
+                            <option value={unit.id} key={unit.id}>
+                              {unit.description}
+                            </option>
+                          ))}
                         </Select>
                       </FormControl>
                     </div>

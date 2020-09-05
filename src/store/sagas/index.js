@@ -119,6 +119,14 @@ import {
   deleteLowPatrimonyItem,
 } from "./low-patrimony-item";
 
+import { Types as TransferencePatrimony } from "../ducks/transference-patrimony-item";
+import {
+  readTransferencersPatrimony,
+  deleteTransferencePatrimony,
+  createTransferencePatrimony,
+  updateTransferencePatrimony,
+} from "./transference-patrimony-item";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
@@ -241,6 +249,23 @@ export default function* rootSaga() {
     takeLatest(
       LowPatrimony.DELETE_LOW_PATRIMONY_REQUEST,
       deleteLowPatrimonyItem
+    ),
+
+    takeLatest(
+      TransferencePatrimony.READ_TRANSFERENCE_PATRIMONY_REQUEST,
+      readTransferencersPatrimony
+    ),
+    takeLatest(
+      TransferencePatrimony.CREATE_TRANSFERENCE_PATRIMONY_REQUEST,
+      createTransferencePatrimony
+    ),
+    takeLatest(
+      TransferencePatrimony.UPDATE_TRANSFERENCE_PATRIMONY_REQUEST,
+      updateTransferencePatrimony
+    ),
+    takeLatest(
+      TransferencePatrimony.DELETE_TRANSFERENCE_PATRIMONY_REQUEST,
+      deleteTransferencePatrimony
     ),
   ]);
 }
