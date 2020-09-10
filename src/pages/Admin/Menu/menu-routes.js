@@ -1,4 +1,7 @@
 import React, { lazy, Suspense } from "react";
+import { useSelector } from "react-redux";
+
+import Loader from "~/components/Loader";
 
 // Listar todos os itens do patrimonio
 import ListPatrimony from "../Patrimony/list";
@@ -12,24 +15,28 @@ import LogPage from "../Log/";
 
 /* --> Gerar [Relatorio] <-- */
 
-import GeneralPatrimonyReport from "../Reports/patrimony/general";
+const GeneralPatrimonyReport = lazy(() =>
+  import("../Reports/patrimony/general")
+);
 
-import DepreciationPatrimonyReport from "../Reports/patrimony/depreciation";
+const DepreciationPatrimonyReport = lazy(() =>
+  import("../Reports/patrimony/depreciation")
+);
 
-import TippingPatrimonyReport from "../Reports/patrimony/tipping";
+const TippingPatrimonyReport = lazy(() =>
+  import("../Reports/patrimony/tipping")
+);
 
-import InvetoryReport from "../Reports/inventory/";
+const InvetoryReport = lazy(() => import("../Reports/inventory/"));
 
-import StatementResponsibilityReport from "../Reports/statement-responsibility";
+const StatementResponsibilityReport = lazy(() =>
+  import("../Reports/statement-responsibility")
+);
 
-import TransferReport from "../Reports/transfer";
+const TransferReport = lazy(() => import("../Reports/transfer"));
 
-import { useSelector } from "react-redux";
-
-import PrefectureCreate from "../Prefecture/create/";
-import PrefectureUpdate from "../Prefecture/update/";
-
-import Loader from "~/components/Loader";
+const PrefectureCreate = lazy(() => import("../Prefecture/create/"));
+const PrefectureUpdate = lazy(() => import("../Prefecture/update/"));
 
 const Account = lazy(() => import("../Account/list"));
 

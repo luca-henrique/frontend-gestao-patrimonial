@@ -92,16 +92,29 @@ import {
 import { Types as LocaleItemTypes } from "../ducks/locale-item";
 import {
   readLocaleItem,
+  readUniqueLocaleItem,
   createLocaleItem,
   updateLocaleItem,
   deleteLocaleItem,
 } from "./locale-item";
 
 import { Types as SectorsTypes } from "../ducks/sectors";
-import { readSector, createSector, updateSector, deleteSector } from "./sector";
+import {
+  readSector,
+  createSector,
+  updateSector,
+  deleteSector,
+  readUniqueSector,
+} from "./sector";
 
 import { Types as UnitsTypes } from "../ducks/units";
-import { readUnit, createUnit, deleteUnit, updateUnit } from "./units";
+import {
+  readUnit,
+  createUnit,
+  deleteUnit,
+  updateUnit,
+  readUniqueUnit,
+} from "./units";
 
 import { Types as PatrimonyTypes } from "../ducks/patrimony";
 import {
@@ -126,6 +139,13 @@ import {
   createTransferencePatrimony,
   updateTransferencePatrimony,
 } from "./transference-patrimony-item";
+
+import { Types as OccurrencePatrimony } from "../ducks/occurrence-patrimony-item";
+import {
+  readOccurrencePatrimony,
+  createOccurrencePatrimony,
+  updateOccurencePatrimony,
+} from "./occurence-patrimony";
 
 export default function* rootSaga() {
   return yield all([
@@ -221,16 +241,22 @@ export default function* rootSaga() {
     ),
 
     takeLatest(LocaleItemTypes.READ_LOCALE_ITEM_REQUEST, readLocaleItem),
+    takeLatest(
+      LocaleItemTypes.READ_UNIQUE_LOCALE_ITEM_REQUEST,
+      readUniqueLocaleItem
+    ),
     takeLatest(LocaleItemTypes.CREATE_LOCALE_ITEM_REQUEST, createLocaleItem),
     takeLatest(LocaleItemTypes.UPDATE_LOCALE_ITEM_REQUEST, updateLocaleItem),
     takeLatest(LocaleItemTypes.DELETE_LOCALE_ITEM_REQUEST, deleteLocaleItem),
 
     takeLatest(SectorsTypes.READ_SECTORS_REQUEST, readSector),
+    takeLatest(SectorsTypes.READ_UNIQUE_SECTORS_REQUEST, readUniqueSector),
     takeLatest(SectorsTypes.CREATE_SECTOR_REQUEST, createSector),
     takeLatest(SectorsTypes.UPDATE_SECTOR_REQUEST, updateSector),
     takeLatest(SectorsTypes.DELETE_SECTOR_REQUEST, deleteSector),
 
     takeLatest(UnitsTypes.READ_UNITS_REQUEST, readUnit),
+    takeLatest(UnitsTypes.READ_UNIQUE_UNITS_REQUEST, readUniqueUnit),
     takeLatest(UnitsTypes.CREATE_UNITS_REQUEST, createUnit),
     takeLatest(UnitsTypes.UPDATE_UNITS_REQUEST, updateUnit),
     takeLatest(UnitsTypes.DELETE_UNITS_REQUEST, deleteUnit),
@@ -266,6 +292,19 @@ export default function* rootSaga() {
     takeLatest(
       TransferencePatrimony.DELETE_TRANSFERENCE_PATRIMONY_REQUEST,
       deleteTransferencePatrimony
+    ),
+
+    takeLatest(
+      OccurrencePatrimony.READ_OCCURRENCE_PATRIMONY_REQUEST,
+      readOccurrencePatrimony
+    ),
+    takeLatest(
+      OccurrencePatrimony.CREATE_OCCURRENCE_PATRIMONY_REQUEST,
+      createOccurrencePatrimony
+    ),
+    takeLatest(
+      OccurrencePatrimony.UPDATE_OCCURRENCE_PATRIMONY_REQUEST,
+      updateOccurencePatrimony
     ),
   ]);
 }

@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { InputLabel, Select, FormControl } from "@material-ui/core";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as CreatorsPatrimonyOccurrence } from "~/store/ducks/occurrence-patrimony-item";
+import { Creators as CreatorsOccurrenceItem } from "~/store/ducks/occurrence-item";
+
 import TextField from "@material-ui/core/TextField";
 
 export default function AlertDialog() {
@@ -14,10 +17,12 @@ export default function AlertDialog() {
 
   const visible = useSelector(
     (state) =>
-      state.occurrente_patrimony_item.show_modal_create_occurrence_patrimony
-        .visible
+      state.occurrente_patrimony_item.create_occurrence_patrimony.visible
   );
-  console.log(visible);
+
+  const patrimony_id = useSelector(
+    (state) => state.patrimony_item.show_patrimony.id
+  );
 
   const [dateOccurrence, setDateOccurrence] = useState("");
   const [typeOccurrence, setTypeOccurrenc] = useState("");
@@ -26,17 +31,38 @@ export default function AlertDialog() {
 
   const handleClose = () => {
     dispatch(CreatorsPatrimonyOccurrence.hideModalCreateOccurrencePatrimony());
-  };
-
-  const deletePatrimony = (e) => {
-    e.preventDefault();
-
-    handleClose();
     setDateOccurrence("");
     setTypeOccurrenc("");
     setReport("");
     setSpecification("");
   };
+
+  const deletePatrimony = (e) => {
+    e.preventDefault();
+
+    var occurrence = {
+      patrimony_id,
+      occurrence_item_id: typeOccurrence,
+      date_occurrence: dateOccurrence,
+      report,
+      specification,
+    };
+
+    dispatch(
+      CreatorsPatrimonyOccurrence.createOccurrencePatrimonyRequest(occurrence)
+    );
+
+    handleClose();
+  };
+
+  useEffect(() => {
+    dispatch(CreatorsOccurrenceItem.readOccurrenceItemRequest());
+  }, [dispatch]);
+
+  const occurrence = useSelector((state) => state.occurrence.occurrence_items);
+  const loading = useSelector(
+    (state) => state.occurrence.loading_occurrence_items
+  );
 
   return (
     <div>
@@ -48,7 +74,7 @@ export default function AlertDialog() {
       >
         <form onSubmit={deletePatrimony}>
           <DialogTitle id="alert-dialog-title">{"Ocorrência"}</DialogTitle>
-          <DialogContent>
+          <DialogContent style={{ marginTop: "10px", marginBottom: "10px" }}>
             <TextField
               required
               InputLabelProps={{
@@ -62,16 +88,30 @@ export default function AlertDialog() {
               value={dateOccurrence}
               onChange={(e) => setDateOccurrence(e.target.value)}
             />
-            <TextField
+
+            <FormControl
               variant="outlined"
-              required
-              margin="dense"
-              label="Tipo de baixa"
-              type="text"
+              style={{ width: "100%", marginTop: "10px", marginBottom: "10px" }}
+              size="small"
               fullWidth
               value={typeOccurrence}
-              onChange={(e) => setTypeOccurrenc(e.target.value)}
-            />
+              onChange={(e) => {
+                setTypeOccurrenc(e.target.value);
+              }}
+              disabled={loading}
+            >
+              <InputLabel id="demo-simple-select-outlined-label">
+                Tipo da ocorrência
+              </InputLabel>
+              <Select native size="small" fullWidth label="Tipo da ocorrência">
+                <option value="" />
+                {occurrence.map((local) => (
+                  <option value={local.id} key={local.id}>
+                    {local.description}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
 
             <TextField
               variant="outlined"
@@ -82,6 +122,7 @@ export default function AlertDialog() {
               fullWidth
               rows={3}
               multiline
+              style={{ marginTop: "10px", marginBottom: "10px" }}
               value={report}
               onChange={(e) => setReport(e.target.value)}
             />
@@ -94,6 +135,7 @@ export default function AlertDialog() {
               fullWidth
               rows={3}
               multiline
+              style={{ marginTop: "10px" }}
               value={specification}
               onChange={(e) => setSpecification(e.target.value)}
             />

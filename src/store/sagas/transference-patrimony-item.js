@@ -12,12 +12,13 @@ export function* readTransferencersPatrimony({ payload }) {
 
 export function* createTransferencePatrimony({ payload }) {
   try {
-    const { low } = payload;
-    const { data } = yield call(api.post, "/transfers", low);
+    yield call(api.post, "/transfers", payload.data);
     yield put(
-      CreatorsTransferencePatrimony.createTransferencePatrimonySuccess(data)
+      CreatorsTransferencePatrimony.readTransfersRequest(
+        payload.data.id_patrimony
+      )
     );
-    toastr.success("A baixa foi criada.");
+    toastr.success("O item foi transferido.");
   } catch (err) {}
 }
 

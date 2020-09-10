@@ -102,6 +102,10 @@ const UpdateTransferenceModal = lazy(() =>
   import("./pages/Admin/Patrimony/update/components/modal-transfer/update")
 );
 
+const DuplicatePatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-duplicate")
+);
+
 const Main = () => {
   const ChangerPassword = () => create(<ChangerPasswordModal />);
   const CreateAccount = () => create(<CreateAccountModal />);
@@ -148,6 +152,8 @@ const Main = () => {
   const CreateTransfers = () => create(<CreateTransferenceModal />);
   const UpdateTransfers = () => create(<UpdateTransferenceModal />);
 
+  const DuplicatePatrimony = () => create(<DuplicatePatrimonyModal />);
+
   return (
     <Suspense fallback={<Loader />}>
       <ChangerPassword />
@@ -192,6 +198,8 @@ const Main = () => {
       <ListTransfers />
       <CreateTransfers />
       <UpdateTransfers />
+
+      <DuplicatePatrimony />
     </Suspense>
   );
 };

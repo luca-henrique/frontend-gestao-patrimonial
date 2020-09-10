@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Create() {
   const classes = useStyles();
+
   const visible = useSelector(
     (state) => state.occurrence.update_occurrence_item.visible
   );
@@ -37,6 +38,8 @@ export default function Create() {
   const data = useSelector(
     (state) => state.occurrence.update_occurrence_item.data
   );
+
+  console.log(data);
 
   const dispatch = useDispatch();
 

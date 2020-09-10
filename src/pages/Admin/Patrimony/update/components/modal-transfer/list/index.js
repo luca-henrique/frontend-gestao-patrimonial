@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
+    padding: "10px",
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100% ",
@@ -25,22 +26,33 @@ const View = () => {
   const [state] = useState({
     columns: [
       {
-        title: "Data",
-        field: "date",
+        title: "Data da transferência",
+        field: "created_at",
         type: "date",
       },
       {
-        title: "Orgão",
-        field: "institution",
+        title: "Orgão anterior",
+        field: "old_locale_item.description",
       },
       {
-        title: "Setor",
-        field: "sector",
+        title: "Setor anterior",
+        field: "oldSector.description",
       },
-
       {
-        title: "Únidade",
-        field: "unit",
+        title: "Únidade anterior",
+        field: "oldUnit.description",
+      },
+      {
+        title: "Orgão atual",
+        field: "newLocaleItem.description",
+      },
+      {
+        title: "Setor atual",
+        field: "newSector.description",
+      },
+      {
+        title: "Unidade atual",
+        field: "newUnit.description",
       },
     ],
   });
@@ -50,6 +62,8 @@ const View = () => {
   const data = useSelector(
     (state) => state.transfer_patrimony_item.read_transference_patrimony
   );
+
+  console.log(data);
 
   const visible = useSelector(
     (state) => state.transfer_patrimony_item.transference_patrimony.visible
@@ -138,21 +152,6 @@ const View = () => {
               isFreeAction: true,
               onClick: (event, rowData) => {
                 dispatch(CreatorsTransfer.hideModalListTransferencePatrimony());
-              },
-            },
-
-            {
-              icon: "delete",
-              tooltip: "Excluir",
-              onClick: (event, rowData) => {},
-            },
-            {
-              icon: "edit",
-              tooltip: "Editar",
-              onClick: (event, rowData) => {
-                dispatch(
-                  CreatorsTransfer.showModalUpdateTransferencePatrimony(rowData)
-                );
               },
             },
           ]}

@@ -47,10 +47,6 @@ const PatrimonyItem = () => {
 
   const classes = useStyles();
 
-  const backForListPatrimony = () => {
-    dispatch(CreatorsPage.changePageLocation("patrimony_list"));
-  };
-
   const [basic, setBasic] = useState({});
 
   const basicsInformations = useCallback((basics) => {
@@ -86,8 +82,10 @@ const PatrimonyItem = () => {
     };
 
     dispatch(CreatorsPatrimony.createPatrimonyRequest(obj));
+  };
 
-    backForListPatrimony();
+  const backForListPatrimony = () => {
+    dispatch(CreatorsPage.changePageLocation("patrimony_list"));
   };
 
   return (

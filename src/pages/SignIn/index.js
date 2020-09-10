@@ -4,7 +4,7 @@ import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import AuthActions from "~/store/ducks/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Form, Container } from "./components/";
 
@@ -56,18 +56,13 @@ export default function SignUp() {
             </Typography>
           </div>
           <div className={classes.input}>
-            <Typography
-              variant="button"
-              className={classes.typography}
-              id="email"
-            >
+            <Typography variant="button" className={classes.typography}>
               Email:
             </Typography>
             <ValidationTextField
               required
               variant="outlined"
               size="small"
-              for="email"
               fullWidth
               type="email"
               value={email}
@@ -75,18 +70,13 @@ export default function SignUp() {
             />
           </div>
           <div className={classes.input}>
-            <Typography
-              variant="button"
-              className={classes.typography}
-              id="password"
-            >
+            <Typography variant="button" className={classes.typography}>
               Senha:
             </Typography>
             <ValidationTextField
               required
               variant="outlined"
               size="small"
-              for="password"
               fullWidth
               type="password"
               value={password}

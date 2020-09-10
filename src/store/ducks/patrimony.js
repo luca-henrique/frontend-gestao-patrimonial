@@ -11,6 +11,9 @@ export const Types = {
   SHOW_UPDATE_PATRIMONY: "@patrimony/SHOW_UPDATE_MODAL_ACCOUNT",
   HIDE_UPDATE_PATRIMONY: "@patrimony/HIDE_UPDATE_MODAL_ACCOUNT",
 
+  SHOW_DUPLICATE_PATRIMONY: "@patrimony/SHOW_DUPLICATE_PATRIMONY",
+  HIDE_DUPLICATE_PATRIMONY: "@patrimony/HIDE_DUPLICATE_PATRIMONY",
+
   /* -> REQUISIÇÔES [ CRUD ] <- */
   CREATE_PATRIMONY_REQUEST: "@patrimony/CREATE_PATRIMONY_REQUEST",
   CREATE_PATRIMONY_SUCCESS: "@patrimony/CREATE_PATRIMONY_SUCCESS",
@@ -29,10 +32,14 @@ export const Types = {
 
   ENABLE_PATRIMONY_EDIT: "@patrimony/ENABLE_PATRIMONY_EDIT",
   DISABLE_PATRIMONY_EDIT: "@patrimony/DISABLE_PATRIMONY_EDIT",
+
+  CHANGER_LOCALIZATION_PATRIMONY: "patrimony/CHANGER_LOCALIZATION_PATRIMONY",
 };
 
 const INITIAL_STATE = Immutable({
   show_patrimony: {},
+
+  patrimony_duplicate: { visible: false, id: 0 },
 
   create_low_item: false,
   update_low_item: { visible: false, data: [] },
@@ -55,6 +62,14 @@ export default function Patrimony(state = INITIAL_STATE, action) {
       return { ...state, show_patrimony: action.payload.item };
     case Types.HIDE_PATRIMONY:
       return { ...state, show_patrimony: {} };
+
+    case Types.SHOW_DUPLICATE_PATRIMONY:
+      return {
+        ...state,
+        patrimony_duplicate: { visible: true, id: action.payload.id },
+      };
+    case Types.HIDE_DUPLICATE_PATRIMONY:
+      return { ...state, patrimony_duplicate: { visible: false, id: 0 } };
 
     case Types.READ_PATRIMONY_REQUEST:
       return { ...state, loading_patrimony: true };
@@ -88,6 +103,15 @@ export default function Patrimony(state = INITIAL_STATE, action) {
         ],
       };
 
+    case Types.CHANGER_LOCALIZATION_PATRIMONY:
+      return {
+        ...state,
+        show_patrimony: updateTransference(
+          state.show_patrimony,
+          action.payload.data
+        ),
+      };
+
     default:
       return state;
   }
@@ -110,6 +134,17 @@ export const Creators = {
     payload: {
       data,
     },
+  }),
+
+  showModalDuplicatePatrimony: (id) => ({
+    type: Types.SHOW_DUPLICATE_PATRIMONY,
+    payload: {
+      id,
+    },
+  }),
+
+  hideModalDuplicatePatrimony: () => ({
+    type: Types.HIDE_DUPLICATE_PATRIMONY,
   }),
 
   readPatrimonySuccess: (data) => ({
@@ -178,12 +213,28 @@ export const Creators = {
   enablePatrimonyEdit: () => ({
     type: Types.ENABLE_PATRIMONY_EDIT,
   }),
+
   disablePatrimonyEdit: () => ({
     type: Types.DISABLE_PATRIMONY_EDIT,
+  }),
+
+  changerTransferencePatrimony: (data) => ({
+    type: Types.CHANGER_LOCALIZATION_PATRIMONY,
+    payload: {
+      data,
+    },
   }),
 };
 
 function updateItem(items, item) {
   const index = items.findIndex((itemArray) => itemArray.id === item.id);
   return [...items.slice(0, index), { ...item }, ...items.slice(index + 1)];
+}
+
+function updateTransference(state, data) {
+  state.locale_item_id = data.new_locale_item_id;
+  state.sector_id = data.new_sector_id;
+  state.unit_id = data.new_unit_id;
+
+  return { ...state };
 }

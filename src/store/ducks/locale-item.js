@@ -20,6 +20,11 @@ export const Types = {
   READ_LOCALE_ITEM_REQUEST: "@localeItem/READ_LOCALE_ITEM_REQUEST",
   READ_LOCALE_ITEM_SUCCESS: "@localeItem/READ_LOCALE_ITEM_SUCCESS",
 
+  READ_UNIQUE_LOCALE_ITEM_REQUEST:
+    "@localeItem/READ_UNIQUE_LOCALE_ITEM_REQUEST",
+  READ_UNIQUE_LOCALE_ITEM_SUCCESS:
+    "@localeItem/READ_UNIQUE_LOCALE_ITEM_SUCCESS",
+
   UPDATE_LOCALE_ITEM_REQUEST: "@localeItem/UPDATE_LOCALE_ITEM_REQUEST",
   UPDATE_LOCALE_ITEM_SUCCESS: "@localeItem/UPDATE_LOCALE_ITEM_SUCCESS",
 
@@ -32,6 +37,7 @@ const INITIAL_STATE = Immutable({
   update_locale_item: { visible: false, data: [] },
 
   locale_items: [],
+  locale_item: {},
   locale_item_loading: false,
 });
 
@@ -85,6 +91,12 @@ export default function LocaleItem(state = INITIAL_STATE, action) {
         locale_items: updateItem(state.locale_items, action.payload.data),
       };
 
+    case Types.READ_UNIQUE_LOCALE_ITEM_SUCCESS:
+      return {
+        ...state,
+        locale_item: action.payload.data,
+      };
+
     default:
       return state;
   }
@@ -115,6 +127,18 @@ export const Creators = {
 
   readLocaleItemSuccess: (data) => ({
     type: Types.READ_LOCALE_ITEM_SUCCESS,
+    payload: { data },
+  }),
+
+  readUniqueLocaleItemRequest: (id) => ({
+    type: Types.READ_UNIQUE_LOCALE_ITEM_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  readUniqueLocaleItemSuccess: (data) => ({
+    type: Types.READ_UNIQUE_LOCALE_ITEM_SUCCESS,
     payload: { data },
   }),
 

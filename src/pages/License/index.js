@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function(props) {
+export default function() {
   const [token, setToken] = useState("");
 
   const classes = useStyles();

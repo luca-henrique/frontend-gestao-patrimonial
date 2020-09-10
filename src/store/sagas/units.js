@@ -5,9 +5,15 @@ import { toastr } from "react-redux-toastr";
 
 export function* readUnit({ payload }) {
   try {
-    console.log(payload);
     const { data } = yield call(api.get, `/units/${payload.id}`);
     yield put(CreatorsUnit.readUnitSuccess(data));
+  } catch (err) {}
+}
+
+export function* readUniqueUnit({ payload }) {
+  try {
+    const { data } = yield call(api.get, `/unit/${payload.id}`);
+    yield put(CreatorsUnit.readUniqueUnitSuccess(data));
   } catch (err) {}
 }
 

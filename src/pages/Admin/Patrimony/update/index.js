@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
 import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
+import { Creators as CreatorsOccurrencePatrimony } from "~/store/ducks/occurrence-patrimony-item";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -75,8 +76,6 @@ const PatrimonyItem = () => {
     changeEdit();
   }
 
-  console.log(edit);
-
   const changeEdit = () => {
     if (edit) {
       dispatch(CreatorsPatrimony.enablePatrimonyEdit());
@@ -86,7 +85,7 @@ const PatrimonyItem = () => {
   };
 
   const backForListPatrimony = () => {
-    if (edit === false) {
+    if (edit === true) {
       dispatch(CreatorsPage.changePageLocation("patrimony_list"));
     } else {
       handleClick();
@@ -101,13 +100,14 @@ const PatrimonyItem = () => {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
+    setOpen(true);
   };
 
   const id = useSelector((state) => state.patrimony_item.show_patrimony.id);
 
   useEffect(() => {
     dispatch(CreatorsLowPatrimony.readLowPatrimonyRequest(id));
+    dispatch(CreatorsOccurrencePatrimony.readOccurrencePatrimonyRequest(id));
   }, [dispatch, id]);
 
   return (

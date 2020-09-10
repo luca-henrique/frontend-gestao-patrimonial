@@ -11,6 +11,14 @@ export function* readSector({ payload }) {
   } catch (err) {}
 }
 
+export function* readUniqueSector({ payload }) {
+  try {
+    console.log(payload);
+    const { data } = yield call(api.get, `/sector/${payload.id}`);
+    yield put(CreatorsSector.readUniqueSectorsSuccess(data));
+  } catch (err) {}
+}
+
 export function* createSector({ payload }) {
   try {
     const { data } = yield call(api.post, "/sector", payload.data);

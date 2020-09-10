@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 
 import MaterialTable from "material-table";
 
@@ -10,17 +10,16 @@ import WarningIcon from "@material-ui/icons/Warning";
 import Typography from "@material-ui/core/Typography";
 
 function View() {
-  const date = new Date().toISOString().slice(0, 10);
-
   const dispatch = useDispatch();
 
   const data = useSelector((state) => state.patrimony_item.patrimonies);
+  const loading = useSelector(
+    (state) => state.patrimony_item.loading_patrimony
+  );
 
   useEffect(() => {
     dispatch(CreatorsPatrimony.readPatrimonyRequest());
   }, [dispatch]);
-
-  console.log(data);
 
   const colors = {
     ativo: "#088A08",
@@ -33,6 +32,7 @@ function View() {
       <MaterialTable
         data={data}
         title={null}
+        loading={loading}
         columns={[
           {
             title: "Situação",
@@ -156,4 +156,4 @@ function View() {
   );
 }
 
-export default View;
+export default memo(View);

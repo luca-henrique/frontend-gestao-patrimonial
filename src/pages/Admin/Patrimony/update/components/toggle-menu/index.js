@@ -2,8 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Creators as CreatorsDeletePatrimony } from "~/store/ducks/delete-patrimony-item";
-import { Creators as CreatorsDuplicatePatrimony } from "~/store/ducks/duplicate-patrimony-item";
+import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
 import { Creators as CreatorsTransfer } from "~/store/ducks/transference-patrimony-item";
 import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
 import { Creators as CreatorsOccurrencePatrimony } from "~/store/ducks/occurrence-patrimony-item";
@@ -40,6 +39,9 @@ export default function SpeedDials() {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
+  const existOccurrence = useSelector(
+    (state) => state.occurrente_patrimony_item.exist_occurrence_patrimony
+  );
 
   const handleClose = (name) => {
     setOpen(false);
@@ -53,10 +55,6 @@ export default function SpeedDials() {
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
 
-  const existOccurrence = useSelector(
-    (state) => state.occurrente_patrimony_item.read_occurrence_patrimony.exist
-  );
-
   const exist_low = useSelector(
     (state) => state.low_patrimony_item.low_item_patrimony_exist
   );
@@ -65,12 +63,19 @@ export default function SpeedDials() {
 
   const userLog = (user) => {
     if (user === "admin") {
-      dispatch(
-        CreatorsDeletePatrimony.showModalDeletePatrimonyAdmin(patrimony.id)
-      );
+      dispatch(CreatorsPatrimony.deletePatrimonyRequest(patrimony.id));
     } else {
-      dispatch(
-        CreatorsDeletePatrimony.showModalDeletePatrimonyUser(patrimony.id)
+      toast.error(
+        "Você não pode excluir esté patrimônio, entre em contato com um administrador.",
+        {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        }
       );
     }
   };
@@ -145,9 +150,7 @@ export default function SpeedDials() {
         low();
         break;
       case "Duplicar":
-        dispatch(
-          CreatorsDuplicatePatrimony.showModalDuplicatePatrimony(patrimony.id)
-        );
+        dispatch(CreatorsPatrimony.showModalDuplicatePatrimony(patrimony.id));
         break;
       case "Deletar":
         userLog("user");

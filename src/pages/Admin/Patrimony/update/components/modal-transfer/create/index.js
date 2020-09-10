@@ -9,6 +9,8 @@ import { Creators as CreatorsSectors } from "~/store/ducks/sectors";
 import { Creators as CreatorsLocale } from "~/store/ducks/locale-item";
 import { Creators as CreatorsUnit } from "~/store/ducks/units";
 
+import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
+
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -62,6 +64,7 @@ const Create = () => {
   const [unit, setUnit] = useState("");
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
+  console.log(patrimony);
 
   const visible = useSelector(
     (state) =>
@@ -78,24 +81,40 @@ const Create = () => {
 
     var transference = {
       id_patrimony,
-      institution,
-      sector,
-      unit,
+      new_locale_item_id: institution,
+      new_sector_id: sector,
+      new_unit_id: unit,
     };
 
-    //dispatch(CreatorsTransfer.createTransferenceRequest(transference));
+    dispatch(CreatorsTransfer.createTransferencePatrimonyRequest(transference));
+    dispatch(CreatorsPatrimony.changerTransferencePatrimony(transference));
+
     hide();
   }
 
   const hide = () => {
     dispatch(CreatorsTransfer.hideModalCreateTransferencePatrimony());
+    setInstitution("");
+    setSector("");
+    setUnit("");
   };
 
   useEffect(() => {
-    dispatch(CreatorsLocale.readLocaleItemRequest());
-    dispatch(CreatorsSectors.readSectorsRequest(patrimony.locale_item_id));
-    dispatch(CreatorsUnit.readUnitRequest(patrimony.sector_id));
-  }, [dispatch, patrimony.locale_item_id, patrimony.sector_id]);
+    if (visible) {
+      dispatch(CreatorsLocale.readLocaleItemRequest());
+      dispatch(
+        CreatorsLocale.readUniqueLocaleItemRequest(patrimony.locale_item_id)
+      );
+      dispatch(CreatorsSectors.readUniqueSectorsRequest(patrimony.sector_id));
+      dispatch(CreatorsUnit.readUniqueUnitRequest(patrimony.unit_id));
+    }
+  }, [
+    dispatch,
+    patrimony.locale_item_id,
+    patrimony.sector_id,
+    patrimony.unit_id,
+    visible,
+  ]);
 
   const locals = useSelector((state) => state.locale.locale_items);
   const loading_locale = useSelector(
@@ -108,17 +127,11 @@ const Create = () => {
   const units = useSelector((state) => state.units.units);
   const loading_units = useSelector((state) => state.units.loading_units);
 
-  const local = locals.filter(
-    (single) => parseInt(single.id) === parseInt(patrimony.locale_item_id)
-  );
+  const current_locale = useSelector((state) => state.locale.locale_item);
 
-  const sector_atual = sectors.filter(
-    (single) => parseInt(single.id) === parseInt(patrimony.sector_id)
-  );
+  const current_sector = useSelector((state) => state.sectors.secto);
 
-  const unit_atual = units.filter(
-    (single) => parseInt(single.id) === parseInt(patrimony.unit_id)
-  );
+  const current_unit = useSelector((state) => state.units.unit);
 
   return (
     <Modal
@@ -159,8 +172,8 @@ const Create = () => {
                         variant="outlined"
                         size="small"
                         fullWidth
-                        value={local[0].description}
                         disabled
+                        value={current_locale.description}
                       />
                     </div>
                   </Grid>
@@ -177,8 +190,8 @@ const Create = () => {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={sector_atual[0].description}
                           disabled
+                          value={current_sector.description}
                         />
                       </FormControl>
                     </div>
@@ -196,8 +209,8 @@ const Create = () => {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={unit_atual[0].description}
                           disabled
+                          value={current_unit.description}
                         />
                       </FormControl>
                     </div>
@@ -236,6 +249,7 @@ const Create = () => {
                           fullWidth
                           value={institution}
                         >
+                          <option value="" />
                           {locals.map((local) => (
                             <option value={local.id} key={local.id}>
                               {local.description}
