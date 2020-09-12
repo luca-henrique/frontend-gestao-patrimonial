@@ -115,6 +115,8 @@ export default function Sectors() {
             tooltip: "Deletar",
             onClick: (event, rowData) => {
               dispatch(CreatorsSectors.deleteSectorRequest(rowData.id));
+              dispatch(CreatorsSectors.hideAccordingSectors());
+              dispatch(CreatorsUnits.hideAccordingUnits());
             },
           },
 

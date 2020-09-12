@@ -35,11 +35,11 @@ export default function AlertDialog() {
     e.preventDefault();
 
     dispatch(
-      CreatorsPatrimony.duplicatePatrimonyRequest(
-        id_patrimony,
-        newTipping,
-        number
-      )
+      CreatorsPatrimony.duplicatePatrimonyRequest({
+        patrimony_id: id_patrimony,
+        tipping: newTipping,
+        number,
+      })
     );
 
     handleClose();

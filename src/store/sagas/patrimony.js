@@ -52,6 +52,7 @@ export function* duplicatePatrimony({ payload }) {
     );
     yield put(CreatorsPatrimony.duplicatePatrimonySuccess(data));
     toastr.success("O patrimônio foi duplicado");
+    yield put(ChangePagerCreators.changePageLocation("patrimony_list"));
   } catch (error) {
     toastr.error("Ocorreu um erro ao duplicar o patrimônio ");
   }

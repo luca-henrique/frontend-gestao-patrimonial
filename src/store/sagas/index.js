@@ -147,6 +147,9 @@ import {
   updateOccurencePatrimony,
 } from "./occurence-patrimony";
 
+import { InvoiceTypes } from "../ducks/invoice";
+import { uploadInvoice, readInvoice } from "./invoice";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", initSocket),
@@ -265,7 +268,7 @@ export default function* rootSaga() {
     takeLatest(PatrimonyTypes.CREATE_PATRIMONY_REQUEST, createPatrimony),
     takeLatest(PatrimonyTypes.UPDATE_PATRIMONY_REQUEST, updatePatrimony),
     takeLatest(PatrimonyTypes.DELETE_PATRIMONY_REQUEST, deletePatrimony),
-    takeLatest(PatrimonyTypes.DELETE_PATRIMONY_REQUEST, duplicatePatrimony),
+    takeLatest(PatrimonyTypes.DUPLICATE_PATRIMONY_REQUEST, duplicatePatrimony),
 
     takeLatest(
       LowPatrimony.CREATE_LOW_PATRIMONY_REQUEST,
@@ -306,5 +309,8 @@ export default function* rootSaga() {
       OccurrencePatrimony.UPDATE_OCCURRENCE_PATRIMONY_REQUEST,
       updateOccurencePatrimony
     ),
+
+    takeLatest(InvoiceTypes.READ_INVOICE_REQUEST, readInvoice),
+    takeLatest(InvoiceTypes.UPLOAD_INVOICE_REQUEST, uploadInvoice),
   ]);
 }

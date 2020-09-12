@@ -112,6 +112,12 @@ export default function Patrimony(state = INITIAL_STATE, action) {
         ),
       };
 
+    case Types.DUPLICATE_PATRIMONY_SUCCESS:
+      return {
+        ...state,
+        patrimonies: duplicatePatrimony(state.patrimonies, action.payload.data),
+      };
+
     default:
       return state;
   }
@@ -205,7 +211,7 @@ export const Creators = {
 
   duplicatePatrimonySuccess: (data) => ({
     type: Types.DUPLICATE_PATRIMONY_SUCCESS,
-    pyaload: {
+    payload: {
       data,
     },
   }),
@@ -237,4 +243,8 @@ function updateTransference(state, data) {
   state.unit_id = data.new_unit_id;
 
   return { ...state };
+}
+
+function duplicatePatrimony(oldState, duplicates) {
+  return oldState.concat(duplicates);
 }

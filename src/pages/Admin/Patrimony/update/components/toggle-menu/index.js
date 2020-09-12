@@ -61,8 +61,8 @@ export default function SpeedDials() {
 
   console.log("Lembre que falta configurar os ids de cada item");
 
-  const userLog = (user) => {
-    if (user === "admin") {
+  const userLog = () => {
+    if (role) {
       dispatch(CreatorsPatrimony.deletePatrimonyRequest(patrimony.id));
     } else {
       toast.error(
@@ -153,7 +153,7 @@ export default function SpeedDials() {
         dispatch(CreatorsPatrimony.showModalDuplicatePatrimony(patrimony.id));
         break;
       case "Deletar":
-        userLog("user");
+        userLog();
         break;
       default:
         console.log(`Sorry, we are out of ${name}.`);

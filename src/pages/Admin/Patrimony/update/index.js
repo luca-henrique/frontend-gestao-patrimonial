@@ -4,6 +4,7 @@ import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
 import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
 import { Creators as CreatorsOccurrencePatrimony } from "~/store/ducks/occurrence-patrimony-item";
+import ActionsInvoice from "~/store/ducks/invoice";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -108,7 +109,14 @@ const PatrimonyItem = () => {
   useEffect(() => {
     dispatch(CreatorsLowPatrimony.readLowPatrimonyRequest(id));
     dispatch(CreatorsOccurrencePatrimony.readOccurrencePatrimonyRequest(id));
+    dispatch(ActionsInvoice.readInvoiceRequest(id));
   }, [dispatch, id]);
+
+  const handleSubmitPdf = (e) => {
+    e.preventDefault();
+    setInvoice(e.target.files[0]);
+    console.log(e.target.files[0]);
+  };
 
   return (
     <Grid
@@ -123,7 +131,7 @@ const PatrimonyItem = () => {
           <Tooltip title="Voltar">
             <IconButton
               style={{ color: "#a4a4a4" }}
-              onClick={backForListPatrimony}
+              onChange={backForListPatrimony}
             >
               <ArrowBackIcon />
             </IconButton>
@@ -131,10 +139,12 @@ const PatrimonyItem = () => {
 
           <div style={{ display: "flex", flexDirection: "row" }}>
             <input
-              accept="image/*"
+              name="upload"
+              accept="application/pdf,application/vnd.ms-excel"
               className={classes.input}
               id="icon-button-file"
-              type={invoice === false ? "file" : ""}
+              type={"file"}
+              onChange={handleSubmitPdf}
             />
             <label htmlFor="icon-button-file">
               <Tooltip title="Nota Fiscal">

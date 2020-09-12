@@ -45,6 +45,8 @@ import low_patrimony_item from "./low-patrimony-item";
 import transfer_patrimony_item from "./transference-patrimony-item";
 import occurrente_patrimony_item from "./occurrence-patrimony-item";
 
+import { reducer as invoice } from "./invoice";
+
 export default (history) =>
   combineReducers({
     toastr,
@@ -80,6 +82,8 @@ export default (history) =>
     low_patrimony_item,
     transfer_patrimony_item,
     occurrente_patrimony_item,
+
+    invoice,
 
     router: connectRouter(history),
   });
