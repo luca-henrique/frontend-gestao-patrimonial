@@ -3,28 +3,52 @@ import Immutable from "seamless-immutable";
 
 /* Types & Action Creators */
 const { Types, Creators } = createActions({
-  licenceCheckRequest: ["pdf"],
-  licenseRequest: ["token"],
-  licenseSuccess: ["token"],
+  openModalImage: [],
+  hideModalImage: [],
+
+  readImageRequest: ["patrimony_id"],
+  readImageSuccess: ["images"],
+
+  uploadImageRequest: ["patrimony_id", "images"],
+  uploadImageSuccess: ["images"],
+
+  deleteImageRequest: ["image_id"],
+  deleteImageSuccess: ["image_id"],
+
+  downloadImageRequest: ["id"],
 });
 
-export const LicenseTypes = Types;
+export const ImagesTypes = Types;
 export default Creators;
+
+console.log(ImagesTypes);
 
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
   exist: false,
+  images: [],
+  open: false,
+  loading_images: false,
 });
 
 /* Reducers */
 
-export const success = (state, { token }) => {
-  return { ...state, isLisenced: token };
+export const open = (state) => {
+  return { ...state, open: true };
+};
+
+export const hide = (state) => {
+  return { ...state, open: false };
+};
+
+export const read = (state, { images }) => {
+  return { ...state, loading_images: false, images: images };
 };
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.LICENCE_CHECK_REQUEST]: success,
-  [Types.LICENSE_SUCCESS]: success,
+  [ImagesTypes.OPEN_MODAL_IMAGE]: open,
+  [ImagesTypes.HIDE_MODAL_IMAGE]: hide,
+  [ImagesTypes.READ_IMAGE_SUCCESS]: read,
 });

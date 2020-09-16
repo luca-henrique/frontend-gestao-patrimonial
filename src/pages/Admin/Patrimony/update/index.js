@@ -4,8 +4,9 @@ import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
 import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
 import { Creators as CreatorsOccurrencePatrimony } from "~/store/ducks/occurrence-patrimony-item";
-import ActionsInvoice from "~/store/ducks/invoice";
 import { useDispatch, useSelector } from "react-redux";
+
+import ActionsInvoice from "~/store/ducks/invoice";
 
 import {
   Grid,
@@ -20,7 +21,6 @@ import { Alert } from "@material-ui/lab/";
 
 import EditIcon from "@material-ui/icons/Edit";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
@@ -31,6 +31,9 @@ import PurchaseInformation from "./components/purchase-information";
 import Low from "./components/low/";
 
 import ToggleMenu from "./components/toggle-menu";
+
+import Invoice from "./components/button-invoice/";
+import ImageButton from "./components/button-image/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -59,9 +62,6 @@ const PatrimonyItem = () => {
 
   const classes = useStyles();
 
-  // eslint-disable-next-line no-unused-vars
-  const [invoice, setInvoice] = useState(false);
-
   const edit = useSelector(
     (state) => state.patrimony_item.edit_patrimony_visible
   );
@@ -86,6 +86,7 @@ const PatrimonyItem = () => {
   };
 
   const backForListPatrimony = () => {
+    console.log("?");
     if (edit === true) {
       dispatch(CreatorsPage.changePageLocation("patrimony_list"));
     } else {
@@ -112,12 +113,6 @@ const PatrimonyItem = () => {
     dispatch(ActionsInvoice.readInvoiceRequest(id));
   }, [dispatch, id]);
 
-  const handleSubmitPdf = (e) => {
-    e.preventDefault();
-    setInvoice(e.target.files[0]);
-    console.log(e.target.files[0]);
-  };
-
   return (
     <Grid
       container
@@ -131,46 +126,16 @@ const PatrimonyItem = () => {
           <Tooltip title="Voltar">
             <IconButton
               style={{ color: "#a4a4a4" }}
-              onChange={backForListPatrimony}
+              onClick={backForListPatrimony}
             >
               <ArrowBackIcon />
             </IconButton>
           </Tooltip>
 
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <input
-              name="upload"
-              accept="application/pdf,application/vnd.ms-excel"
-              className={classes.input}
-              id="icon-button-file"
-              type={"file"}
-              onChange={handleSubmitPdf}
-            />
-            <label htmlFor="icon-button-file">
-              <Tooltip title="Nota Fiscal">
-                <IconButton aria-label="upload picture" component="span">
-                  <FileCopyIcon style={{ color: "#a4a4a4" }} />
-                </IconButton>
-              </Tooltip>
-            </label>
+            <Invoice />
 
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="icon-button-photo"
-              type="file"
-            />
-            <label htmlFor="icon-button-photo">
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <Tooltip title="Adicionar Foto">
-                  <PhotoCamera style={{ color: "#a4a4a4" }} />
-                </Tooltip>
-              </IconButton>
-            </label>
+            <ImageButton />
 
             <Tooltip title="Ficha do bem">
               <IconButton>

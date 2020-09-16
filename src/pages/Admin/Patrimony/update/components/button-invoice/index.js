@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
@@ -10,25 +8,27 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 
-const options = [
-  "Create a merge commit",
-  "Squash and merge",
-  "Rebase and merge",
-];
+import ActionsInvoice from "~/store/ducks/invoice";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import { Tooltip, IconButton } from "@material-ui/core";
+import { FileCopy } from "@material-ui/icons/";
 
 export default function SplitButton() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
-  };
+  const dispatch = useDispatch();
 
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
-    setOpen(false);
-  };
+  const [formData, setFormData] = useState(new FormData());
+
+  const [invoice, setInvoice] = useState(false);
+
+  const invoiceExist = useSelector((state) => state.invoice.exist);
+  const id = useSelector((state) => state.patrimony_item.show_patrimony.id);
+
+  console.log(invoiceExist);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -42,27 +42,33 @@ export default function SplitButton() {
     setOpen(false);
   };
 
+  const upload = (e) => {
+    e.preventDefault();
+
+    dispatch(ActionsInvoice.uploadInvoiceRequest(id, e.target.files[0]));
+
+    setOpen(false);
+  };
+
+  const download = () => {
+    dispatch(ActionsInvoice.downloadInvoiceRequest(id));
+    setOpen(false);
+  };
+
+  const remove = () => {
+    setOpen(false);
+    dispatch(ActionsInvoice.deleteInvoiceRequest(id));
+  };
+
   return (
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <ButtonGroup
-          variant="contained"
-          color="primary"
-          ref={anchorRef}
-          aria-label="split button"
-        >
-          <Button onClick={handleClick}>{options[selectedIndex]}</Button>
-          <Button
-            color="primary"
-            size="small"
-            aria-controls={open ? "split-button-menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            aria-label="select merge strategy"
-            aria-haspopup="menu"
-            onClick={handleToggle}
-          >
-            <ArrowDropDownIcon />
-          </Button>
+        <ButtonGroup ref={anchorRef}>
+          <Tooltip title="Nota Fiscal">
+            <IconButton onClick={handleToggle}>
+              <FileCopy style={{ color: "#a4a4a4" }} />
+            </IconButton>
+          </Tooltip>
         </ButtonGroup>
         <Popper
           open={open}
@@ -82,16 +88,33 @@ export default function SplitButton() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList id="split-button-menu">
-                    {options.map((option, index) => (
+                    <input
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={upload}
+                      accept="application/pdf,application/vnd.ms-excel"
+                      disabled={invoiceExist}
+                    />
+                    <label htmlFor="contained-button-file">
                       <MenuItem
-                        key={option}
-                        disabled={index === 2}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
+                        disabled={invoiceExist}
+                        variant="contained"
+                        color="primary"
+                        component="span"
                       >
-                        {option}
+                        adicionar
                       </MenuItem>
-                    ))}
+                    </label>
+
+                    <MenuItem onClick={download} disabled={!invoiceExist}>
+                      baixar
+                    </MenuItem>
+
+                    <MenuItem onClick={remove} disabled={!invoiceExist}>
+                      excluir
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

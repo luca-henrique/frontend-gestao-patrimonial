@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { all, takeLatest } from "redux-saga/effects";
 
 import { initSocket } from "./socket";
@@ -148,7 +147,15 @@ import {
 } from "./occurence-patrimony";
 
 import { InvoiceTypes } from "../ducks/invoice";
-import { uploadInvoice, readInvoice } from "./invoice";
+import {
+  uploadInvoice,
+  readInvoice,
+  downloadInvoice,
+  deleteInvoice,
+} from "./invoice";
+
+import { ImagesTypes } from "../ducks/image";
+import { readImage, uploadImage, deleteImage, downloadImage } from "./image";
 
 export default function* rootSaga() {
   return yield all([
@@ -312,5 +319,12 @@ export default function* rootSaga() {
 
     takeLatest(InvoiceTypes.READ_INVOICE_REQUEST, readInvoice),
     takeLatest(InvoiceTypes.UPLOAD_INVOICE_REQUEST, uploadInvoice),
+    takeLatest(InvoiceTypes.DOWNLOAD_INVOICE_REQUEST, downloadInvoice),
+    takeLatest(InvoiceTypes.DELETE_INVOICE_REQUEST, deleteInvoice),
+
+    takeLatest(ImagesTypes.READ_IMAGE_REQUEST, readImage),
+    takeLatest(ImagesTypes.UPLOAD_IMAGE_REQUEST, uploadImage),
+    takeLatest(ImagesTypes.DOWNLOAD_IMAGE_REQUEST, downloadImage),
+    takeLatest(ImagesTypes.DELETE_IMAGE_REQUEST, deleteImage),
   ]);
 }

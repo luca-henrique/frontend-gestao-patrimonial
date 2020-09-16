@@ -46,6 +46,7 @@ import transfer_patrimony_item from "./transference-patrimony-item";
 import occurrente_patrimony_item from "./occurrence-patrimony-item";
 
 import { reducer as invoice } from "./invoice";
+import { reducer as image } from "./image";
 
 export default (history) =>
   combineReducers({
@@ -84,6 +85,7 @@ export default (history) =>
     occurrente_patrimony_item,
 
     invoice,
+    image,
 
     router: connectRouter(history),
   });
