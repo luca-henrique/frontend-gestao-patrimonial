@@ -2,7 +2,6 @@ import { call, put } from "redux-saga/effects";
 import api from "../../service/api";
 import ActionsInvoice from "../ducks/invoice";
 import { toastr } from "react-redux-toastr";
-import { saveAs } from "file-saver";
 
 export function* readInvoice({ patrimony_id }) {
   try {

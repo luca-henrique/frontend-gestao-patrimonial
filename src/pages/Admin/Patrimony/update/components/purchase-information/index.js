@@ -25,19 +25,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Purchase = () => {
-  //toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-
+const Purchase = React.memo(({ purchaseInformation }) => {
   const [bidding, setBidding] = useState("");
   const [effort, setEffort] = useState("");
   const [buyDate, setBuyDate] = useState("");
   const [numberInvoice, setNumberInvoice] = useState("");
   const [dateInvoice, setDateInvoice] = useState("");
 
-  const [value, setValue] = useState(100.0);
-  const [acquisitionValue, setAcquisitionValue] = useState(
-    value.toLocaleString("pt-br", { style: "currency", currency: "BRL" })
-  );
+  const [value, setValue] = useState("");
+
+  const [allocation, setAllocation] = useState("");
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
 
@@ -74,13 +71,15 @@ const Purchase = () => {
     setBuyDate(formatDate(patrimony.dateBuy));
     setNumberInvoice(patrimony.numberInvoice);
     setDateInvoice(formatDate(patrimony.dateInvoice));
-    setAcquisitionValue(
+    setValue(
       patrimony.value.toLocaleString("pt-br", {
         style: "currency",
         currency: "BRL",
       })
     );
+    setAllocation(patrimony.allocation);
   }, [
+    patrimony.allocation,
     patrimony.bidding,
     patrimony.dateBuy,
     patrimony.dateInvoice,
@@ -93,6 +92,16 @@ const Purchase = () => {
     const date = moment(data).format("YYYY-MM-DD");
     return date;
   }
+
+  purchaseInformation({
+    bidding,
+    effort,
+    buyDate,
+    numberInvoice,
+    dateInvoice,
+    value,
+    allocation,
+  });
 
   return (
     <>
@@ -153,8 +162,8 @@ const Purchase = () => {
             variant="outlined"
             size="small"
             fullWidth
-            value={convertToReal(acquisitionValue)}
-            onChange={(e) => setAcquisitionValue(e.target.value)}
+            value={convertToReal(value)}
+            onChange={(e) => setValue(e.target.value)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">R$</InputAdornment>
@@ -190,8 +199,24 @@ const Purchase = () => {
           />
         </div>
       </Grid>
+
+      <Grid item xs={12} sm={12} className={classes.input}>
+        <div>
+          <Typography variant="button">Dotação:</Typography>
+          <TextField
+            required
+            variant="outlined"
+            size="small"
+            fullWidth
+            type="text"
+            value={allocation}
+            onChange={(e) => setAllocation(e.target.value)}
+            disabled={edit}
+          />
+        </div>
+      </Grid>
     </>
   );
-};
+});
 
 export default Purchase;

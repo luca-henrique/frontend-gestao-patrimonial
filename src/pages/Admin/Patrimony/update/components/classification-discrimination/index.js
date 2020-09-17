@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Classification = () => {
+const Classification = React.memo(({ classificationInformation }) => {
   const classes = useStyles();
 
   const [nature, setNature] = useState("");
@@ -75,6 +75,8 @@ const Classification = () => {
     patrimony.origin_item_id,
     patrimony.state_item_id,
   ]);
+
+  classificationInformation({ nature, origin, state, type });
 
   return (
     <>
@@ -169,6 +171,6 @@ const Classification = () => {
       </Grid>
     </>
   );
-};
+});
 
 export default Classification;

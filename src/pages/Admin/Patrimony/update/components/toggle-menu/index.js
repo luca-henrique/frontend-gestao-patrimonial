@@ -59,8 +59,6 @@ export default function SpeedDials() {
     (state) => state.low_patrimony_item.low_item_patrimony_exist
   );
 
-  console.log("Lembre que falta configurar os ids de cada item");
-
   const userLog = () => {
     if (role) {
       dispatch(CreatorsPatrimony.deletePatrimonyRequest(patrimony.id));

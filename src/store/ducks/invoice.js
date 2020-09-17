@@ -20,9 +20,6 @@ export default Creators;
 
 /* Initial State */
 
-console.log(Types);
-console.log(Creators);
-
 export const INITIAL_STATE = Immutable({
   exist: false,
   invoice: {},

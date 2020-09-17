@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Localization = () => {
+const Localization = React.memo(({ localization }) => {
   const classes = useStyles();
 
   const [institution, setInstitution] = useState("");
@@ -65,6 +65,8 @@ const Localization = () => {
 
   const units = useSelector((state) => state.units.units);
   const loading_units = useSelector((state) => state.units.loading_units);
+
+  localization({ institution, sector, unit });
 
   return (
     <>
@@ -146,26 +148,6 @@ const Localization = () => {
       </Grid>
     </>
   );
-};
+});
 
 export default Localization;
-
-/*
-
- onChange={(e) => {
-            setInstitution(e.target.value);
-            dispatch(CreatorsSectors.readSectorsRequest(e.target.value));
-            dispatch(CreatorsUnit.changerLoadingUnits());
-            setUnit("");
-          }}
-
-onChange={(e) => setUnit(e.target.value)}
-
-
- onChange={(e) => {
-            setSector(e.target.value);
-            dispatch(CreatorsUnit.readUnitRequest(e.target.value));
-          }}
-
-
-*/

@@ -9,8 +9,7 @@ import {
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { useSelector, useDispatch } from "react-redux";
-import { Creators as CreatorsLowPatrimonyItem } from "~/store/ducks/low-patrimony-item";
+import { useSelector } from "react-redux";
 
 import { formatDate } from "~/util/formatDate";
 
@@ -34,10 +33,6 @@ const Low = () => {
 
   const low = useSelector(
     (state) => state.low_patrimony_item.low_item_patrimony
-  );
-
-  const edit = useSelector(
-    (state) => state.patrimony_item.edit_patrimony_visible
   );
 
   const [type, setType] = useState("");
@@ -68,7 +63,7 @@ const Low = () => {
           onChange={(e) => {
             setType(e.target.value);
           }}
-          disabled={edit}
+          disabled
         >
           <Typography variant="button">Tipo de baixa:</Typography>
           <Select native size="small" fullWidth value={type}>
@@ -91,7 +86,7 @@ const Low = () => {
             fullWidth
             type="date"
             value={formatDate(date)}
-            disabled={edit}
+            disabled
           />
         </div>
       </Grid>
@@ -107,7 +102,7 @@ const Low = () => {
             multiline
             rows="2"
             value={reason}
-            disabled={edit}
+            disabled
           />
         </div>
       </Grid>

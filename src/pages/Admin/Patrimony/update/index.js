@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
@@ -22,7 +22,6 @@ import { Alert } from "@material-ui/lab/";
 import EditIcon from "@material-ui/icons/Edit";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
 import BasicsImformation from "./components/basics-information/";
 import Localization from "./components/localization/";
@@ -72,11 +71,6 @@ const PatrimonyItem = () => {
     (state) => state.low_patrimony_item.low_item_patrimony_exist
   );
 
-  function updateRequestPatrimonyItem(e) {
-    e.preventDefault();
-    changeEdit();
-  }
-
   const changeEdit = () => {
     if (edit) {
       dispatch(CreatorsPatrimony.enablePatrimonyEdit());
@@ -86,7 +80,6 @@ const PatrimonyItem = () => {
   };
 
   const backForListPatrimony = () => {
-    console.log("?");
     if (edit === true) {
       dispatch(CreatorsPage.changePageLocation("patrimony_list"));
     } else {
@@ -113,6 +106,46 @@ const PatrimonyItem = () => {
     dispatch(ActionsInvoice.readInvoiceRequest(id));
   }, [dispatch, id]);
 
+  const [basic, setBasic] = useState({});
+
+  const basicsInformations = useCallback((basics) => {
+    setBasic(basics);
+  }, []);
+
+  const [local, setLocal] = useState({});
+
+  const localization = useCallback((local) => {
+    setLocal(local);
+  }, []);
+
+  const [classification, setClassification] = useState({});
+
+  const classificationInformation = useCallback((classic) => {
+    setClassification(classic);
+  }, []);
+
+  const [purchase, setPurchase] = useState({});
+
+  const purchaseInformation = useCallback((purchase) => {
+    setPurchase(purchase);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    var obj = {
+      id,
+      basic,
+      local,
+      classification,
+      purchase,
+    };
+
+    dispatch(CreatorsPatrimony.updatePatrimonyRequest(obj));
+
+    changeEdit();
+  };
+
   return (
     <Grid
       container
@@ -121,7 +154,7 @@ const PatrimonyItem = () => {
       alignItems="flex-start"
       style={{ color: "#BDBDBD" }}
     >
-      <form onSubmit={updateRequestPatrimonyItem}>
+      <form onSubmit={handleSubmit}>
         <Grid item xs={12} sm={12} className={classes.headerIcons}>
           <Tooltip title="Voltar">
             <IconButton
@@ -167,7 +200,7 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <BasicsImformation />
+          <BasicsImformation basicsInformations={basicsInformations} />
         </Grid>
 
         {/* Dados da Localização */}
@@ -177,7 +210,7 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <Localization />
+          <Localization localization={localization} />
         </Grid>
 
         {/* Classificação e descriminação */}
@@ -187,7 +220,9 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <ClassificationDiscrimination />
+          <ClassificationDiscrimination
+            classificationInformation={classificationInformation}
+          />
         </Grid>
 
         {/* Informação da Aquisição */}
@@ -197,7 +232,7 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <PurchaseInformation />
+          <PurchaseInformation purchaseInformation={purchaseInformation} />
         </Grid>
 
         {/* Baixa */}

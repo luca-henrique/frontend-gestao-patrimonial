@@ -130,7 +130,7 @@ function View() {
       <div style={{ display: "flex", flexDirection: "row", marginTop: "20px" }}>
         <div>
           <Typography variant="subtitle1" color="initial">
-            Situações do patrimônio:
+            Situações:
           </Typography>
         </div>
         <div>
@@ -138,14 +138,7 @@ function View() {
             ativo,
           </Typography>
         </div>
-        <div>
-          <Typography
-            variant="subtitle1"
-            style={{ color: colors["transferido"] }}
-          >
-            transferido,
-          </Typography>
-        </div>
+
         <div>
           <Typography variant="subtitle1" style={{ color: colors["baixa"] }}>
             baixa

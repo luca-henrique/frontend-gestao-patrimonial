@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import moment from "moment";
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BasicsInformations = () => {
+const BasicsInformations = React.memo(({ basicsInformations }) => {
   const classes = useStyles();
 
   const patrimony = useSelector((state) => state.patrimony_item.show_patrimony);
@@ -52,6 +52,8 @@ const BasicsInformations = () => {
     const date = moment(data).format("YYYY-MM-DD");
     return date;
   }
+
+  basicsInformations({ tipping, discrimination, dateEntry, specification });
 
   return (
     <>
@@ -120,6 +122,6 @@ const BasicsInformations = () => {
       </Grid>
     </>
   );
-};
+});
 
 export default BasicsInformations;

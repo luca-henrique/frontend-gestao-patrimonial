@@ -105,7 +105,9 @@ const View = () => {
     {
       icon: "delete",
       tooltip: "Deletar imagem",
-      onClick: (event, rowData) => {},
+      onClick: (event, rowData) => {
+        dispatch(ActionsImage.deleteImageRequest(rowData.id));
+      },
     },
 
     {
