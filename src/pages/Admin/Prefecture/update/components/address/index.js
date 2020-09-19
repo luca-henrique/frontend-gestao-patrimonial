@@ -5,10 +5,10 @@ import { Grid, Typography, TextField } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsPrefectureAddress } from "~/store/ducks/prefecture_address";
 
-function Address(props) {
-  const address = useSelector(
-    (state) => state.prefecture_address.read_prefecture_address.address
-  );
+function Address() {
+  const address = useSelector((state) => state.prefecture_address.address);
+
+  const loading = useSelector((state) => state.prefecture_address.loading);
 
   const dispatch = useDispatch();
 
@@ -22,6 +22,7 @@ function Address(props) {
 
   useEffect(() => {
     dispatch(CreatorsPrefectureAddress.readPrefectureAddressRequest());
+
     setCep(address.cep);
     setCidade(address.cidade);
     setEstado(address.estado);
@@ -29,7 +30,6 @@ function Address(props) {
     setRua(address.rua);
     setComplemento(address.complemento || "");
     setNumero(address.numero);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address.bairro,
     address.cep,
@@ -38,6 +38,7 @@ function Address(props) {
     address.estado,
     address.numero,
     address.rua,
+    dispatch,
   ]);
 
   function handleSubmit(e) {
@@ -84,6 +85,10 @@ function Address(props) {
 
   function soNumeros(d) {
     return d.replace(/\D/g, "");
+  }
+
+  if (loading) {
+    return <></>;
   }
 
   return (

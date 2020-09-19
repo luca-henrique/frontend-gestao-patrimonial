@@ -56,7 +56,7 @@ export default function AlertDialog() {
   };
 
   useEffect(() => {
-    dispatch(CreatorsOccurrenceItem.readOccurrenceItemRequest());
+    dispatch(CreatorsOccurrenceItem.readTesteOccurrenceItemRequest());
   }, [dispatch]);
 
   const occurrence = useSelector((state) => state.occurrence.occurrence_items);

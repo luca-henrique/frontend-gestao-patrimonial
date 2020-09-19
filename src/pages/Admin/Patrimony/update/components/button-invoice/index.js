@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -21,14 +21,9 @@ export default function SplitButton() {
 
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState(new FormData());
-
-  const [invoice, setInvoice] = useState(false);
-
   const invoiceExist = useSelector((state) => state.invoice.exist);
-  const id = useSelector((state) => state.patrimony_item.show_patrimony.id);
 
-  console.log(invoiceExist);
+  const id = useSelector((state) => state.patrimony_item.show_patrimony.id);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);

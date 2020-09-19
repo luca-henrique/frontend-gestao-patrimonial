@@ -15,6 +15,9 @@ export const Types = {
   CREATE_OCCURRENCE_PATRIMONY_REQUEST:
     "@occurrence-patrimony/CREATE_OCCURRENCE_PATRIMONY_REQUEST",
 
+  CREATE_OCCURRENCE_PATRIMONY_SUCCESS:
+    "@occurrence-patrimony/CREATE_OCCURRENCE_PATRIMONY_SUCCESS",
+
   READ_OCCURRENCE_PATRIMONY_REQUEST:
     "@occurrence-patrimony/READ_OCCURRENCE_PATRIMONY_REQUEST",
   READ_OCCURRENCE_PATRIMONY_SUCCESS:
@@ -98,7 +101,7 @@ export default function occurrencePatrimony(state = INITIAL_STATE, action) {
     case Types.UPDATE_OCCURRENCE_PATRIMONY_SUCCESS:
       return {
         ...state,
-        read_occurrence_patrimony: action.payload.occurrence,
+        read_occurrence_patrimony: action.payload.data,
       };
 
     default:
@@ -136,24 +139,24 @@ export const Creators = {
     },
   }),
 
-  createOccurrencePatrimonySuccess: (occurrence) => ({
+  createOccurrencePatrimonySuccess: (data) => ({
     type: Types.CREATE_OCCURRENCE_PATRIMONY_SUCCESS,
     payload: {
-      occurrence,
+      data,
     },
   }),
 
-  updateOccurrencePatrimonyRequest: (occurrence) => ({
+  updateOccurrencePatrimonyRequest: (data) => ({
     type: Types.UPDATE_OCCURRENCE_PATRIMONY_REQUEST,
     payload: {
-      occurrence,
+      data,
     },
   }),
 
-  updateOccurrencePatrimonySuccess: (occurrence) => ({
+  updateOccurrencePatrimonySuccess: (data) => ({
     type: Types.UPDATE_OCCURRENCE_PATRIMONY_SUCCESS,
     payload: {
-      occurrence,
+      data,
     },
   }),
 

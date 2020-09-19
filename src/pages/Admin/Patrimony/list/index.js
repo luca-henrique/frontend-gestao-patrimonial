@@ -22,7 +22,7 @@ function View() {
   }, [dispatch]);
 
   const colors = {
-    ativo: "#088A08",
+    ativo: "#0080FF",
     transferido: "#FF8000",
     baixa: "#DF0101",
   };
@@ -39,7 +39,11 @@ function View() {
             field: "situation",
             render: (rowData) => (
               <>
-                <WarningIcon style={{ color: colors[rowData.situation] }} />
+                {rowData.situation === true ? (
+                  <WarningIcon style={{ color: "#DF0101" }} />
+                ) : (
+                  <WarningIcon style={{ color: "#0080FF" }} />
+                )}
               </>
             ),
           },

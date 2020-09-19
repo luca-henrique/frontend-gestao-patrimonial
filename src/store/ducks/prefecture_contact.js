@@ -21,18 +21,20 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  read_prefecture_contact: {},
-  create_prefecture_contact: {},
-  update_prefecture_contact: {},
+  contact: {},
+  loading: false,
 });
 
 export default function PrefectureContact(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.CREATE_PREFECTURE_CONTACT_REQUEST:
-      return { ...state, create_prefecture_contact: action.payload };
+    case Types.READ_PREFECTURE_CONTACT_REQUEST:
+      return { ...state, loading: false };
 
     case Types.READ_PREFECTURE_CONTACT_SUCCESS:
-      return { ...state, read_prefecture_contact: action.payload };
+      return { ...state, contact: action.payload.data, loading: false };
+
+    case Types.CREATE_PREFECTURE_CONTACT_SUCCESS:
+      return { ...state, contact: action.payload.data };
 
     default:
       return state;
@@ -40,28 +42,36 @@ export default function PrefectureContact(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  createPrefectureContactRequest: (contact) => ({
+  createPrefectureContactRequest: (data) => ({
     type: Types.CREATE_PREFECTURE_CONTACT_REQUEST,
     payload: {
-      contact,
+      data,
     },
   }),
 
-  readPrefectureContactRequest: () => ({
+  readPrefectureContactRequest: (id) => ({
     type: Types.READ_PREFECTURE_CONTACT_REQUEST,
+    payload: { id },
   }),
 
-  readPrefectureContactSuccess: (contact) => ({
+  readPrefectureContactSuccess: (data) => ({
     type: Types.READ_PREFECTURE_CONTACT_SUCCESS,
     payload: {
-      contact,
+      data,
     },
   }),
 
-  updatePrefectureContactRequest: (contact) => ({
+  updatePrefectureContactRequest: (data) => ({
     type: Types.UPDATE_PREFECTURE_CONTACT_REQUEST,
     payload: {
-      contact,
+      data,
+    },
+  }),
+
+  updatePrefectureContactSuccess: (data) => ({
+    type: Types.UPDATE_PREFECTURE_CONTACT_SUCCESS,
+    payload: {
+      data,
     },
   }),
 };

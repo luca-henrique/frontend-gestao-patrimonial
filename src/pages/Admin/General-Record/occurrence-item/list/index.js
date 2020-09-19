@@ -16,7 +16,7 @@ function OcurrenceItem() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CreatorsOccurrenceItem.readOccurrenceItemRequest());
+    dispatch(CreatorsOccurrenceItem.readTesteOccurrenceItemRequest());
   }, [dispatch]);
 
   return (

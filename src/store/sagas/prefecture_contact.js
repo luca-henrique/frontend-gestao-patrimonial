@@ -4,9 +4,9 @@ import { Creators as CreatorsPrefectureContact } from "../ducks/prefecture_conta
 
 import { toastr } from "react-redux-toastr";
 
-export function* readPrefectureContact() {
+export function* readPrefectureContact({ payload }) {
   try {
-    const { data } = yield call(api.get, `/get-prefecture-contact`);
+    const { data } = yield call(api.get, `/prefecture-contact/${payload.id}`);
 
     yield put(CreatorsPrefectureContact.readPrefectureContactSuccess(data));
   } catch (err) {}
@@ -14,17 +14,14 @@ export function* readPrefectureContact() {
 
 export function* createPrefectureContact({ payload }) {
   try {
-    const { contact } = payload;
-    const { data } = yield call(api.post, "/prefecture-contact", contact);
+    const { data } = yield call(api.post, "/prefecture-contact", payload.data);
     yield put(CreatorsPrefectureContact.readPrefectureContactSuccess(data));
   } catch (err) {}
 }
 
 export function* updatePrefectureContact({ payload }) {
   try {
-    const { contact } = payload;
-
-    yield call(api.put, `/prefecture-contact/${contact.id || 1}`, contact);
+    yield call(api.put, `/prefecture-contact/${payload.data.id}`, payload.data);
     toastr.success("Contato atualizado");
   } catch (err) {}
 }

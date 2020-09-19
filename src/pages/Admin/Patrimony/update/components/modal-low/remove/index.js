@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import { useSelector, useDispatch } from "react-redux";
-import { Creators as CreatorsPatrimonyLow } from "~/store/ducks/low-patrimony-item";
-
 export default function AlertDialog() {
-  const dispatch = useDispatch();
-
   const deletePatrimony = (e) => {
     e.preventDefault();
   };

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { Creators as CreatorsContact } from "~/store/ducks/prefecture_contact";
 
 function Contact() {
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
 
   const dispatch = useDispatch();

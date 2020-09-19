@@ -1,17 +1,12 @@
 import Immutable from "seamless-immutable";
 
 export const Types = {
-  /* -> Modal [ CREATE, UPDATE, CHANGE PASSWORD ] <- */
-
-  SHOW_NEW_MODAL_PREFECTURE: "@prefecture/SHOW_NEW_MODAL_PREFECTURE",
-  HIDE_NEW_MODAL_PREFECTURE: "@prefecture/HIDE_NEW_MODAL_PREFECTURE",
-
-  ONBLUR_PREFECTURE_REQUEST: "@prefecture/ONBLUR_PREFECTURE_REQUEST",
-
   CREATE_PREFECTURE_REQUEST: "@prefecture/CREATE_PREFECTURE_REQUEST",
   CREATE_PREFECTURE_SUCCESS: "@prefecture/CREATE_PREFECTURE_SUCCESS",
+  CREATE_PREFECTURE_COMPLETE: "@prefecture/CREATE_PREFECTURE_COMPLETE",
 
   READ_PREFECTURE_REQUEST: "@prefecture/READ_PREFECTURE_REQUEST",
+  READ_PREFECTURE_FAIL: "@prefecture/READ_PREFECTURE_FAIL",
   READ_PREFECTURE_SUCCESS: "@prefecture/READ_PREFECTURE_SUCCESS",
 
   UPDATE_PREFECTURE_REQUEST: "@prefecture/UPDATE_PREFECTURE_REQUEST",
@@ -19,21 +14,30 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  create_prefecture: false,
-  read_prefecture: {},
-  create_prefecture_request: {},
+  exist: false,
+  prefecture: false,
 });
 
 export default function Prefecture(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.SHOW_NEW_MODAL_PREFECTURE:
-      return { ...state, create_prefecture: true };
-
-    case Types.HIDE_NEW_MODAL_PREFECTURE:
-      return { ...state, create_prefecture: false };
-
     case Types.READ_PREFECTURE_SUCCESS:
-      return { ...state, read_prefecture: action.payload };
+      return {
+        ...state,
+        prefecture: action.payload.data,
+        exist: true,
+      };
+
+    case Types.UPDATE_PREFECTURE_SUCCESS:
+      return { ...state, prefecture: action.payload.data };
+
+    case Types.CREATE_PREFECTURE_SUCCESS:
+      return { ...state, prefecture: action.payload.data };
+
+    case Types.READ_PREFECTURE_FAIL:
+      return { ...state, exist: false };
+
+    case Types.CREATE_PREFECTURE_COMPLETE:
+      return { ...state, exist: true };
 
     default:
       return state;
@@ -41,43 +45,50 @@ export default function Prefecture(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  showPrefectureCreate: () => ({
-    type: Types.SHOW_NEW_MODAL_PREFECTURE,
-  }),
-
-  hidePrefectureCreate: () => ({
-    type: Types.HIDE_NEW_MODAL_PREFECTURE,
-  }),
-
   readPrefecturePrefectureRequest: () => ({
     type: Types.READ_PREFECTURE_REQUEST,
   }),
 
-  readPrefecturePrefectureSuccess: (prefeture) => ({
+  readPrefecturePrefectureFail: () => ({
+    type: Types.READ_PREFECTURE_FAIL,
+  }),
+
+  readPrefecturePrefectureSuccess: (data) => ({
     type: Types.READ_PREFECTURE_SUCCESS,
     payload: {
-      prefeture,
+      data,
     },
   }),
 
-  onBlurPrefectureRequest: (prefeture) => ({
-    type: Types.ONBLUR_PREFECTURE_REQUEST,
-    payload: {
-      prefeture,
-    },
-  }),
-
-  createPrefectureRequest: (prefeture) => ({
+  createPrefectureRequest: (prefecture) => ({
     type: Types.CREATE_PREFECTURE_REQUEST,
     payload: {
-      prefeture,
+      prefecture,
     },
   }),
 
-  updatePrefectureRequest: (prefecture) => ({
+  createPrefectureSuccess: (data) => ({
+    type: Types.CREATE_PREFECTURE_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  createPrefectureComplete: () => ({
+    type: Types.CREATE_PREFECTURE_COMPLETE,
+  }),
+
+  updatePrefectureRequest: (data) => ({
     type: Types.UPDATE_PREFECTURE_REQUEST,
     payload: {
-      prefecture,
+      data,
+    },
+  }),
+
+  updatePrefectureSuccess: (data) => ({
+    type: Types.UPDATE_PREFECTURE_SUCCESS,
+    payload: {
+      data,
     },
   }),
 };

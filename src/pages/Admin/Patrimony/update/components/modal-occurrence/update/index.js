@@ -30,21 +30,26 @@ export default function AlertDialog() {
     (state) => state.occurrente_patrimony_item.read_occurrence_patrimony
   );
 
-  console.log(data);
+  const exist = useSelector(
+    (state) => state.occurrente_patrimony_item.exist_occurrence_patrimony
+  );
 
   useEffect(() => {
-    dispatch(CreatorsOccurrenceItem.readOccurrenceItemRequest());
-
-    setDateOccurrence(data.date_occurrence);
-    setTypeOccurrenc(data.occurrence_item_id);
-    setReport(data.report);
-    setSpecification(data.specification);
+    dispatch(CreatorsOccurrenceItem.readTesteOccurrenceItemRequest());
+    if (visible && exist) {
+      setDateOccurrence(data.date_occurrence);
+      setTypeOccurrenc(data.occurrence_item_id);
+      setReport(data.report);
+      setSpecification(data.specification);
+    }
   }, [
     data.date_occurrence,
     data.occurrence_item_id,
     data.report,
     data.specification,
     dispatch,
+    exist,
+    visible,
   ]);
 
   const [dateOccurrence, setDateOccurrence] = useState("");

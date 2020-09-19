@@ -21,8 +21,6 @@ const { Types, Creators } = createActions({
 export const ImagesTypes = Types;
 export default Creators;
 
-console.log(ImagesTypes);
-
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({

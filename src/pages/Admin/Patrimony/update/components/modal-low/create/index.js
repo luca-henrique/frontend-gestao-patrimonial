@@ -29,14 +29,6 @@ export default function AlertDialog() {
     (state) => state.low_patrimony_item.show_create_low_patrimony.id_patrimony
   );
 
-  const deletePatrimony = (e) => {
-    e.preventDefault();
-
-    setDateLow("");
-    setTypeLow("");
-    setReason("");
-  };
-
   const lows = useSelector((state) => state.low.low_items);
 
   const handleSubmit = (e) => {
@@ -56,6 +48,9 @@ export default function AlertDialog() {
 
   const handleClose = () => {
     dispatch(CreatorsPatrimonyLow.hideModalCreateLowPatrimony());
+    setTypeLow("");
+    setReason("");
+    setDateLow("");
   };
 
   useEffect(() => {

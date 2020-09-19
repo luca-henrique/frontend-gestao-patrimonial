@@ -1,29 +1,26 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../service/api";
 import { Creators as CreatorsPrefecture } from "../ducks/prefecture";
-import { Creators as CreatorsPrefectureAddress } from "../ducks/prefecture_address";
-import { Creators as CreatorsPrefectureContact } from "../ducks/prefecture_contact";
 
 import { toastr } from "react-redux-toastr";
-
 export function* readPrefecture() {
   try {
     const { data } = yield call(api.get, "/prefecture");
 
-    if (data.length > 0) {
-      yield put(CreatorsPrefecture.readPrefecturePrefectureSuccess(data[0]));
-      yield put(CreatorsPrefectureAddress.readPrefectureAddressRequest());
-      yield put(CreatorsPrefectureContact.readPrefectureContactRequest());
+    if (data.id) {
+      yield put(CreatorsPrefecture.readPrefecturePrefectureSuccess(data));
     } else {
-      yield put(CreatorsPrefecture.showPrefectureCreate());
+      yield put(CreatorsPrefecture.readPrefecturePrefectureFail());
     }
   } catch (err) {}
 }
 
 export function* createPrefecture({ payload }) {
   try {
-    const { prefeture } = payload;
-    yield call(api.post, "/prefecture", prefeture);
+    const { prefecture } = payload;
+    const { data } = yield call(api.post, "/prefecture", prefecture);
+
+    yield put(CreatorsPrefecture.createPrefectureSuccess(data));
   } catch (err) {}
 }
 

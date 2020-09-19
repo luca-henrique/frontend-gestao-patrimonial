@@ -7,10 +7,10 @@ const { Types, Creators } = createActions({
   readInvoiceSuccess: ["exist"],
 
   uploadInvoiceRequest: ["patrimony_id", "invoice"],
-  uploadInvoiceSuccess: ["invoice"],
+  uploadInvoiceSuccess: ["exist"],
 
   deleteInvoiceRequest: ["patrimony_id"],
-  deleteInvoiceSuccess: ["invoice"],
+  deleteInvoiceSuccess: ["exist"],
 
   downloadInvoiceRequest: ["patrimony_id"],
 });
@@ -36,6 +36,7 @@ export const deleteSuccess = (state, { exist }) => {
 };
 
 export const uploadSuccess = (state, { exist }) => {
+  console.log(exist);
   return { ...state, exist: exist };
 };
 

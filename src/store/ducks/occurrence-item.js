@@ -118,7 +118,8 @@ export const Creators = {
     type: Types.HIDE_UPDATE_MODAL_OCCURRENCE_ITEM,
   }),
   /* --> Modal <-- */
-  readOccurrenceItemRequest: () => ({
+
+  readTesteOccurrenceItemRequest: () => ({
     type: Types.READ_OCCURRENCE_ITEM_REQUEST,
   }),
 

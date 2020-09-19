@@ -7,37 +7,45 @@ import formatPhoneNumber from "~/pages/util/formatPhoneNumber";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsPrefectureContact } from "~/store/ducks/prefecture_contact";
 
-function Contact(props) {
-  const contact = useSelector(
-    (state) => state.prefecture_contact.read_prefecture_contact.contact
-  );
-  console.log(contact);
+const Contact = () => {
+  const contact = useSelector((state) => state.prefecture_contact.contact);
+
+  const loading = useSelector((state) => state.prefecture_contact.loading);
+
+  const prefecture_id = useSelector((state) => state.prefecture.prefecture.id);
 
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
 
+  const dispatch = useDispatch();
+
+  console.log(contact);
+
   useEffect(() => {
-    dispatch(CreatorsPrefectureContact.readPrefectureContactRequest());
+    dispatch(
+      CreatorsPrefectureContact.readPrefectureContactRequest(prefecture_id)
+    );
+
     setNumber(contact.numero);
     setEmail(contact.email);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contact.email, contact.numero]);
-
-  const dispatch = useDispatch();
+  }, [contact.email, contact.numero, dispatch, prefecture_id]);
 
   function handleSubmitUpdate(e) {
     e.preventDefault();
 
-    var contact = {
+    var obj = {
+      id: contact.id,
       numero: number,
       email: email,
     };
 
     if (number.length > 5 && email.length > 5) {
-      dispatch(
-        CreatorsPrefectureContact.updatePrefectureContactRequest(contact)
-      );
+      dispatch(CreatorsPrefectureContact.updatePrefectureContactRequest(obj));
     }
+  }
+
+  if (loading) {
+    return <></>;
   }
 
   return (
@@ -102,6 +110,6 @@ function Contact(props) {
       </Grid>
     </form>
   );
-}
+};
 
 export default Contact;

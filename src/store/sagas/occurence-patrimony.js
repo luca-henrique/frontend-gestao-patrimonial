@@ -16,12 +16,12 @@ export function* readOccurrencePatrimony({ payload }) {
 
 export function* createOccurrencePatrimony({ payload }) {
   try {
-    yield call(api.post, "/occurrence-patrimony", payload.occurrence);
-    yield put(
-      CreatorsOccurrenceItem.createOccurrencePatrimonySuccess(
-        payload.occurrence
-      )
+    const { data } = yield call(
+      api.post,
+      "/occurrence-patrimony",
+      payload.occurrence
     );
+    yield put(CreatorsOccurrenceItem.createOccurrencePatrimonySuccess(data));
     toastr.success("A ocorrência foi adicionada ao patrimônio.");
   } catch (err) {}
 }

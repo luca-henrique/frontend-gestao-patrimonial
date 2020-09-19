@@ -59,22 +59,22 @@ const OccurrencePage = lazy(() =>
 const LocalePage = lazy(() => import("../General-Record/locale-item/list"));
 
 function Start() {
-  const visible = useSelector((state) => state.prefecture.create_prefecture);
-  console.log(visible);
-  if (visible) {
-    return <PrefectureCreate />;
+  const exist = useSelector((state) => state.prefecture.exist);
+
+  if (exist) {
+    return <h3>Home</h3>;
   } else {
-    return <h1>Home</h1>;
+    return <PrefectureCreate />;
   }
 }
 
 function Prefecture() {
-  const visible = useSelector((state) => state.prefecture.create_prefecture);
+  const exist = useSelector((state) => state.prefecture.exist);
 
-  if (visible) {
-    return <PrefectureCreate />;
-  } else {
+  if (exist) {
     return <PrefectureUpdate />;
+  } else {
+    return <PrefectureCreate />;
   }
 }
 
