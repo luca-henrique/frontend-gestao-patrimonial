@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { cnpjMask } from "~/pages/util/maskCnpj";
 import { useDispatch, useSelector } from "react-redux";
-import ActionsPrefecture from "~/store/ducks/prefecture";
+import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
+
+import Image from "../image/";
 
 const Informacoes = () => {
   const prefecture = useSelector((state) => state.prefecture.prefecture);
@@ -28,7 +30,7 @@ const Informacoes = () => {
       razao,
     };
     if (cnpj.length > 5 && nome.length > 5 && razao.length > 5) {
-      dispatch(ActionsPrefecture.updatePrefectureRequest(prefectureUpdate));
+      dispatch(CreatorsPrefecture.updatePrefectureRequest(prefectureUpdate));
     }
   }
 
@@ -49,6 +51,21 @@ const Informacoes = () => {
         width: "auto",
       }}
     >
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        style={{ marginTop: "15px", marginBottom: "15px" }}
+      >
+        <div>
+          <Typography variant="h5" style={{ color: "rgba(0, 0, 0, 0.7)" }}>
+            Informações da prefeitura
+          </Typography>
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={2}>
+        <Image />
+      </Grid>
       <Grid item xs={12}>
         <form onBlur={handleSubmitUpdate}>
           <Grid
@@ -57,16 +74,6 @@ const Informacoes = () => {
             justify="flex-start"
             alignItems="flex-start"
           >
-            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
-              <div>
-                <Typography
-                  variant="h5"
-                  style={{ color: "rgba(0, 0, 0, 0.7)" }}
-                >
-                  Informações da prefeitura
-                </Typography>
-              </div>
-            </Grid>
             <Grid item xs={12} sm={4} style={{ marginTop: "15px" }}>
               <div>
                 <Typography

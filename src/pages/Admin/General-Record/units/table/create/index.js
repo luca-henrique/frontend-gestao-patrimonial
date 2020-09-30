@@ -18,12 +18,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      height: "60%",
+      width: "90%",
     },
     [theme.breakpoints.up("md")]: {
       width: "30%",
-      height: "40%",
     },
   },
 }));
@@ -78,38 +76,38 @@ export default function Create() {
         <div
           style={{
             backgroundColor: "#fff",
-            padding: "20px",
+            padding: "10px",
             border: "2px solid #a4a4a4",
             borderRadius: "5px",
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={12}>
-              <Typography
-                variant="h4"
-                style={{
-                  color: "#a4a4a4",
-                }}
-              >
-                Únidate
-              </Typography>
-            </Grid>
-            <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <Grid item xs={12} sm={12}>
+                <Typography
+                  variant="h4"
+                  style={{
+                    color: "#a4a4a4",
+                  }}
+                >
+                  Únidade
+                </Typography>
+              </Grid>
               <Grid
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginTop: "10px", width: "100%" }}
               >
                 <div>
                   <Typography
-                    variant="button"
+                    variant="subtitle2"
                     style={{
                       color: "#a4a4a4",
                     }}
@@ -131,11 +129,11 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginTop: "10px", width: "100%" }}
               >
                 <div>
                   <Typography
-                    variant="button"
+                    variant="subtitle2"
                     style={{
                       color: "#a4a4a4",
                     }}
@@ -157,7 +155,7 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginTop: "10px", width: "100%" }}
               >
                 <Button
                   color="secondary"
@@ -174,7 +172,7 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginTop: "10px", width: "100%" }}
               >
                 <Button
                   variant="contained"
@@ -184,8 +182,8 @@ export default function Create() {
                   Criar
                 </Button>
               </Grid>
-            </form>
-          </Grid>
+            </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>

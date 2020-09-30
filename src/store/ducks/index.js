@@ -48,6 +48,8 @@ import occurrente_patrimony_item from "./occurrence-patrimony-item";
 import { reducer as invoice } from "./invoice";
 import { reducer as image } from "./image";
 
+import { reducer as prefecture_image } from "./prefecture-image";
+
 export default (history) =>
   combineReducers({
     toastr,
@@ -86,6 +88,7 @@ export default (history) =>
 
     invoice,
     image,
+    prefecture_image,
 
     router: connectRouter(history),
   });

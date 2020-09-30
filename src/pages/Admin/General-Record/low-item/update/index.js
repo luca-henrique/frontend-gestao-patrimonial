@@ -20,8 +20,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      height: "35%",
+      width: "90%",
     },
     [theme.breakpoints.up("md")]: {
       width: "30%",
@@ -78,67 +77,38 @@ export default function Create() {
         <div
           style={{
             backgroundColor: "#fff",
+            padding: "10px",
+            border: "2px solid #a4a4a4",
             borderRadius: "5px",
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="flex
-          -start"
-          >
-            <Grid item xs={12} sm={12} style={{ width: "100%" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Close
-                  color="secondary"
-                  style={{
-                    padding: "0px",
-                  }}
-                  onClick={handleOnClose}
-                  fontSize="large"
-                />
-              </div>
-            </Grid>
-
+          <form onSubmit={handleSubmit}>
             <Grid
-              item
-              xs={12}
-              sm={12}
-              style={{
-                marginTop: "30px",
-                marginBottom: "30px",
-                marginLeft: "60px",
-              }}
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
             >
-              <Typography
-                variant="h4"
-                style={{
-                  color: "#a4a4a4",
-                }}
-              >
-                Atualizar informações
-              </Typography>
-            </Grid>
-            <form
-              onSubmit={handleSubmit}
-              style={{ paddingLeft: "60px", paddingRight: "60px" }}
-            >
+              <Grid item xs={12} sm={12}>
+                <Typography
+                  variant="h4"
+                  style={{
+                    color: "#a4a4a4",
+                  }}
+                >
+                  Atualizar baixa
+                </Typography>
+              </Grid>
               <Grid
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "10px", width: "100%" }}
+                style={{ marginTop: "25px", width: "100%" }}
               >
                 <div>
                   <Typography
-                    variant="legend"
+                    variant="subtitle2"
                     style={{
                       color: "#a4a4a4",
                     }}
@@ -150,6 +120,7 @@ export default function Create() {
                     variant="outlined"
                     size="small"
                     fullWidth
+                    type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
@@ -160,7 +131,32 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "10px", marginBottom: "60px" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
+              >
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleOnClose}
+                >
+                  Fechar
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
               >
                 <Button
                   variant="contained"
@@ -170,8 +166,8 @@ export default function Create() {
                   Atualizar
                 </Button>
               </Grid>
-            </form>
-          </Grid>
+            </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>

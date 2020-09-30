@@ -31,5 +31,6 @@ export function* updateGoodItem({ payload }) {
     const { data } = payload;
     yield call(api.put, `/good-item/${data.id}`, data);
     yield put(CreatorsGoodItem.updateGoodItemSuccess(data));
+    toastr.success("O bem foi atualizado.");
   } catch (err) {}
 }

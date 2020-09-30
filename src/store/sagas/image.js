@@ -13,13 +13,31 @@ export function* readImage({ patrimony_id }) {
 
 export function* uploadImage({ patrimony_id, images }) {
   try {
-    const formData = new FormData();
+    var formData = new FormData();
 
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i], images[i].name, images[i].type);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    for (const key of Object.keys(images)) {
+      formData.append("images", images[key]);
     }
 
-    const { data } = yield call(api.post, `/images/${patrimony_id}`, formData);
+    /*
+    for (let i = 0; i < images.length; i++) {
+      formData.append("images", images[i], images[i].name, images[i].type);
+    }*/
+
+    console.log(formData);
+
+    const { data } = yield call(
+      api.post,
+      `/images/${patrimony_id}`,
+      formData,
+      config
+    );
 
     yield put(ActionsImage.uploadImageSuccess(data));
 

@@ -8,3 +8,17 @@ In the project directory, you can run:
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### `bibliotecas`
+
+Gerenciar estados: <br />
+
+  <p> 
+    "redux",
+    "react-redux",
+    "redux-logger" ,
+    "redux-persist" ,
+    "redux-saga",
+    "reduxsauce",
+  
+  </p>

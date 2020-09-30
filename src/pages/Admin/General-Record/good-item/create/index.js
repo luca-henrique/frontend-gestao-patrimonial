@@ -21,11 +21,9 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      height: "55%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "20%",
-      height: "40%",
+      width: "30%",
     },
   },
 }));
@@ -83,13 +81,13 @@ export default function Create() {
           }}
           className={classes.modal}
         >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
               <Grid item xs={12} sm={12}>
                 <Typography
                   variant="h4"
@@ -104,7 +102,7 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginTop: "15px", width: "100%" }}
               >
                 <div>
                   <Typography
@@ -131,7 +129,11 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
               >
                 <div>
                   <Typography
@@ -161,7 +163,11 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
               >
                 <Button
                   color="secondary"
@@ -178,7 +184,11 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
               >
                 <Button
                   variant="contained"
@@ -188,8 +198,8 @@ export default function Create() {
                   Criar
                 </Button>
               </Grid>
-            </form>
-          </Grid>
+            </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>

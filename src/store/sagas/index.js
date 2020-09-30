@@ -40,6 +40,9 @@ import {
   updatePrefectureContact,
 } from "./prefecture_contact";
 
+import { PrefectureImageTypes } from "../ducks/prefecture-image";
+import { readImagePrefecture } from "./prefecture-image";
+
 import { Types as LowItemTypes } from "../ducks/low-item";
 import {
   readLowItem,
@@ -326,5 +329,10 @@ export default function* rootSaga() {
     takeLatest(ImagesTypes.UPLOAD_IMAGE_REQUEST, uploadImage),
     takeLatest(ImagesTypes.DOWNLOAD_IMAGE_REQUEST, downloadImage),
     takeLatest(ImagesTypes.DELETE_IMAGE_REQUEST, deleteImage),
+
+    takeLatest(
+      PrefectureImageTypes.READ_IMAGE_PREFECTURE_REQUEST,
+      readImagePrefecture
+    ),
   ]);
 }

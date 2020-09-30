@@ -19,11 +19,9 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      height: "45%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "20%",
-      height: "35%",
+      width: "30%",
     },
   },
 }));
@@ -72,7 +70,7 @@ export default function Create() {
         <div
           style={{
             backgroundColor: "#fff",
-            padding: "20px",
+            padding: "10px",
             border: "2px solid #a4a4a4",
             borderRadius: "5px",
           }}
@@ -99,11 +97,15 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
               >
                 <div>
                   <Typography
-                    variant="button"
+                    variant="subtitle2"
                     style={{
                       color: "#a4a4a4",
                     }}
@@ -125,7 +127,11 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
               >
                 <Button
                   color="secondary"
@@ -142,7 +148,7 @@ export default function Create() {
                 item
                 xs={12}
                 sm={12}
-                style={{ marginTop: "25px", width: "100%" }}
+                style={{ marginBottom: "10px", width: "100%" }}
               >
                 <Button
                   variant="contained"

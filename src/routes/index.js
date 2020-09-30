@@ -18,10 +18,19 @@ export default function Routes() {
     <Suspense fallback={<Loader />}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/" exact component={License} />
-          <Route path="/entrar" component={SignIn} isLicensed />
+          <Route path="/" exact component={(props) => <License {...props} />} />
+          <Route
+            path="/entrar"
+            component={(props) => <SignIn {...props} />}
+            isLicensed
+          />
 
-          <Route path="/admin" component={AdminPage} isLicensed isPrivate />
+          <Route
+            path="/admin"
+            component={(props) => <AdminPage {...props} />}
+            isLicensed
+            isPrivate
+          />
         </Switch>
       </ConnectedRouter>
     </Suspense>

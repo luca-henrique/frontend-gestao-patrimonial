@@ -26,8 +26,8 @@ export function* createPrefecture({ payload }) {
 
 export function* updatePrefecture({ payload }) {
   try {
-    const { prefecture } = payload;
-    yield call(api.put, `/prefecture/${prefecture.id}`, prefecture);
+    const { data } = payload;
+    yield call(api.put, `/prefecture/${data.id}`, data);
     toastr.success("Informações da prefeitura atualizadas.");
   } catch (err) {}
 }

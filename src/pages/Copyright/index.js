@@ -2,7 +2,12 @@ import React from "react";
 import { Typography, Link } from "@material-ui/core/";
 
 const Copyright = () => (
-  <Typography variant="body2" color="textSecondary" align="center">
+  <Typography
+    variant="body2"
+    color="textSecondary"
+    align="center"
+    style={{ color: "#fff !important" }}
+  >
     {"Copyright © "}
     <Link color="inherit" href="https://ctmconsultoria.com/index.html">
       CTM consultoria
