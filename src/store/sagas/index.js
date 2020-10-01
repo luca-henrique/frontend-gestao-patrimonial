@@ -41,7 +41,11 @@ import {
 } from "./prefecture_contact";
 
 import { PrefectureImageTypes } from "../ducks/prefecture-image";
-import { readImagePrefecture } from "./prefecture-image";
+import {
+  readImagePrefecture,
+  updatePrefectureImage,
+  uploadPrefectureImage,
+} from "./prefecture-image";
 
 import { Types as LowItemTypes } from "../ducks/low-item";
 import {
@@ -333,6 +337,16 @@ export default function* rootSaga() {
     takeLatest(
       PrefectureImageTypes.READ_IMAGE_PREFECTURE_REQUEST,
       readImagePrefecture
+    ),
+
+    takeLatest(
+      PrefectureImageTypes.UPLOAD_IMAGE_PREFECTURE_REQUEST,
+      uploadPrefectureImage
+    ),
+
+    takeLatest(
+      PrefectureImageTypes.UPDATE_IMAGE_PREFECTURE_REQUEST,
+      updatePrefectureImage
     ),
   ]);
 }

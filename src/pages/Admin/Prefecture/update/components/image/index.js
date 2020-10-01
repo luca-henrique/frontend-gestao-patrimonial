@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 
-import { Grid, ButtonBase, Button } from "@material-ui/core/";
+import { Grid, IconButton } from "@material-ui/core/";
 
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ActionsPrefectureImage from "~/store/ducks/prefecture-image";
 
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import EditIcon from "@material-ui/icons/Edit";
 
 import "./styles.css";
-import Prefeitura from "~/assets/static/prefeitura.png";
+import Prefecture from "~/assets/images/start.png";
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     maxWidth: "100%",
     maxHeight: "100%",
-    width: "150px",
-    height: "150px",
+    width: "200px",
+    height: "220px",
   },
 }));
 
@@ -34,9 +34,30 @@ const Image = () => {
 
   const id = useSelector((state) => state.prefecture.prefecture.id);
 
+  const url = useSelector((state) => state.prefecture_image.url);
+
+  const exist = useSelector((state) => state.prefecture_image.exist);
+
   useEffect(() => {
     dispatch(ActionsPrefectureImage.readImagePrefectureRequest(id));
   }, [dispatch, id]);
+
+  const handleSubmitImage = (event) => {
+    event.preventDefault();
+
+    var prefecture_id = id;
+    var file = event.target.files[0];
+
+    if (exist) {
+      dispatch(
+        ActionsPrefectureImage.updateImagePrefectureRequest(prefecture_id, file)
+      );
+    } else {
+      dispatch(
+        ActionsPrefectureImage.uploadImagePrefectureRequest(prefecture_id, file)
+      );
+    }
+  };
 
   return (
     <Grid
@@ -55,40 +76,45 @@ const Image = () => {
           className={classes.img}
           style={{
             border: "1px solid #D8D8D8",
+            position: "relative",
           }}
         >
           <img
             alt="prefeitura"
-            src={Prefeitura}
+            src={url.href === undefined ? Prefecture : url}
             width="100%"
             height="100%"
             style={{ margin: "auto" }}
           />
-        </div>
-        <div style={{ marginTop: "10px" }}>
+
           <input
             id="contained-button-file"
             style={{ display: "none" }}
             accept="image/*"
             name="image-upload"
             type="file"
+            onChange={handleSubmitImage}
           />
           <label htmlFor="contained-button-file">
-            <Button
+            <IconButton
+              aria-label="delete"
               style={{
-                width: "100%",
-                backgroundColor: "rgb(46, 100, 254)",
-                color: "#fff",
+                color: "rgba(0, 0, 0, 0.54)",
+                position: "absolute",
+                width: "48px",
+                height: "48px",
+                right: "0",
+                bottom: "0",
               }}
               variant="contained"
               component="span"
               size="small"
-              startIcon={<CloudUploadIcon />}
             >
-              upload
-            </Button>
+              <EditIcon />
+            </IconButton>
           </label>
         </div>
+        <div style={{ marginTop: "10px" }}></div>
       </Grid>
     </Grid>
   );

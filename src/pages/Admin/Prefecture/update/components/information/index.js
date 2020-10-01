@@ -63,10 +63,10 @@ const Informacoes = () => {
           </Typography>
         </div>
       </Grid>
-      <Grid item xs={12} sm={2}>
+      <Grid item xs={12} sm={3}>
         <Image />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={9}>
         <form onBlur={handleSubmitUpdate}>
           <Grid
             container
@@ -93,7 +93,7 @@ const Informacoes = () => {
             </Grid>
             <Grid item xs={12} sm={1} />
 
-            <Grid item xs={12} sm={7} style={{ marginTop: "15px" }}>
+            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
               <div>
                 <Typography
                   variant="subtitle2"
@@ -110,7 +110,8 @@ const Informacoes = () => {
                 />
               </div>
             </Grid>
-            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+
+            <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
               <div>
                 <Typography
                   variant="subtitle2"

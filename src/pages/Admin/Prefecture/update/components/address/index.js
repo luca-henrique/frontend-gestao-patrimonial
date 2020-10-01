@@ -100,12 +100,7 @@ function Address() {
         alignItems="flex-start"
         style={{ paddingLeft: "20px", paddingRight: "20px" }}
       >
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
-        >
+        <Grid item xs={12} sm={12} style={{ marginBottom: "10px" }}>
           <div>
             <Typography variant="h5" style={{ color: "rgba(0, 0, 0, 0.7)" }}>
               Endereço
