@@ -95,7 +95,7 @@ export default function Top() {
           </div>
           <div style={{ display: "flex", height: "32px", marginTop: "7px" }}>
             <Typography variant="h6" noWrap style={{ color: "#fff" }}>
-              Sistema de patrimônio
+              Sistema de Gestão Patrimônial
             </Typography>
           </div>
         </div>
