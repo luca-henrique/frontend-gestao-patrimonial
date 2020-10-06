@@ -47,15 +47,19 @@ export default function AlertDialog() {
   };
 
   const handleClose = () => {
-    dispatch(CreatorsPatrimonyLow.hideModalCreateLowPatrimony());
-    setTypeLow("");
-    setReason("");
-    setDateLow("");
+    if (visible) {
+      dispatch(CreatorsPatrimonyLow.hideModalCreateLowPatrimony());
+      setTypeLow("");
+      setReason("");
+      setDateLow("");
+    }
   };
 
   useEffect(() => {
-    dispatch(CreatorsLowItem.readLowItemRequest());
-  }, [dispatch]);
+    if (visible) {
+      dispatch(CreatorsLowItem.readLowItemRequest());
+    }
+  }, [dispatch, visible]);
 
   return (
     <div>

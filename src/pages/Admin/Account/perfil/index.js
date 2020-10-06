@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as CreatorsAccount } from "~/store/ducks/account";
 
-import { Typography, Grid } from "@material-ui/core/";
+import { Typography, Grid, Button } from "@material-ui/core/";
 import { FormControl, Tooltip } from "@material-ui/core/";
 import Select from "@material-ui/core/Select";
 import { TextField } from "@material-ui/core/";
@@ -39,8 +39,7 @@ export default function Update() {
     setEmail(account.email);
     setNome(account.nome);
     setRole(account.role);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account.email, account.nome, account.role]);
+  }, [account.email, account.nome, account.role, dispatch]);
 
   const [nome, setNome] = useState("");
   const [role, setRole] = useState("");
@@ -113,7 +112,7 @@ export default function Update() {
       </Grid>
 
       <Grid item xs={12} sm={12}>
-        <form onBlur={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <Grid
             container
             direction="row"
@@ -171,6 +170,17 @@ export default function Update() {
             ) : (
               <> </>
             )}
+
+            <Grid item xs={12} sm={12} className={classes.grid}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="outlined"
+                style={{ backgroundColor: "#2E64FE", color: "#fff" }}
+              >
+                Atualizar Informações
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Grid>

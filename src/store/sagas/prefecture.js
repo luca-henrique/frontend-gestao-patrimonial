@@ -5,7 +5,7 @@ import { Creators as CreatorsPrefecture } from "../ducks/prefecture";
 import { toastr } from "react-redux-toastr";
 export function* readPrefecture() {
   try {
-    const { data } = yield call(api.get, "/prefecture");
+    const { data } = yield call(api.get, "/prefeitura");
 
     if (data.id) {
       yield put(CreatorsPrefecture.readPrefecturePrefectureSuccess(data));

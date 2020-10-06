@@ -5,6 +5,19 @@ import MaterialTable from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsOriginItem } from "~/store/ducks/origin-item";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "500px ",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+    },
+  },
+}));
+
 function GoodItem() {
   const [selectedRow, setSelectedRow] = useState("");
   const dispatch = useDispatch();
@@ -12,12 +25,14 @@ function GoodItem() {
   const data = useSelector((state) => state.origin.origin_items);
   const loading = useSelector((state) => state.origin.origin_items);
 
+  const classes = useStyles();
+
   useEffect(() => {
     dispatch(CreatorsOriginItem.readOriginItemRequest());
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={classes.modal}>
       <MaterialTable
         data={data}
         title="Origem"
@@ -43,7 +58,7 @@ function GoodItem() {
           rowStyle: (rowData) => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#58ACFA"
+                ? "rgba(164, 164, 164,0.2)"
                 : "#FFF",
           }),
         }}

@@ -1,7 +1,7 @@
 import React from "react";
 
 /* -> Redux[Biblioteca] <- */
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsPage } from "~/store/ducks/page";
 import { Creators as CreatorsDrawerMenu } from "~/store/ducks/drawer-menu";
 import AuthAction from "~/store/ducks/auth";
@@ -38,6 +38,8 @@ export default function Menu() {
 
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.account.account_joined.role);
+
   function changePage(location) {
     dispatch(CreatorsPage.changePageLocation(location));
 
@@ -58,10 +60,10 @@ export default function Menu() {
         <ListItemIcon>
           <PersonOutlineOutlined className={classes.list_icon} />
         </ListItemIcon>
-        <ListItemText className={classes.list_text} primary="Conta" />
+        <ListItemText className={classes.list_text} primary="Usuário" />
       </ListItem>
 
-      <ListItem button className={classes.list_item}>
+      <ListItem button className={classes.list_item} disabled={!user}>
         <ListItemIcon>
           <HomeWorkOutlined className={classes.list_icon} />
         </ListItemIcon>
@@ -92,7 +94,7 @@ export default function Menu() {
 
       <ListItemCreate />
 
-      <ListItem button className={classes.list_item}>
+      <ListItem button className={classes.list_item} disabled={!user}>
         <ListItemIcon>
           <AssignmentOutlined className={classes.list_icon} />
         </ListItemIcon>

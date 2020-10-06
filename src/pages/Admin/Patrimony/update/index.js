@@ -65,11 +65,15 @@ const PatrimonyItem = () => {
     (state) => state.patrimony_item.edit_patrimony_visible
   );
 
-  const [open, setOpen] = useState(false);
+  const user = useSelector((state) => state.account.account_joined.role);
 
-  const exist = useSelector(
+  const low_item_exist = useSelector(
     (state) => state.low_patrimony_item.low_item_patrimony_exist
   );
+
+  const table = user && low_item_exist;
+
+  const [open, setOpen] = useState(false);
 
   const changeEdit = () => {
     if (edit) {
@@ -146,6 +150,8 @@ const PatrimonyItem = () => {
     changeEdit();
   };
 
+  console.log(table);
+
   return (
     <Grid
       container
@@ -175,15 +181,22 @@ const PatrimonyItem = () => {
                 <PictureAsPdfIcon style={{ color: "#a4a4a4" }} />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Editar Informações">
-              <IconButton onClick={changeEdit}>
-                <EditIcon
-                  style={
-                    edit === true ? { color: "#a4a4a4" } : { color: "#FF0040" }
-                  }
-                />
-              </IconButton>
-            </Tooltip>
+
+            {table === false ? (
+              <></>
+            ) : (
+              <Tooltip title="Editar Informações">
+                <IconButton onClick={changeEdit}>
+                  <EditIcon
+                    style={
+                      edit === true
+                        ? { color: "#a4a4a4" }
+                        : { color: "#FF0040" }
+                    }
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
           </div>
         </Grid>
 
@@ -194,57 +207,60 @@ const PatrimonyItem = () => {
         </Grid>
 
         {/* Informações Basicas */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
+        <Grid item xs={12} sm={12}>
           <BasicsImformation basicsInformations={basicsInformations} />
         </Grid>
 
         {/* Dados da Localização */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Localization localization={localization} />
-        </Grid>
-
-        {/* Classificação e descriminação */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <ClassificationDiscrimination
-            classificationInformation={classificationInformation}
-          />
-        </Grid>
-
-        {/* Informação da Aquisição */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <PurchaseInformation purchaseInformation={purchaseInformation} />
-        </Grid>
-
-        {/* Baixa */}
-
-        {exist === true ? (
+        <Grid item xs={12} sm={12}>
           <Grid
             container
             direction="row"
             justify="flex-start"
             alignItems="flex-start"
           >
-            <Low />
+            <Localization localization={localization} />
+          </Grid>
+        </Grid>
+
+        {/* Classificação e descriminação */}
+        <Grid item xs={12} sm={12}>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <ClassificationDiscrimination
+              classificationInformation={classificationInformation}
+            />
+          </Grid>
+        </Grid>
+
+        {/* Informação da Aquisição */}
+        <Grid item xs={12} sm={12}>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <PurchaseInformation purchaseInformation={purchaseInformation} />
+          </Grid>
+        </Grid>
+
+        {/* Baixa */}
+
+        {low_item_exist === true ? (
+          <Grid item xs={12} sm={12}>
+            <Grid
+              container
+              direction="row"
+              justify="flex-start"
+              alignItems="flex-start"
+            >
+              <Low />
+            </Grid>
           </Grid>
         ) : (
           <></>

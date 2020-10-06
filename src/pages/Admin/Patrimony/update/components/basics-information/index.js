@@ -56,14 +56,19 @@ const BasicsInformations = React.memo(({ basicsInformations }) => {
   basicsInformations({ tipping, discrimination, dateEntry, specification });
 
   return (
-    <>
+    <Grid
+      container
+      direction="row"
+      justify="flex-start"
+      alignItems="flex-start"
+    >
       <Grid item xs={12} sm={12} style={{ marginTop: "30px" }}>
         <Typography className={classes.title}>Informações básicas</Typography>
       </Grid>
 
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Tombamento:</Typography>
+          <Typography variant="subtitle1">Tombamento:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -77,7 +82,7 @@ const BasicsInformations = React.memo(({ basicsInformations }) => {
 
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Descriminação do bem:</Typography>
+          <Typography variant="subtitle1">Descriminação:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -91,7 +96,7 @@ const BasicsInformations = React.memo(({ basicsInformations }) => {
 
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Data de entrada:</Typography>
+          <Typography variant="subtitle1">Data de entrada:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -106,7 +111,7 @@ const BasicsInformations = React.memo(({ basicsInformations }) => {
 
       <Grid item xs={12} sm={12} className={classes.input}>
         <div>
-          <Typography variant="button">Especificação:</Typography>
+          <Typography variant="subtitle1">Especificação:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -120,7 +125,7 @@ const BasicsInformations = React.memo(({ basicsInformations }) => {
           />
         </div>
       </Grid>
-    </>
+    </Grid>
   );
 });
 

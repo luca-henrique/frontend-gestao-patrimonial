@@ -35,8 +35,8 @@ export default function AlertDialog() {
   );
 
   useEffect(() => {
-    dispatch(CreatorsOccurrenceItem.readTesteOccurrenceItemRequest());
     if (visible && exist) {
+      dispatch(CreatorsOccurrenceItem.readTesteOccurrenceItemRequest());
       setDateOccurrence(data.date_occurrence);
       setTypeOccurrenc(data.occurrence_item_id);
       setReport(data.report);

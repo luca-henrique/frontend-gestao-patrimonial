@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import MaterialTable from "material-table";
 
+import ActionLogs from "~/store/ducks/log";
+
+import { useSelector, useDispatch } from "react-redux";
+
 const Log = () => {
-  const data = [];
+  const data = useSelector((state) => state.log.logs);
+
+  const dispatch = useDispatch();
 
   function changer(array) {
     const log = [];
@@ -16,6 +22,10 @@ const Log = () => {
     }
     return log;
   }
+
+  useEffect(() => {
+    dispatch(ActionLogs.readLogRequest());
+  }, [dispatch]);
 
   return (
     <>

@@ -54,18 +54,16 @@ export default function SignUp() {
         </Left>
         <Right>
           <TitleForm style={{ color: "rgb(164, 164, 164)" }}>
-            <h2 style={{ fontSize: "34px" }}>Gestão Patrimonial</h2>
+            <h2 style={{ fontSize: "38px" }}>Gestão Patrimonial</h2>
           </TitleForm>
           <FormContainer>
             <Form onSubmit={handleSubmit}>
               <div>
-                <h3 style={{ fontSize: "42px", color: "#A4A4A4" }}>Entrar</h3>
+                <h3 style={{ fontSize: "28px", color: "#A4A4A4" }}>Entrar</h3>
               </div>
               <div style={{ width: "100%", marginTop: "26px" }}>
                 <TextField
                   autoFocus
-                  style={{ fontSize: "32px" }}
-                  id="standard-basic"
                   label="Email"
                   type="email"
                   fullWidth
@@ -76,7 +74,6 @@ export default function SignUp() {
               <div style={{ width: "100%", marginTop: "20px" }}>
                 <TextField
                   fullWidth
-                  id="standard-basic"
                   label="Password"
                   type="password"
                   value={password}
@@ -106,8 +103,10 @@ export default function SignUp() {
 
       <div
         style={{
-          position: "absolute",
-          bottom: "5px",
+          position: "fixed",
+          bottom: "0",
+          zIndex: "99px",
+          right: "0px",
           width: "100%",
         }}
       >
@@ -118,56 +117,10 @@ export default function SignUp() {
 }
 
 /*
+z-index: 99;
+    position: fixed;//my style
+    right: 0;//my style
+    bottom: 0;//my style
 
-<div className={classes.header}>
-        <Typography className={classes.title_header}>
-          Gestão de Patrimônio
-        </Typography>
-      </div>
-      <Form onSubmit={handleSubmit}>
-        <div className={classes.title}>
-          <Typography variant="h3" className={classes.typography}>
-            Entrar
-          </Typography>
-        </div>
-        <div className={classes.input}>
-          <Typography variant="button" className={classes.typography}>
-            Email:
-          </Typography>
-          <ValidationTextField
-            required
-            variant="outlined"
-            size="small"
-            fullWidth
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className={classes.input}>
-          <Typography variant="button" className={classes.typography}>
-            Senha:
-          </Typography>
-          <ValidationTextField
-            required
-            variant="outlined"
-            size="small"
-            fullWidth
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className={classes.signIn}>
-          <Button
-            variant="contained"
-            fullWidth
-            className={classes.button}
-            type="submit"
-          >
-            Entrar
-          </Button>
-        </div>
-      </Form>
-     
-      */
+
+    */

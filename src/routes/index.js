@@ -8,9 +8,8 @@ import history from "./history";
 
 import Route from "./Route";
 
-import License from "../pages/License";
-import SignIn from "../pages/SignIn";
-
+const License = lazy(() => import("../pages/License"));
+const SignIn = lazy(() => import("../pages/SignIn"));
 const AdminPage = lazy(() => import("../pages/Admin/"));
 
 export default function Routes() {

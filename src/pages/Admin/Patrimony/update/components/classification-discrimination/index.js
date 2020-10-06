@@ -96,7 +96,7 @@ const Classification = React.memo(({ classificationInformation }) => {
           onChange={(e) => setNature(e.target.value)}
           disabled={edit || loading_nature}
         >
-          <Typography variant="button">Natureza:</Typography>
+          <Typography variant="subtitle1">Natureza:</Typography>
           <Select native size="small" fullWidth value={nature}>
             {natures.map((natu) => (
               <option key={natu.id} value={natu.id}>
@@ -117,7 +117,7 @@ const Classification = React.memo(({ classificationInformation }) => {
           onChange={(e) => setOrigin(e.target.value)}
           disabled={edit || loading_origin}
         >
-          <Typography variant="button">Origem do bem:</Typography>
+          <Typography variant="subtitle1">Origem do bem:</Typography>
           <Select native size="small" fullWidth value={origin}>
             {origins.map((ori) => (
               <option key={ori.id} value={ori.id}>
@@ -138,7 +138,7 @@ const Classification = React.memo(({ classificationInformation }) => {
           onChange={(e) => setState(e.target.value)}
           disabled={edit || loading_states}
         >
-          <Typography variant="button">Estado de conservação:</Typography>
+          <Typography variant="subtitle1">Conservação:</Typography>
           <Select native size="small" fullWidth value={state}>
             {states.map((sta) => (
               <option key={sta.id} value={sta.id}>
@@ -159,7 +159,7 @@ const Classification = React.memo(({ classificationInformation }) => {
           onChange={(e) => setType(e.target.value)}
           disabled={edit || loading_good}
         >
-          <Typography variant="button">Tipo do bem:</Typography>
+          <Typography variant="subtitle1">Tipo do bem:</Typography>
           <Select native size="small" fullWidth value={type}>
             {goods.map((go) => (
               <option key={go.id} value={go.id}>

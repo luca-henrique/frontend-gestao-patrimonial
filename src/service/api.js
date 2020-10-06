@@ -2,6 +2,10 @@ import axios from "axios";
 import { store } from "../store/index";
 
 const local = "http://127.0.0.1:3333";
+
+const production =
+  "https://www.api.patrimonio-teste.patrimonio-teste.ctmconsultoria.com/api";
+
 const api = axios.create({
   baseURL: local,
 });

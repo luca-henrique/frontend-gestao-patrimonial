@@ -11,6 +11,8 @@ import { reducer as license } from "./license";
 
 import { reducer as auth } from "./auth";
 
+import { reducer as log } from "./log";
+
 /**
  * controler de mudança de rotas
  */
@@ -53,6 +55,8 @@ import { reducer as prefecture_image } from "./prefecture-image";
 export default (history) =>
   combineReducers({
     toastr,
+
+    log,
 
     license,
 

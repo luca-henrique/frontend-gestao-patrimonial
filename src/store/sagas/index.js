@@ -9,6 +9,9 @@ import { updateToken, checkLicense } from "./license";
 import { AuthTypes } from "../ducks/auth";
 import { signIn, signOut } from "./auth";
 
+import { LogTypes } from "../ducks/log";
+import { readLogs } from "./log";
+
 import { Types as AccountTypes } from "../ducks/account";
 import {
   readUserJoined,
@@ -172,6 +175,8 @@ export default function* rootSaga() {
     takeLatest("persist/REHYDRATE", checkLicense), //Checar a linceça toda vez que acessa o sistema
 
     takeLatest(LicenseTypes.LICENSE_REQUEST, updateToken),
+
+    takeLatest(LogTypes.READ_LOG_REQUEST, readLogs),
 
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
     takeLatest(AuthTypes.SIGN_OUT, signOut),

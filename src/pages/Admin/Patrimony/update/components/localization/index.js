@@ -89,7 +89,7 @@ const Localization = React.memo(({ localization }) => {
           }}
           disabled={edit || loading_locale}
         >
-          <Typography variant="button">Orgão:</Typography>
+          <Typography variant="subtitle1">Orgão:</Typography>
           <Select native size="small" fullWidth value={institution}>
             {locals.map((local) => (
               <option value={local.id} key={local.id}>
@@ -113,7 +113,7 @@ const Localization = React.memo(({ localization }) => {
           }}
           disabled={edit || loading_sectors}
         >
-          <Typography variant="button">Setor:</Typography>
+          <Typography variant="subtitle1">Setor:</Typography>
           <Select native size="small" fullWidth value={sector}>
             <option value="" />
             {sectors.map((sector) => (
@@ -135,7 +135,7 @@ const Localization = React.memo(({ localization }) => {
           onChange={(e) => setUnit(e.target.value)}
           disabled={edit || loading_units}
         >
-          <Typography variant="button">Únidade:</Typography>
+          <Typography variant="subtitle1">Únidade:</Typography>
           <Select native size="small" fullWidth value={unit}>
             <option value="" />
             {units.map((unit) => (

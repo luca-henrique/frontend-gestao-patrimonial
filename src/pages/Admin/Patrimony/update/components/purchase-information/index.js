@@ -113,7 +113,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
 
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Licitação:</Typography>
+          <Typography variant="subtitle1">Licitação:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -127,7 +127,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
 
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Empenho:</Typography>
+          <Typography variant="subtitle1">Empenho:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -141,7 +141,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
 
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Data de compra:</Typography>
+          <Typography variant="subtitle1">Data de compra:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -156,7 +156,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
 
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Valor da aquisição:</Typography>
+          <Typography variant="subtitle1">Valor da aquisição:</Typography>
           <TextField
             disabled={edit}
             variant="outlined"
@@ -174,7 +174,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
       </Grid>
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Nº da nota fiscal:</Typography>
+          <Typography variant="subtitle1">Nº da nota fiscal:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -187,7 +187,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
       </Grid>
       <Grid item xs={12} sm={4} className={classes.input}>
         <div>
-          <Typography variant="button">Data da nota fiscal:</Typography>
+          <Typography variant="subtitle1">Data da nota fiscal:</Typography>
           <TextField
             variant="outlined"
             size="small"
@@ -202,7 +202,7 @@ const Purchase = React.memo(({ purchaseInformation }) => {
 
       <Grid item xs={12} sm={12} className={classes.input}>
         <div>
-          <Typography variant="button">Dotação:</Typography>
+          <Typography variant="subtitle1">Dotação:</Typography>
           <TextField
             required
             variant="outlined"

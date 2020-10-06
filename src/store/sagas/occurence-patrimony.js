@@ -28,11 +28,9 @@ export function* createOccurrencePatrimony({ payload }) {
 
 export function* updateOccurencePatrimony({ payload }) {
   try {
-    const { occurrence } = payload;
-    yield call(api.put, `/occurrence-patrimony/${occurrence.id}`, occurrence);
-    yield put(
-      CreatorsOccurrenceItem.updateOccurrencePatrimonySuccess(occurrence)
-    );
+    const { data } = payload;
+    yield call(api.put, `/occurrence-patrimony/${data.id}`, data);
+    yield put(CreatorsOccurrenceItem.updateOccurrencePatrimonySuccess(data));
     toastr.success("A ocorrência foi atualizada.");
   } catch (err) {}
 }

@@ -47,6 +47,10 @@ export const Container = styled.div`
     height: 100%;
     border-radius: 0px;
   }
+
+  @media (max-height: 700px) {
+    width: 100%;
+  }
 `;
 
 export const Left = styled.div`
@@ -99,6 +103,12 @@ export const Right = styled.div`
   @media (max-width: 992px) {
     width: 100%;
   }
+
+  @media (max-height: 385px) {
+    overflow-x: visible;
+    overflow-y: scroll;
+    height: 500px;
+  }
 `;
 
 export const FormContainer = styled.div`
@@ -124,7 +134,6 @@ const mobileAnimation = keyframes`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
   width: 100%;
@@ -141,5 +150,7 @@ export const TitleForm = styled.div`
   @media (max-width: 992px) {
     display: flex;
     animation: ${mobileAnimation} 2s;
+    margin-bottom: 20px;
+    justify-content: none;
   }
 `;

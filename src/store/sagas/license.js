@@ -5,7 +5,6 @@ import { push } from "connected-react-router";
 
 import LicenseActions from "../ducks/license";
 
-import { actions as toastrActions } from "react-redux-toastr";
 import { toastr } from "react-redux-toastr";
 
 export function* updateToken({ token }) {
@@ -18,7 +17,7 @@ export function* updateToken({ token }) {
     var data = err.response.data;
     if (data.length >= 1) {
       data.map((error) => {
-        toastr.error(error.message);
+        return toastr.error(error.message);
       });
     } else {
       toastr.error(err.response.data.error.message);
@@ -45,7 +44,7 @@ export function* checkLicense() {
     var data = err.response.data;
     if (data.length >= 1) {
       data.map((error) => {
-        toastr.error(error.message);
+        return toastr.error(error.message);
       });
     } else {
       toastr.error(err.response.data.error.message);

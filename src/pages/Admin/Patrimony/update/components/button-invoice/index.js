@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Tooltip, IconButton } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons/";
 
-export default function SplitButton() {
+const Button = () => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -56,67 +56,67 @@ export default function SplitButton() {
   };
 
   return (
-    <Grid container direction="column" alignItems="center">
-      <Grid item xs={12}>
-        <ButtonGroup ref={anchorRef}>
-          <Tooltip title="Nota Fiscal">
-            <IconButton onClick={handleToggle}>
-              <FileCopy style={{ color: "#a4a4a4" }} />
-            </IconButton>
-          </Tooltip>
-        </ButtonGroup>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom",
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList id="split-button-menu">
-                    <input
-                      id="contained-button-file"
-                      multiple
-                      type="file"
-                      style={{ display: "none" }}
-                      onChange={upload}
-                      accept="application/pdf,application/vnd.ms-excel"
+    <>
+      <ButtonGroup ref={anchorRef}>
+        <Tooltip title="Nota Fiscal">
+          <IconButton onClick={handleToggle}>
+            <FileCopy style={{ color: "#a4a4a4" }} />
+          </IconButton>
+        </Tooltip>
+      </ButtonGroup>
+      <Popper
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
+            }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList id="split-button-menu">
+                  <input
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={upload}
+                    accept="application/pdf,application/vnd.ms-excel"
+                    disabled={invoiceExist}
+                  />
+                  <label htmlFor="contained-button-file">
+                    <MenuItem
                       disabled={invoiceExist}
-                    />
-                    <label htmlFor="contained-button-file">
-                      <MenuItem
-                        disabled={invoiceExist}
-                        variant="contained"
-                        color="primary"
-                        component="span"
-                      >
-                        adicionar
-                      </MenuItem>
-                    </label>
-
-                    <MenuItem onClick={download} disabled={!invoiceExist}>
-                      baixar
+                      variant="contained"
+                      color="primary"
+                      component="span"
+                    >
+                      adicionar
                     </MenuItem>
+                  </label>
 
-                    <MenuItem onClick={remove} disabled={!invoiceExist}>
-                      excluir
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </Grid>
-    </Grid>
+                  <MenuItem onClick={download} disabled={!invoiceExist}>
+                    baixar
+                  </MenuItem>
+
+                  <MenuItem onClick={remove} disabled={!invoiceExist}>
+                    excluir
+                  </MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </>
   );
-}
+};
+
+export default Button;

@@ -15,15 +15,14 @@ const Index = () => {
 
   useEffect(() => {
     dispatch(CreatorsAccount.readAccountRequest());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const account = useSelector((state) => state.account.account_joined);
 
   const actions = [
     {
       icon: "add",
-      tooltip: "Add User",
+      tooltip: "Adicionar novo usuário",
       isFreeAction: true,
       onClick: (event) => {
         dispatch(CreatorsAccount.showNewAccount());
@@ -31,7 +30,7 @@ const Index = () => {
     },
     {
       icon: "edit",
-      tooltip: "Editar informações",
+      tooltip: "Editar informações do usuário",
       onClick: (event, rowData) => {
         dispatch(CreatorsAccount.showUpdateAccount(rowData));
       },
@@ -39,7 +38,7 @@ const Index = () => {
 
     {
       icon: "delete",
-      tooltip: "Deletar conta",
+      tooltip: "Deletar usuário",
       onClick: (event, rowData) => {
         dispatch(CreatorsAccount.deleteAccountRequest(rowData.id));
       },
@@ -49,7 +48,7 @@ const Index = () => {
   return (
     <MaterialTable
       data={data}
-      title="Contas"
+      title="Usuários"
       columns={[
         {
           title: "Código",
@@ -82,8 +81,10 @@ const Index = () => {
         setSelectedRow(selectedRow);
       }}
       options={{
+        cellStyle: { whiteSpace: "nowrap" },
         headerStyle: {
           color: "#a4a4a4",
+          whiteSpace: "nowrap",
         },
         actionsCellStyle: { color: "#a4a4a4" },
         rowStyle: (rowData) => ({
