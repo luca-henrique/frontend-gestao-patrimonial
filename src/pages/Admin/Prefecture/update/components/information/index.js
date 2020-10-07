@@ -66,7 +66,7 @@ const Informacoes = () => {
       <Grid item xs={12} sm={3}>
         <Image />
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={12} sm={9}>
         <form onBlur={handleSubmitUpdate}>
           <Grid
             container
