@@ -6,10 +6,13 @@ const Copyright = () => (
     variant="body2"
     color="textSecondary"
     align="center"
-    style={{ color: "#fff" }}
+    style={{ color: "#848484" }}
   >
     {"Copyright © "}
-    <Link color="inherit" href="https://ctmconsultoria.com/index.html">
+    <Link
+      style={{ color: "#848484" }}
+      href="https://ctmconsultoria.com/index.html"
+    >
       CTM consultoria
     </Link>{" "}
     {new Date().getFullYear()}

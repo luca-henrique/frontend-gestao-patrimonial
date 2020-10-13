@@ -20,11 +20,16 @@ export const Types = {
   READ_UNITS_REQUEST: "@UNITS/READ_UNITS_REQUEST",
   READ_UNITS_SUCCESS: "@UNITS/READ_UNITS_SUCCESS",
 
+  READ_UNIQUE_UNITS_REQUEST: "@UNITS/READ_UNIQUE_UNITS_REQUEST",
+  READ_UNIQUE_UNITS_SUCCESS: "@UNITS/READ_UNIQUE_UNITS_SUCCESS",
+
   UPDATE_UNITS_REQUEST: "@UNITS/UPDATE_UNITS_REQUEST",
   UPDATE_UNITS_SUCCESS: "@UNITS/UPDATE_UNITS_SUCCESS",
 
   DELETE_UNITS_REQUEST: "@UNITS/DELETE_UNITS_REQUEST",
   DELETE_UNITS_SUCCESS: "@UNITS/DELETE_UNITS_SUCCESS",
+
+  CHANGER_LOADING_UNIT: "@UNITS/CHANGER_LOADING_UNIT",
 };
 
 const INITIAL_STATE = Immutable({
@@ -35,6 +40,7 @@ const INITIAL_STATE = Immutable({
   update_units: { visible: false, data: [] },
 
   units: [],
+  unit: {},
   loading_units: false,
 });
 
@@ -72,6 +78,9 @@ export default function Units(state = INITIAL_STATE, action) {
     case Types.READ_UNITS_REQUEST:
       return { ...state, loading_units: true };
 
+    case Types.READ_UNIQUE_UNITS_SUCCESS:
+      return { ...state, unit: action.payload.data };
+
     case Types.READ_UNITS_SUCCESS:
       return { ...state, loading_units: false, units: action.payload.data };
 
@@ -95,6 +104,13 @@ export default function Units(state = INITIAL_STATE, action) {
       return {
         ...state,
         units: updateItem(state.units, action.payload.data),
+      };
+
+    case Types.CHANGER_LOADING_UNIT:
+      return {
+        ...state,
+        loading_units: true,
+        units: [],
       };
 
     default:
@@ -149,6 +165,20 @@ export const Creators = {
     },
   }),
 
+  readUniqueUnitRequest: (id) => ({
+    type: Types.READ_UNIQUE_UNITS_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  readUniqueUnitSuccess: (data) => ({
+    type: Types.READ_UNIQUE_UNITS_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
   createUnitRequest: (data) => ({
     type: Types.CREATE_UNITS_REQUEST,
     payload: {
@@ -189,6 +219,10 @@ export const Creators = {
     payload: {
       id,
     },
+  }),
+
+  changerLoadingUnits: () => ({
+    type: Types.CHANGER_LOADING_UNIT,
   }),
 };
 

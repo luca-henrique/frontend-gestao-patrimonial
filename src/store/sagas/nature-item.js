@@ -14,7 +14,7 @@ export function* createNatureItem({ payload }) {
   try {
     const { data } = yield call(api.post, "/nature-item", payload.data);
     yield put(CreatorsNatureItem.createNatureItemSuccess(data));
-    toastr.error("O item foi criado");
+    toastr.success("O item foi criado");
   } catch (err) {}
 }
 
@@ -31,6 +31,6 @@ export function* updateNatureItem({ payload }) {
     const { data } = payload;
     yield call(api.put, `/nature-item/${data.id}`, data);
     yield put(CreatorsNatureItem.updateNatureItemSuccess(data));
-    toastr.error("O item foi atualizado");
+    toastr.success("O item foi atualizado");
   } catch (err) {}
 }

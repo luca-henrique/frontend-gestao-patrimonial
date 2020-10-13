@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { Creators as CreatorsPage } from "~/store/ducks/page";
-import { useDispatch } from "react-redux";
+import { Creators as CreatorsLowPatrimony } from "~/store/ducks/low-patrimony-item";
+import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
+import { Creators as CreatorsOccurrencePatrimony } from "~/store/ducks/occurrence-patrimony-item";
+import { useDispatch, useSelector } from "react-redux";
+
+import ActionsInvoice from "~/store/ducks/invoice";
 
 import {
   Grid,
@@ -16,9 +21,7 @@ import { Alert } from "@material-ui/lab/";
 
 import EditIcon from "@material-ui/icons/Edit";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
 import BasicsImformation from "./components/basics-information/";
 import Localization from "./components/localization/";
@@ -28,20 +31,10 @@ import Low from "./components/low/";
 
 import ToggleMenu from "./components/toggle-menu";
 
+import Invoice from "./components/button-invoice/";
+import ImageButton from "./components/button-image/";
+
 import { makeStyles } from "@material-ui/core/styles";
-
-import DeleteDialogPatrimonyAdmin from "./components/modal-delete-admin";
-import DeleteDialogPatrimonyUser from "./components/modal-delete-user/";
-
-import DuplicateDialogPatrimony from "./components/modal-duplicate/";
-
-import TransferModalPatrimony from "./components/modal-transfer/list";
-
-import LowDialogPatrimonyCreate from "./components/modal-low/create";
-import LowDialogPatrimonyRemove from "./components/modal-low/remove";
-
-import OccurrenceDialogPatrimonyCreate from "./components/modal-occurrence/create";
-import OccurrenceDialogPatrimonyUpdate from "./components/modal-occurrence/update";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -68,23 +61,30 @@ const PatrimonyItem = () => {
 
   const classes = useStyles();
 
-  // eslint-disable-next-line no-unused-vars
-  const [invoice, setInvoice] = useState(false);
+  const edit = useSelector(
+    (state) => state.patrimony_item.edit_patrimony_visible
+  );
 
-  const [edit, setEdit] = useState(false);
+  const user = useSelector((state) => state.account.account_joined.role);
+
+  const low_item_exist = useSelector(
+    (state) => state.low_patrimony_item.low_item_patrimony_exist
+  );
+
+  const table = user && low_item_exist;
+
   const [open, setOpen] = useState(false);
 
-  function updateRequestPatrimonyItem(e) {
-    e.preventDefault();
-    changeEdit();
-  }
-
   const changeEdit = () => {
-    setEdit(!edit);
+    if (edit) {
+      dispatch(CreatorsPatrimony.enablePatrimonyEdit());
+    } else {
+      dispatch(CreatorsPatrimony.disablePatrimonyEdit());
+    }
   };
 
   const backForListPatrimony = () => {
-    if (edit === false) {
+    if (edit === true) {
       dispatch(CreatorsPage.changePageLocation("patrimony_list"));
     } else {
       handleClick();
@@ -99,8 +99,58 @@ const PatrimonyItem = () => {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
+    setOpen(true);
   };
+
+  const id = useSelector((state) => state.patrimony_item.show_patrimony.id);
+
+  useEffect(() => {
+    dispatch(CreatorsLowPatrimony.readLowPatrimonyRequest(id));
+    dispatch(CreatorsOccurrencePatrimony.readOccurrencePatrimonyRequest(id));
+    dispatch(ActionsInvoice.readInvoiceRequest(id));
+  }, [dispatch, id]);
+
+  const [basic, setBasic] = useState({});
+
+  const basicsInformations = useCallback((basics) => {
+    setBasic(basics);
+  }, []);
+
+  const [local, setLocal] = useState({});
+
+  const localization = useCallback((local) => {
+    setLocal(local);
+  }, []);
+
+  const [classification, setClassification] = useState({});
+
+  const classificationInformation = useCallback((classic) => {
+    setClassification(classic);
+  }, []);
+
+  const [purchase, setPurchase] = useState({});
+
+  const purchaseInformation = useCallback((purchase) => {
+    setPurchase(purchase);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    var obj = {
+      id,
+      basic,
+      local,
+      classification,
+      purchase,
+    };
+
+    dispatch(CreatorsPatrimony.updatePatrimonyRequest(obj));
+
+    changeEdit();
+  };
+
+  console.log(table);
 
   return (
     <Grid
@@ -110,7 +160,7 @@ const PatrimonyItem = () => {
       alignItems="flex-start"
       style={{ color: "#BDBDBD" }}
     >
-      <form onSubmit={updateRequestPatrimonyItem}>
+      <form onSubmit={handleSubmit}>
         <Grid item xs={12} sm={12} className={classes.headerIcons}>
           <Tooltip title="Voltar">
             <IconButton
@@ -122,52 +172,31 @@ const PatrimonyItem = () => {
           </Tooltip>
 
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="icon-button-file"
-              type={invoice === false ? "file" : ""}
-            />
-            <label htmlFor="icon-button-file">
-              <Tooltip title="Nota Fiscal">
-                <IconButton aria-label="upload picture" component="span">
-                  <FileCopyIcon style={{ color: "#a4a4a4" }} />
-                </IconButton>
-              </Tooltip>
-            </label>
+            <Invoice />
 
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="icon-button-photo"
-              type="file"
-            />
-            <label htmlFor="icon-button-photo">
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <Tooltip title="Adicionar Foto">
-                  <PhotoCamera style={{ color: "#a4a4a4" }} />
-                </Tooltip>
-              </IconButton>
-            </label>
+            <ImageButton />
 
             <Tooltip title="Ficha do bem">
               <IconButton>
                 <PictureAsPdfIcon style={{ color: "#a4a4a4" }} />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Editar Informações">
-              <IconButton onClick={changeEdit}>
-                <EditIcon
-                  style={
-                    edit === false ? { color: "#a4a4a4" } : { color: "#FF0040" }
-                  }
-                />
-              </IconButton>
-            </Tooltip>
+
+            {table === false ? (
+              <></>
+            ) : (
+              <Tooltip title="Editar Informações">
+                <IconButton onClick={changeEdit}>
+                  <EditIcon
+                    style={
+                      edit === true
+                        ? { color: "#a4a4a4" }
+                        : { color: "#FF0040" }
+                    }
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
           </div>
         </Grid>
 
@@ -178,60 +207,70 @@ const PatrimonyItem = () => {
         </Grid>
 
         {/* Informações Basicas */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <BasicsImformation />
+        <Grid item xs={12} sm={12}>
+          <BasicsImformation basicsInformations={basicsInformations} />
         </Grid>
 
         {/* Dados da Localização */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Localization />
+        <Grid item xs={12} sm={12}>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <Localization localization={localization} />
+          </Grid>
         </Grid>
 
         {/* Classificação e descriminação */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <ClassificationDiscrimination />
+        <Grid item xs={12} sm={12}>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <ClassificationDiscrimination
+              classificationInformation={classificationInformation}
+            />
+          </Grid>
         </Grid>
 
         {/* Informação da Aquisição */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <PurchaseInformation />
+        <Grid item xs={12} sm={12}>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <PurchaseInformation purchaseInformation={purchaseInformation} />
+          </Grid>
         </Grid>
 
         {/* Baixa */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Low />
-        </Grid>
+
+        {low_item_exist === true ? (
+          <Grid item xs={12} sm={12}>
+            <Grid
+              container
+              direction="row"
+              justify="flex-start"
+              alignItems="flex-start"
+            >
+              <Low />
+            </Grid>
+          </Grid>
+        ) : (
+          <></>
+        )}
 
         <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
           <ToggleMenu />
         </Grid>
 
-        {edit === true ? (
+        {edit === false ? (
           <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
             <Button
               variant="outlined"
@@ -255,19 +294,6 @@ const PatrimonyItem = () => {
           </Alert>
         </Snackbar>
       </form>
-
-      <DeleteDialogPatrimonyAdmin />
-      <DeleteDialogPatrimonyUser />
-
-      <DuplicateDialogPatrimony />
-
-      <TransferModalPatrimony />
-
-      <LowDialogPatrimonyCreate />
-      <LowDialogPatrimonyRemove />
-
-      <OccurrenceDialogPatrimonyCreate />
-      <OccurrenceDialogPatrimonyUpdate />
     </Grid>
   );
 };

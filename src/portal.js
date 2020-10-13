@@ -73,6 +73,43 @@ const UpdateUnitModal = lazy(() =>
   import("./pages/Admin/General-Record/units/table/update")
 );
 
+const CreateLowItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-low/create")
+);
+
+const RemoveLowItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-low/remove")
+);
+
+const CreateOccurrenceItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-occurrence/create")
+);
+const UpdateOccurrenceItemPatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-occurrence/update")
+);
+
+const DialogRemoveLowPatrimony = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/low-remove-confirmation/")
+);
+
+const ListTransferenceModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-transfer/list")
+);
+const CreateTransferenceModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-transfer/create")
+);
+const UpdateTransferenceModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-transfer/update")
+);
+
+const DuplicatePatrimonyModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-duplicate")
+);
+
+const ImagesModal = lazy(() =>
+  import("./pages/Admin/Patrimony/update/components/modal-images/")
+);
+
 const Main = () => {
   const ChangerPassword = () => create(<ChangerPasswordModal />);
   const CreateAccount = () => create(<CreateAccountModal />);
@@ -104,6 +141,24 @@ const Main = () => {
 
   const CreateUnit = () => create(<CreateUnitModal />);
   const UpdateUnit = () => create(<UpdateUnitModal />);
+
+  const CreateLowItemPatrimony = () => create(<CreateLowItemPatrimonyModal />);
+  const RemoveLowItemPatrimony = () => create(<RemoveLowItemPatrimonyModal />);
+
+  const CreateOccurrenceItemPatrimony = () =>
+    create(<CreateOccurrenceItemPatrimonyModal />);
+  const RemoveOccurrenceItemPatrimony = () =>
+    create(<UpdateOccurrenceItemPatrimonyModal />);
+
+  const RemoveLowPatrimony = () => create(<DialogRemoveLowPatrimony />);
+
+  const ListTransfers = () => create(<ListTransferenceModal />);
+  const CreateTransfers = () => create(<CreateTransferenceModal />);
+  const UpdateTransfers = () => create(<UpdateTransferenceModal />);
+
+  const DuplicatePatrimony = () => create(<DuplicatePatrimonyModal />);
+
+  const ImagesPatrimony = () => create(<ImagesModal />);
 
   return (
     <Suspense fallback={<Loader />}>
@@ -137,6 +192,22 @@ const Main = () => {
 
       <CreateUnit />
       <UpdateUnit />
+
+      <CreateLowItemPatrimony />
+      <RemoveLowItemPatrimony />
+
+      <CreateOccurrenceItemPatrimony />
+      <RemoveOccurrenceItemPatrimony />
+
+      <RemoveLowPatrimony />
+
+      <ListTransfers />
+      <CreateTransfers />
+      <UpdateTransfers />
+
+      <DuplicatePatrimony />
+
+      <ImagesPatrimony />
     </Suspense>
   );
 };

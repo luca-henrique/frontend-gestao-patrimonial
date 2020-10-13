@@ -5,6 +5,19 @@ import MaterialTable from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsStateItem } from "~/store/ducks/state-item";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "500px ",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+    },
+  },
+}));
+
 function StateItem() {
   const [selectedRow, setSelectedRow] = useState("");
   const data = useSelector((state) => state.state.state_items);
@@ -13,12 +26,14 @@ function StateItem() {
 
   const dispatch = useDispatch();
 
+  const classes = useStyles();
+
   useEffect(() => {
     dispatch(CreatorsStateItem.readStateItemRequest());
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={classes.modal}>
       <MaterialTable
         data={data}
         loading={loading}
@@ -44,7 +59,7 @@ function StateItem() {
           rowStyle: (rowData) => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#58ACFA"
+                ? "rgba(164, 164, 164,0.2)"
                 : "#FFF",
           }),
         }}

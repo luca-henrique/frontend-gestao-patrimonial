@@ -5,10 +5,10 @@ import { cnpjMask } from "~/pages/util/maskCnpj";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
 
+import Image from "../image/";
+
 const Informacoes = () => {
-  const prefecture = useSelector(
-    (state) => state.prefecture.read_prefecture.prefeture
-  );
+  const prefecture = useSelector((state) => state.prefecture.prefecture);
 
   const dispatch = useDispatch();
 
@@ -16,14 +16,10 @@ const Informacoes = () => {
   const [razao, setRazao] = useState("");
   const [nome, setNome] = useState("");
 
-  console.log(prefecture);
-
   useEffect(() => {
-    dispatch(CreatorsPrefecture.readPrefecturePrefectureRequest());
     setCnpj(prefecture.cnpj);
     setRazao(prefecture.razao);
     setNome(prefecture.nome);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefecture.cnpj, prefecture.nome, prefecture.razao]);
 
   function handleSubmitUpdate() {
@@ -55,7 +51,22 @@ const Informacoes = () => {
         width: "auto",
       }}
     >
-      <Grid item xs={12}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        style={{ marginTop: "15px", marginBottom: "15px" }}
+      >
+        <div>
+          <Typography variant="h5" style={{ color: "rgba(0, 0, 0, 0.7)" }}>
+            Informações da prefeitura
+          </Typography>
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={3}>
+        <Image />
+      </Grid>
+      <Grid item xs={12} sm={9}>
         <form onBlur={handleSubmitUpdate}>
           <Grid
             container
@@ -63,16 +74,6 @@ const Informacoes = () => {
             justify="flex-start"
             alignItems="flex-start"
           >
-            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
-              <div>
-                <Typography
-                  variant="h5"
-                  style={{ color: "rgba(0, 0, 0, 0.7)" }}
-                >
-                  Informações da prefeitura
-                </Typography>
-              </div>
-            </Grid>
             <Grid item xs={12} sm={4} style={{ marginTop: "15px" }}>
               <div>
                 <Typography
@@ -92,7 +93,7 @@ const Informacoes = () => {
             </Grid>
             <Grid item xs={12} sm={1} />
 
-            <Grid item xs={12} sm={7} style={{ marginTop: "15px" }}>
+            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
               <div>
                 <Typography
                   variant="subtitle2"
@@ -109,7 +110,8 @@ const Informacoes = () => {
                 />
               </div>
             </Grid>
-            <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+
+            <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
               <div>
                 <Typography
                   variant="subtitle2"

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import { Creators as CreatorsPage } from "~/store/ducks/page";
+import { Creators as CreatorsPatrimony } from "~/store/ducks/patrimony";
 import { useDispatch } from "react-redux";
 
 import {
@@ -12,15 +13,12 @@ import {
 } from "@material-ui/core/";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
 /* Components */
-import BasicsImformation from "./components/basics-information/";
+import BasicsInformation from "./components/basics-information/";
 import Localization from "./components/localization/";
 import ClassificationDiscrimination from "./components/classification-discrimination/";
 import PurchaseInformation from "./components/purchase-information";
-import Low from "./components/low/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -49,8 +47,42 @@ const PatrimonyItem = () => {
 
   const classes = useStyles();
 
-  // eslint-disable-next-line no-unused-vars
-  const [invoice, setInvoice] = useState(false);
+  const [basic, setBasic] = useState({});
+
+  const basicsInformations = useCallback((basics) => {
+    setBasic(basics);
+  }, []);
+
+  const [local, setLocal] = useState({});
+
+  const localization = useCallback((local) => {
+    setLocal(local);
+  }, []);
+
+  const [classification, setClassification] = useState({});
+
+  const classificationInformation = useCallback((classic) => {
+    setClassification(classic);
+  }, []);
+
+  const [purchase, setPurchase] = useState({});
+
+  const purchaseInformation = useCallback((purchase) => {
+    setPurchase(purchase);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    var obj = {
+      basic,
+      local,
+      classification,
+      purchase,
+    };
+
+    dispatch(CreatorsPatrimony.createPatrimonyRequest(obj));
+  };
 
   const backForListPatrimony = () => {
     dispatch(CreatorsPage.changePageLocation("patrimony_list"));
@@ -64,7 +96,7 @@ const PatrimonyItem = () => {
       alignItems="flex-start"
       style={{ color: "#BDBDBD" }}
     >
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={handleSubmit}>
         <Grid item xs={12} sm={12} className={classes.headerIcons}>
           <Tooltip title="Voltar">
             <IconButton
@@ -74,40 +106,6 @@ const PatrimonyItem = () => {
               <ArrowBackIcon />
             </IconButton>
           </Tooltip>
-
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="icon-button-file"
-              type={invoice === false ? "file" : ""}
-            />
-            <label htmlFor="icon-button-file">
-              <Tooltip title="Nota Fiscal">
-                <IconButton aria-label="upload picture" component="span">
-                  <FileCopyIcon style={{ color: "#a4a4a4" }} />
-                </IconButton>
-              </Tooltip>
-            </label>
-
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="icon-button-photo"
-              type="file"
-            />
-            <label htmlFor="icon-button-photo">
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <Tooltip title="Adicionar Foto">
-                  <PhotoCamera style={{ color: "#a4a4a4" }} />
-                </Tooltip>
-              </IconButton>
-            </label>
-          </div>
         </Grid>
 
         <Grid item xs={12} sm={12}>
@@ -123,7 +121,7 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <BasicsImformation />
+          <BasicsInformation basicsInformations={basicsInformations} />
         </Grid>
 
         {/* Dados da Localização */}
@@ -133,7 +131,7 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <Localization />
+          <Localization localization={localization} />
         </Grid>
 
         {/* Classificação e descriminação */}
@@ -143,7 +141,9 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <ClassificationDiscrimination />
+          <ClassificationDiscrimination
+            classificationInformation={classificationInformation}
+          />
         </Grid>
 
         {/* Informação da Aquisição */}
@@ -153,17 +153,7 @@ const PatrimonyItem = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <PurchaseInformation />
-        </Grid>
-
-        {/* Baixa */}
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Low />
+          <PurchaseInformation purchaseInformation={purchaseInformation} />
         </Grid>
 
         <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>

@@ -8,9 +8,8 @@ import history from "./history";
 
 import Route from "./Route";
 
-import License from "../pages/License";
-import SignIn from "../pages/SignIn";
-
+const License = lazy(() => import("../pages/License"));
+const SignIn = lazy(() => import("../pages/SignIn"));
 const AdminPage = lazy(() => import("../pages/Admin/"));
 
 export default function Routes() {
@@ -18,10 +17,19 @@ export default function Routes() {
     <Suspense fallback={<Loader />}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/" exact component={License} />
-          <Route path="/entrar" component={SignIn} isLicensed />
+          <Route path="/" exact component={(props) => <License {...props} />} />
+          <Route
+            path="/entrar"
+            component={(props) => <SignIn {...props} />}
+            isLicensed
+          />
 
-          <Route path="/admin" component={AdminPage} isLicensed isPrivate />
+          <Route
+            path="/admin"
+            component={(props) => <AdminPage {...props} />}
+            isLicensed
+            isPrivate
+          />
         </Switch>
       </ConnectedRouter>
     </Suspense>

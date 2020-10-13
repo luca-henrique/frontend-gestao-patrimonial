@@ -72,7 +72,7 @@ export default function Sectors() {
           rowStyle: (rowData) => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#58ACFA"
+                ? "rgba(164, 164, 164,0.2)"
                 : "#FFF",
           }),
         }}
@@ -115,6 +115,8 @@ export default function Sectors() {
             tooltip: "Deletar",
             onClick: (event, rowData) => {
               dispatch(CreatorsSectors.deleteSectorRequest(rowData.id));
+              dispatch(CreatorsSectors.hideAccordingSectors());
+              dispatch(CreatorsUnits.hideAccordingUnits());
             },
           },
 

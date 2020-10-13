@@ -5,6 +5,19 @@ import MaterialTable from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsOccurrenceItem } from "~/store/ducks/occurrence-item";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "500px ",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+    },
+  },
+}));
+
 function OcurrenceItem() {
   const [selectedRow, setSelectedRow] = useState("");
   const data = useSelector((state) => state.occurrence.occurrence_items);
@@ -15,12 +28,14 @@ function OcurrenceItem() {
 
   const dispatch = useDispatch();
 
+  const classes = useStyles();
+
   useEffect(() => {
-    dispatch(CreatorsOccurrenceItem.readOccurrenceItemRequest());
+    dispatch(CreatorsOccurrenceItem.readTesteOccurrenceItemRequest());
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={classes.modal}>
       <MaterialTable
         data={data}
         title="Ocorrência"
@@ -46,7 +61,7 @@ function OcurrenceItem() {
           rowStyle: (rowData) => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#58ACFA"
+                ? "rgba(164, 164, 164,0.2)"
                 : "#FFF",
           }),
         }}

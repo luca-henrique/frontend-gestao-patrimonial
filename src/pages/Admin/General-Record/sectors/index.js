@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { Creators as CreatorsSectors } from "~/store/ducks/sectors";
+import { Creators as CreatorsUnits } from "~/store/ducks/units";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -40,6 +41,7 @@ export default function ControlledExpansionPanels() {
     setExpanded(isExpanded ? panel : false);
     if (!isExpanded) {
       dispatch(CreatorsSectors.hideAccordingSectors());
+      dispatch(CreatorsUnits.hideAccordingUnits());
     }
   };
 

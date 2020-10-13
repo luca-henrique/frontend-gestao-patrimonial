@@ -20,11 +20,16 @@ export const Types = {
   READ_SECTORS_REQUEST: "@sector/READ_SECTORS_REQUEST",
   READ_SECTORS_SUCCESS: "@sector/READ_SECTORS_SUCCESS",
 
+  READ_UNIQUE_SECTORS_REQUEST: "@sector/READ_UNIQUE_SECTORS_REQUEST",
+  READ_UNIQUE_SECTORS_SUCCESS: "@sector/READ_UNIQUE_SECTORS_SUCCESS",
+
   UPDATE_SECTOR_REQUEST: "@sector/UPDATE_SECTOR_REQUEST",
   UPDATE_SECTOR_SUCCESS: "@sector/UPDATE_SECTOR_SUCCESS",
 
   DELETE_SECTOR_REQUEST: "@sector/DELETE_SECTOR_REQUEST",
   DELETE_SECTOR_SUCCESS: "@sector/DELETE_SECTOR_SUCCESS",
+
+  CHANGER_LOAGIND_SECTOR: "@sector/CHANGER_LOAGIND_SECTOR",
 };
 
 const INITIAL_STATE = Immutable({
@@ -33,6 +38,7 @@ const INITIAL_STATE = Immutable({
   update_sector: { visible: false, data: [] },
 
   sector: [],
+  secto: {},
   loading_sectors: false,
 });
 
@@ -93,6 +99,18 @@ export default function Sector(state = INITIAL_STATE, action) {
         sector: updateItem(state.sector, action.payload.data),
       };
 
+    case Types.CHANGER_LOAGIND_SECTOR:
+      return {
+        ...state,
+        loading_sectors: true,
+      };
+
+    case Types.READ_UNIQUE_SECTORS_SUCCESS:
+      return {
+        ...state,
+        secto: action.payload.data,
+      };
+
     default:
       return state;
   }
@@ -145,6 +163,20 @@ export const Creators = {
     },
   }),
 
+  readUniqueSectorsRequest: (id) => ({
+    type: Types.READ_UNIQUE_SECTORS_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  readUniqueSectorsSuccess: (data) => ({
+    type: Types.READ_UNIQUE_SECTORS_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
   createSectorRequest: (data) => ({
     type: Types.CREATE_SECTOR_REQUEST,
     payload: {
@@ -185,6 +217,10 @@ export const Creators = {
     payload: {
       id,
     },
+  }),
+
+  changerLoadingSector: () => ({
+    type: Types.CHANGER_LOAGIND_SECTOR,
   }),
 };
 

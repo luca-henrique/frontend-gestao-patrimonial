@@ -11,6 +11,10 @@ import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
 const Index = () => {
   const dispatch = useDispatch();
 
+  const changePage = () => {
+    dispatch(CreatorsPrefecture.createPrefectureComplete());
+  };
+
   return (
     <Grid
       container
@@ -18,9 +22,17 @@ const Index = () => {
       justify="flex-start"
       alignItems="flex-start"
     >
-      <Information />
-      <Address />
-      <Contact />
+      <Grid item xs={12} sm={12}>
+        <Information />
+      </Grid>
+
+      <Grid item xs={12} sm={12}>
+        <Address />
+      </Grid>
+
+      <Grid item xs={12} sm={12}>
+        <Contact />
+      </Grid>
 
       <Grid
         container
@@ -37,7 +49,7 @@ const Index = () => {
           <Button
             variant="contained"
             style={{ width: "100%", color: "#0174DF" }}
-            onClick={() => dispatch(CreatorsPrefecture.hidePrefectureCreate())}
+            onClick={changePage}
           >
             Salvar
           </Button>

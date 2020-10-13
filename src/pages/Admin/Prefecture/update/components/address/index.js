@@ -5,10 +5,10 @@ import { Grid, Typography, TextField } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsPrefectureAddress } from "~/store/ducks/prefecture_address";
 
-function Address(props) {
-  const address = useSelector(
-    (state) => state.prefecture_address.read_prefecture_address.address
-  );
+function Address() {
+  const address = useSelector((state) => state.prefecture_address.address);
+
+  const loading = useSelector((state) => state.prefecture_address.loading);
 
   const dispatch = useDispatch();
 
@@ -22,6 +22,7 @@ function Address(props) {
 
   useEffect(() => {
     dispatch(CreatorsPrefectureAddress.readPrefectureAddressRequest());
+
     setCep(address.cep);
     setCidade(address.cidade);
     setEstado(address.estado);
@@ -29,7 +30,6 @@ function Address(props) {
     setRua(address.rua);
     setComplemento(address.complemento || "");
     setNumero(address.numero);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address.bairro,
     address.cep,
@@ -38,6 +38,7 @@ function Address(props) {
     address.estado,
     address.numero,
     address.rua,
+    dispatch,
   ]);
 
   function handleSubmit(e) {
@@ -86,6 +87,10 @@ function Address(props) {
     return d.replace(/\D/g, "");
   }
 
+  if (loading) {
+    return <></>;
+  }
+
   return (
     <form onBlur={handleSubmit}>
       <Grid
@@ -95,12 +100,7 @@ function Address(props) {
         alignItems="flex-start"
         style={{ paddingLeft: "20px", paddingRight: "20px" }}
       >
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
-        >
+        <Grid item xs={12} sm={12} style={{ marginBottom: "10px" }}>
           <div>
             <Typography variant="h5" style={{ color: "rgba(0, 0, 0, 0.7)" }}>
               Endereço

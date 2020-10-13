@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { all, takeLatest } from "redux-saga/effects";
 
 import { initSocket } from "./socket";
@@ -9,6 +8,9 @@ import { updateToken, checkLicense } from "./license";
 
 import { AuthTypes } from "../ducks/auth";
 import { signIn, signOut } from "./auth";
+
+import { LogTypes } from "../ducks/log";
+import { readLogs } from "./log";
 
 import { Types as AccountTypes } from "../ducks/account";
 import {
@@ -40,6 +42,13 @@ import {
   createPrefectureContact,
   updatePrefectureContact,
 } from "./prefecture_contact";
+
+import { PrefectureImageTypes } from "../ducks/prefecture-image";
+import {
+  readImagePrefecture,
+  updatePrefectureImage,
+  uploadPrefectureImage,
+} from "./prefecture-image";
 
 import { Types as LowItemTypes } from "../ducks/low-item";
 import {
@@ -92,16 +101,71 @@ import {
 import { Types as LocaleItemTypes } from "../ducks/locale-item";
 import {
   readLocaleItem,
+  readUniqueLocaleItem,
   createLocaleItem,
   updateLocaleItem,
   deleteLocaleItem,
 } from "./locale-item";
 
 import { Types as SectorsTypes } from "../ducks/sectors";
-import { readSector, createSector, updateSector, deleteSector } from "./sector";
+import {
+  readSector,
+  createSector,
+  updateSector,
+  deleteSector,
+  readUniqueSector,
+} from "./sector";
 
 import { Types as UnitsTypes } from "../ducks/units";
-import { readUnit, createUnit, deleteUnit, updateUnit } from "./units";
+import {
+  readUnit,
+  createUnit,
+  deleteUnit,
+  updateUnit,
+  readUniqueUnit,
+} from "./units";
+
+import { Types as PatrimonyTypes } from "../ducks/patrimony";
+import {
+  readPatrimony,
+  createPatrimony,
+  updatePatrimony,
+  deletePatrimony,
+  duplicatePatrimony,
+} from "./patrimony";
+
+import { Types as LowPatrimony } from "../ducks/low-patrimony-item";
+import {
+  readLowItemPatrimony,
+  createLowItemPatrimony,
+  deleteLowPatrimonyItem,
+} from "./low-patrimony-item";
+
+import { Types as TransferencePatrimony } from "../ducks/transference-patrimony-item";
+import {
+  readTransferencersPatrimony,
+  deleteTransferencePatrimony,
+  createTransferencePatrimony,
+  updateTransferencePatrimony,
+} from "./transference-patrimony-item";
+
+import { Types as OccurrencePatrimony } from "../ducks/occurrence-patrimony-item";
+import {
+  readOccurrencePatrimony,
+  createOccurrencePatrimony,
+  updateOccurencePatrimony,
+} from "./occurence-patrimony";
+
+import { InvoiceTypes } from "../ducks/invoice";
+import {
+  uploadInvoice,
+  readInvoice,
+  downloadInvoice,
+  deleteInvoice,
+} from "./invoice";
+
+import { ImagesTypes } from "../ducks/image";
+import { readImage, uploadImage, deleteImage, downloadImage } from "./image";
 
 export default function* rootSaga() {
   return yield all([
@@ -111,6 +175,8 @@ export default function* rootSaga() {
     takeLatest("persist/REHYDRATE", checkLicense), //Checar a linceça toda vez que acessa o sistema
 
     takeLatest(LicenseTypes.LICENSE_REQUEST, updateToken),
+
+    takeLatest(LogTypes.READ_LOG_REQUEST, readLogs),
 
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
     takeLatest(AuthTypes.SIGN_OUT, signOut),
@@ -197,18 +263,95 @@ export default function* rootSaga() {
     ),
 
     takeLatest(LocaleItemTypes.READ_LOCALE_ITEM_REQUEST, readLocaleItem),
+    takeLatest(
+      LocaleItemTypes.READ_UNIQUE_LOCALE_ITEM_REQUEST,
+      readUniqueLocaleItem
+    ),
     takeLatest(LocaleItemTypes.CREATE_LOCALE_ITEM_REQUEST, createLocaleItem),
     takeLatest(LocaleItemTypes.UPDATE_LOCALE_ITEM_REQUEST, updateLocaleItem),
     takeLatest(LocaleItemTypes.DELETE_LOCALE_ITEM_REQUEST, deleteLocaleItem),
 
     takeLatest(SectorsTypes.READ_SECTORS_REQUEST, readSector),
+    takeLatest(SectorsTypes.READ_UNIQUE_SECTORS_REQUEST, readUniqueSector),
     takeLatest(SectorsTypes.CREATE_SECTOR_REQUEST, createSector),
     takeLatest(SectorsTypes.UPDATE_SECTOR_REQUEST, updateSector),
     takeLatest(SectorsTypes.DELETE_SECTOR_REQUEST, deleteSector),
 
     takeLatest(UnitsTypes.READ_UNITS_REQUEST, readUnit),
+    takeLatest(UnitsTypes.READ_UNIQUE_UNITS_REQUEST, readUniqueUnit),
     takeLatest(UnitsTypes.CREATE_UNITS_REQUEST, createUnit),
     takeLatest(UnitsTypes.UPDATE_UNITS_REQUEST, updateUnit),
     takeLatest(UnitsTypes.DELETE_UNITS_REQUEST, deleteUnit),
+
+    takeLatest(PatrimonyTypes.READ_PATRIMONY_REQUEST, readPatrimony),
+    takeLatest(PatrimonyTypes.CREATE_PATRIMONY_REQUEST, createPatrimony),
+    takeLatest(PatrimonyTypes.UPDATE_PATRIMONY_REQUEST, updatePatrimony),
+    takeLatest(PatrimonyTypes.DELETE_PATRIMONY_REQUEST, deletePatrimony),
+    takeLatest(PatrimonyTypes.DUPLICATE_PATRIMONY_REQUEST, duplicatePatrimony),
+
+    takeLatest(
+      LowPatrimony.CREATE_LOW_PATRIMONY_REQUEST,
+      createLowItemPatrimony
+    ),
+    takeLatest(LowPatrimony.READ_LOW_PATRIMONY_REQUEST, readLowItemPatrimony),
+    takeLatest(
+      LowPatrimony.DELETE_LOW_PATRIMONY_REQUEST,
+      deleteLowPatrimonyItem
+    ),
+
+    takeLatest(
+      TransferencePatrimony.READ_TRANSFERENCE_PATRIMONY_REQUEST,
+      readTransferencersPatrimony
+    ),
+    takeLatest(
+      TransferencePatrimony.CREATE_TRANSFERENCE_PATRIMONY_REQUEST,
+      createTransferencePatrimony
+    ),
+    takeLatest(
+      TransferencePatrimony.UPDATE_TRANSFERENCE_PATRIMONY_REQUEST,
+      updateTransferencePatrimony
+    ),
+    takeLatest(
+      TransferencePatrimony.DELETE_TRANSFERENCE_PATRIMONY_REQUEST,
+      deleteTransferencePatrimony
+    ),
+
+    takeLatest(
+      OccurrencePatrimony.READ_OCCURRENCE_PATRIMONY_REQUEST,
+      readOccurrencePatrimony
+    ),
+    takeLatest(
+      OccurrencePatrimony.CREATE_OCCURRENCE_PATRIMONY_REQUEST,
+      createOccurrencePatrimony
+    ),
+    takeLatest(
+      OccurrencePatrimony.UPDATE_OCCURRENCE_PATRIMONY_REQUEST,
+      updateOccurencePatrimony
+    ),
+
+    takeLatest(InvoiceTypes.READ_INVOICE_REQUEST, readInvoice),
+    takeLatest(InvoiceTypes.UPLOAD_INVOICE_REQUEST, uploadInvoice),
+    takeLatest(InvoiceTypes.DOWNLOAD_INVOICE_REQUEST, downloadInvoice),
+    takeLatest(InvoiceTypes.DELETE_INVOICE_REQUEST, deleteInvoice),
+
+    takeLatest(ImagesTypes.READ_IMAGE_REQUEST, readImage),
+    takeLatest(ImagesTypes.UPLOAD_IMAGE_REQUEST, uploadImage),
+    takeLatest(ImagesTypes.DOWNLOAD_IMAGE_REQUEST, downloadImage),
+    takeLatest(ImagesTypes.DELETE_IMAGE_REQUEST, deleteImage),
+
+    takeLatest(
+      PrefectureImageTypes.READ_IMAGE_PREFECTURE_REQUEST,
+      readImagePrefecture
+    ),
+
+    takeLatest(
+      PrefectureImageTypes.UPLOAD_IMAGE_PREFECTURE_REQUEST,
+      uploadPrefectureImage
+    ),
+
+    takeLatest(
+      PrefectureImageTypes.UPDATE_IMAGE_PREFECTURE_REQUEST,
+      updatePrefectureImage
+    ),
   ]);
 }

@@ -21,7 +21,16 @@ export function* readAccounts() {
   try {
     const { data } = yield call(api.get, "/user/");
     yield put(CreatorsAccount.readAccountSuccess(data));
-  } catch (err) {}
+  } catch (err) {
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        return toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
+  }
 }
 
 export function* createAccount({ payload }) {
@@ -30,14 +39,34 @@ export function* createAccount({ payload }) {
 
     const { data } = yield call(api.post, "/user", account);
     yield put(CreatorsAccount.createAccountSuccess(data));
-  } catch (err) {}
+
+    toastr.success("Úsuario criado.");
+  } catch (err) {
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        return toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
+  }
 }
 
 export function* deleteAccount({ payload }) {
   try {
     yield call(api.delete, `/user/${payload.id}`);
     yield put(CreatorsAccount.deleteAccountSuccess(payload.id));
-  } catch (err) {}
+  } catch (err) {
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        return toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
+  }
 }
 
 export function* updateAccount({ payload }) {
@@ -48,10 +77,17 @@ export function* updateAccount({ payload }) {
     if (store.getState().account.account_joined.id === account.id) {
       toastr.success("Suas informações foram atualizadas.");
     } else {
-      toastr.success("As informações foram do úsuario atualizadas.");
+      toastr.success("As informações do úsuario foram atualizadas.");
     }
   } catch (err) {
-    toastr.error("Erro ao atualiza as informações.");
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        return toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
   }
 }
 
@@ -60,5 +96,14 @@ export function* changerPasswordAccount({ payload }) {
     const { password } = payload;
 
     yield call(api.put, "/change-password-user", password);
-  } catch (err) {}
+  } catch (err) {
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        return toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
+  }
 }

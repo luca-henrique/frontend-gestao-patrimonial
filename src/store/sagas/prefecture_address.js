@@ -13,16 +13,15 @@ export function* readPrefectureAddress() {
 
 export function* createPrefectureAddress({ payload }) {
   try {
-    const { address } = payload;
-    const { data } = yield call(api.post, "/prefecture-address", address);
+    const { data } = yield call(api.post, "/prefecture-address", payload.data);
     yield put(CreatorsPrefectureAddress.readPrefectureAddressSuccess(data));
   } catch (err) {}
 }
 
 export function* updatePrefectureAddress({ payload }) {
   try {
-    const { address } = payload;
-    yield call(api.put, `/prefecture-address/${address.id}`, address);
+    const { data } = payload;
+    yield call(api.put, `/prefecture-address/${data.id}`, data);
     toastr.success("Endereço atualizado");
   } catch (err) {}
 }

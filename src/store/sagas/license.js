@@ -5,7 +5,7 @@ import { push } from "connected-react-router";
 
 import LicenseActions from "../ducks/license";
 
-import { actions as toastrActions } from "react-redux-toastr";
+import { toastr } from "react-redux-toastr";
 
 export function* updateToken({ token }) {
   try {
@@ -14,12 +14,14 @@ export function* updateToken({ token }) {
     yield put(LicenseActions.licenseSuccess(response.data.license));
     yield put(push("/entrar"));
   } catch (err) {
-    yield put(
-      toastrActions.add({
-        title: "Falha na chave da licença",
-        message: "Está chave de acesso já está em uso/ou já foi usada.",
-      })
-    );
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        return toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
   }
 }
 
@@ -38,12 +40,14 @@ export function* checkLicense() {
     } else {
       yield put(push("/"));
     }
-  } catch (error) {
-    yield put(
-      toastrActions.add({
-        title: "Falha na chave da licença",
-        message: "Está chave de acesso já está em uso/ou já foi usada.",
-      })
-    );
+  } catch (err) {
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        return toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
   }
 }

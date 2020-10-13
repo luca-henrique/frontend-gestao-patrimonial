@@ -58,23 +58,14 @@ const Create = () => {
 
   const visible = useSelector(
     (state) =>
-      state.transfer_patrimony_item.show_modal_update_transference_patrimony
-        .visible
+      state.transfer_patrimony_item.update_transference_patrimony.visible
   );
-
-  const transference = useSelector(
-    (state) =>
-      state.transfer_patrimony_item.show_modal_update_transference_patrimony
-        .transference
-  );
-
-  console.log(transference.id);
 
   function create(e) {
     e.preventDefault();
 
     var transfer = {
-      id: transference.id,
+      id: 0,
       institution,
       sector,
       unit,

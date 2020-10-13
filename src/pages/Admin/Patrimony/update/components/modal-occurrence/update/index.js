@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import React, { useState, useEffect } from "react";
+
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  Select,
+} from "@material-ui/core";
+
+import { formatDate } from "~/util/formatDate";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as CreatorsPatrimonyOccurrence } from "~/store/ducks/occurrence-patrimony-item";
+import { Creators as CreatorsOccurrenceItem } from "~/store/ducks/occurrence-item";
 import TextField from "@material-ui/core/TextField";
 
 export default function AlertDialog() {
@@ -14,10 +23,34 @@ export default function AlertDialog() {
 
   const visible = useSelector(
     (state) =>
-      state.occurrente_patrimony_item.show_modal_update_occurrence_patrimony
-        .visible
+      state.occurrente_patrimony_item.update_occurrence_patrimony.visible
   );
-  console.log(visible);
+
+  const data = useSelector(
+    (state) => state.occurrente_patrimony_item.read_occurrence_patrimony
+  );
+
+  const exist = useSelector(
+    (state) => state.occurrente_patrimony_item.exist_occurrence_patrimony
+  );
+
+  useEffect(() => {
+    if (visible && exist) {
+      dispatch(CreatorsOccurrenceItem.readTesteOccurrenceItemRequest());
+      setDateOccurrence(data.date_occurrence);
+      setTypeOccurrenc(data.occurrence_item_id);
+      setReport(data.report);
+      setSpecification(data.specification);
+    }
+  }, [
+    data.date_occurrence,
+    data.occurrence_item_id,
+    data.report,
+    data.specification,
+    dispatch,
+    exist,
+    visible,
+  ]);
 
   const [dateOccurrence, setDateOccurrence] = useState("");
   const [typeOccurrence, setTypeOccurrenc] = useState("");
@@ -28,14 +61,27 @@ export default function AlertDialog() {
     dispatch(CreatorsPatrimonyOccurrence.hideModalUpdateOccurrencePatrimony());
   };
 
-  const deletePatrimony = (e) => {
+  const occurrence = useSelector((state) => state.occurrence.occurrence_items);
+  const loading = useSelector(
+    (state) => state.occurrence.loading_occurrence_items
+  );
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
+    var occurrence = {
+      id: data.id,
+      occurrence_item_id: typeOccurrence,
+      date_occurrence: dateOccurrence,
+      report,
+      specification,
+    };
+
+    dispatch(
+      CreatorsPatrimonyOccurrence.updateOccurrencePatrimonyRequest(occurrence)
+    );
+
     handleClose();
-    setDateOccurrence("");
-    setTypeOccurrenc("");
-    setReport("");
-    setSpecification("");
   };
 
   return (
@@ -46,7 +92,7 @@ export default function AlertDialog() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <form onSubmit={deletePatrimony}>
+        <form onSubmit={handleSubmit}>
           <DialogTitle id="alert-dialog-title">
             {"Atualizar Ocorrência"}
           </DialogTitle>
@@ -61,19 +107,38 @@ export default function AlertDialog() {
               label="Data"
               type="date"
               fullWidth
-              value={dateOccurrence}
+              value={formatDate(dateOccurrence)}
               onChange={(e) => setDateOccurrence(e.target.value)}
             />
-            <TextField
+            <FormControl
               variant="outlined"
-              required
-              margin="dense"
-              label="Tipo de baixa"
-              type="text"
+              style={{ width: "100%", marginTop: "10px", marginBottom: "10px" }}
+              size="small"
               fullWidth
               value={typeOccurrence}
-              onChange={(e) => setTypeOccurrenc(e.target.value)}
-            />
+              onChange={(e) => {
+                setTypeOccurrenc(e.target.value);
+              }}
+              disabled={loading}
+            >
+              <InputLabel id="demo-simple-select-outlined-label">
+                Tipo da ocorrência
+              </InputLabel>
+              <Select
+                native
+                size="small"
+                fullWidth
+                label="Tipo da ocorrência"
+                value={typeOccurrence}
+              >
+                <option value="" />
+                {occurrence.map((local) => (
+                  <option value={local.id} key={local.id}>
+                    {local.description}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
 
             <TextField
               variant="outlined"

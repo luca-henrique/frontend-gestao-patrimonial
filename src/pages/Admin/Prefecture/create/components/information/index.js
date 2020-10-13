@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Grid, Typography, TextField } from "@material-ui/core/";
 import { cnpjMask } from "~/pages/util/maskCnpj";
 
-import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
+import { Creators as ActionsPrefecture } from "~/store/ducks/prefecture";
 import { useDispatch } from "react-redux";
 
 const Informacoes = (props) => {
@@ -21,7 +21,7 @@ const Informacoes = (props) => {
     };
 
     if (nome.length > 5 && cnpj.length > 5 && razao.length > 5) {
-      dispatch(CreatorsPrefecture.createPrefectureRequest(prefecture));
+      dispatch(ActionsPrefecture.createPrefectureRequest(prefecture));
     }
   };
 

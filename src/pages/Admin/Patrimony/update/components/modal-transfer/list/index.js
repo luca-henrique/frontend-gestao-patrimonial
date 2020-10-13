@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Modal } from "@material-ui/core/";
 import MaterialTable from "material-table";
@@ -7,11 +7,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Creators as CreatorsTransfer } from "~/store/ducks/transference-patrimony-item";
 import { useSelector, useDispatch } from "react-redux";
 
-import Create from "../create/";
-import Update from "../update/";
-
 const useStyles = makeStyles((theme) => ({
   modal: {
+    padding: "10px",
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100% ",
@@ -25,77 +23,67 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const View = () => {
-  const date = new Date().toISOString().slice(0, 10);
-
   const [state] = useState({
     columns: [
       {
-        title: "Data",
-        field: "date",
+        title: "Data da transferência",
+        field: "created_at",
         type: "date",
       },
       {
-        title: "Orgão",
-        field: "institution",
+        title: "Orgão anterior",
+        field: "old_locale_item.description",
       },
       {
-        title: "Setor",
-        field: "sector",
+        title: "Setor anterior",
+        field: "oldSector.description",
       },
-
       {
-        title: "Únidade",
-        field: "unit",
+        title: "Únidade anterior",
+        field: "oldUnit.description",
+      },
+      {
+        title: "Orgão atual",
+        field: "newLocaleItem.description",
+      },
+      {
+        title: "Setor atual",
+        field: "newSector.description",
+      },
+      {
+        title: "Unidade atual",
+        field: "newUnit.description",
       },
     ],
   });
 
   const classes = useStyles();
 
-  const data = [
-    {
-      id: 1,
-      date: date,
-      institution: "SECRETARIA DE SAUDE",
-      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-    },
-    {
-      id: 2343,
-      date: date,
-      institution: "SECRETARIA DE SAUDE",
-      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-    },
-    {
-      id: 2342,
-      date: date,
-      institution: "SECRETARIA DE SAUDE",
-      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-    },
-    {
-      id: 34,
-      date: date,
-      institution: "SECRETARIA DE SAUDE",
-      sector: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-      unit: "SECRETARIA DE INFRA ESTRUTURA E SERVIÇOS PUBLICOS",
-    },
-  ];
+  const data = useSelector(
+    (state) => state.transfer_patrimony_item.read_transference_patrimony
+  );
+
+  console.log(data);
 
   const visible = useSelector(
-    (state) =>
-      state.transfer_patrimony_item.show_modal_list_transference_patrimony
-        .visible
+    (state) => state.transfer_patrimony_item.transference_patrimony.visible
   );
 
   const id_patrimony = useSelector(
-    (state) =>
-      state.transfer_patrimony_item.show_modal_list_transference_patrimony
-        .id_patrimony
+    (state) => state.transfer_patrimony_item.transference_patrimony.id_patrimony
   );
 
   const dispatch = useDispatch();
+
+  const loading_patrimony = useSelector(
+    (state) => state.transfer_patrimony_item.loading_transference_patrimony
+  );
+
+  useEffect(() => {
+    if (visible) {
+      dispatch(CreatorsTransfer.readTransfersRequest(id_patrimony));
+    }
+  }, [dispatch, id_patrimony, visible]);
 
   return (
     <Modal
@@ -113,6 +101,7 @@ const View = () => {
           title="Transferências"
           columns={state.columns}
           data={data}
+          loading={loading_patrimony}
           options={{
             actionsCellStyle: { color: "#848484" },
             headerStyle: {
@@ -165,26 +154,8 @@ const View = () => {
                 dispatch(CreatorsTransfer.hideModalListTransferencePatrimony());
               },
             },
-
-            {
-              icon: "delete",
-              tooltip: "Excluir",
-              onClick: (event, rowData) => {},
-            },
-            {
-              icon: "edit",
-              tooltip: "Editar",
-              onClick: (event, rowData) => {
-                dispatch(
-                  CreatorsTransfer.showModalUpdateTransferencePatrimony(rowData)
-                );
-              },
-            },
           ]}
         />
-
-        <Create />
-        <Update />
       </div>
     </Modal>
   );

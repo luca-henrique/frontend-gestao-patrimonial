@@ -4,6 +4,8 @@ import { Grid, Typography, TextField } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import InputAdornment from "@material-ui/core/InputAdornment";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     [theme.breakpoints.down("sm")]: {
@@ -19,21 +21,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Purchase = () => {
-  //toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-
+const Purchase = React.memo(({ purchaseInformation }) => {
   const [bidding, setBidding] = useState("");
   const [effort, setEffort] = useState("");
   const [buyDate, setBuyDate] = useState("");
   const [numberInvoice, setNumberInvoice] = useState("");
   const [dateInvoice, setDateInvoice] = useState("");
 
-  const [value, setValue] = useState(100.0);
-  const [acquisitionValue, setAcquisitionValue] = useState(
-    value.toLocaleString("pt-br", { style: "currency", currency: "BRL" })
-  );
+  const [value, setValue] = useState("");
+
+  const [allocation, setAllocation] = useState("");
 
   const classes = useStyles();
+
+  function convertToReal(valor) {
+    const v = ((valor.replace(/\D/g, "") / 100).toFixed(2) + "").split(".");
+
+    const m = v[0]
+      .split("")
+      .reverse()
+      .join("")
+      .match(/.{1,3}/g);
+
+    for (let i = 0; i < m.length; i++)
+      m[i] =
+        m[i]
+          .split("")
+          .reverse()
+          .join("") + ".";
+
+    const r = m.reverse().join("");
+
+    return r.substring(0, r.lastIndexOf(".")) + "," + v[1];
+  }
+
+  purchaseInformation({
+    bidding,
+    effort,
+    buyDate,
+    numberInvoice,
+    dateInvoice,
+    value,
+    allocation,
+  });
 
   return (
     <>
@@ -60,6 +90,7 @@ const Purchase = () => {
         <div>
           <Typography variant="button">Empenho:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -73,6 +104,7 @@ const Purchase = () => {
         <div>
           <Typography variant="button">Data de compra:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -87,11 +119,17 @@ const Purchase = () => {
         <div>
           <Typography variant="button">Valor da aquisição:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
-            value={acquisitionValue}
-            onChange={(e) => setAcquisitionValue(e.target.value)}
+            value={convertToReal(value)}
+            onChange={(e) => setValue(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">R$</InputAdornment>
+              ),
+            }}
           />
         </div>
       </Grid>
@@ -99,6 +137,7 @@ const Purchase = () => {
         <div>
           <Typography variant="button">Nº da nota fiscal:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -111,6 +150,7 @@ const Purchase = () => {
         <div>
           <Typography variant="button">Data da nota fiscal:</Typography>
           <TextField
+            required
             variant="outlined"
             size="small"
             fullWidth
@@ -120,8 +160,23 @@ const Purchase = () => {
           />
         </div>
       </Grid>
+
+      <Grid item xs={12} sm={12} className={classes.input}>
+        <div>
+          <Typography variant="button">Dotação:</Typography>
+          <TextField
+            required
+            variant="outlined"
+            size="small"
+            fullWidth
+            type="text"
+            value={allocation}
+            onChange={(e) => setAllocation(e.target.value)}
+          />
+        </div>
+      </Grid>
     </>
   );
-};
+});
 
 export default Purchase;

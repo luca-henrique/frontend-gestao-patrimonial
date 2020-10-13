@@ -6,7 +6,7 @@ import AuthActions from "../ducks/auth";
 import { Creators as AccountCreators } from "../ducks/account";
 import { Creators as NavigationPageCreators } from "../ducks/page";
 
-import { actions as toastrActions } from "react-redux-toastr";
+import { toastr } from "react-redux-toastr";
 
 export function* signIn({ email, password }) {
   try {
@@ -19,13 +19,14 @@ export function* signIn({ email, password }) {
     yield put(AuthActions.signInSuccess(response.data.token));
     yield put(AccountCreators.readAccountJoinedRequest());
   } catch (err) {
-    yield put(
-      toastrActions.add({
-        title: "Falha no login",
-        message:
-          "Email/senha errados, entre em contato com a empresa responsavel ou com o administrador.",
-      })
-    );
+    var data = err.response.data;
+    if (data.length >= 1) {
+      data.map((error) => {
+        toastr.error(error.message);
+      });
+    } else {
+      toastr.error(err.response.data.error.message);
+    }
   }
 }
 

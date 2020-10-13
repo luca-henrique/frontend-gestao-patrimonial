@@ -10,6 +10,13 @@ export function* readLocaleItem() {
   } catch (err) {}
 }
 
+export function* readUniqueLocaleItem({ payload }) {
+  try {
+    const { data } = yield call(api.get, `/locale-item/${payload.id}`);
+    yield put(CreatorsLocaleItem.readUniqueLocaleItemSuccess(data));
+  } catch (err) {}
+}
+
 export function* createLocaleItem({ payload }) {
   try {
     const { data } = yield call(api.post, "/locale-item", payload.data);

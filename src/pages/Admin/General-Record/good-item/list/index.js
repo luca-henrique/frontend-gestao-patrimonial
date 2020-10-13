@@ -49,7 +49,7 @@ function GoodItem() {
           rowStyle: (rowData) => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#58ACFA"
+                ? "rgba(164, 164, 164,0.2)"
                 : "#FFF",
           }),
         }}

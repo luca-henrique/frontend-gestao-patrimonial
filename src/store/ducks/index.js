@@ -11,6 +11,8 @@ import { reducer as license } from "./license";
 
 import { reducer as auth } from "./auth";
 
+import { reducer as log } from "./log";
+
 /**
  * controler de mudança de rotas
  */
@@ -45,9 +47,16 @@ import low_patrimony_item from "./low-patrimony-item";
 import transfer_patrimony_item from "./transference-patrimony-item";
 import occurrente_patrimony_item from "./occurrence-patrimony-item";
 
+import { reducer as invoice } from "./invoice";
+import { reducer as image } from "./image";
+
+import { reducer as prefecture_image } from "./prefecture-image";
+
 export default (history) =>
   combineReducers({
     toastr,
+
+    log,
 
     license,
 
@@ -80,6 +89,10 @@ export default (history) =>
     low_patrimony_item,
     transfer_patrimony_item,
     occurrente_patrimony_item,
+
+    invoice,
+    image,
+    prefecture_image,
 
     router: connectRouter(history),
   });
