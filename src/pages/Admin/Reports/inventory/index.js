@@ -1,5 +1,9 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import moment from "moment";
+import { saveAs } from "file-saver";
+import FileDownload from "js-file-download";
 import {
   Typography,
   Grid,
@@ -75,6 +79,53 @@ function StyledRadio(props) {
 }
 
 export default function Create() {
+  /**
+   * orgaos
+   */
+  const locals = useSelector((state) => state.locale.locale_items);
+  /**
+   * setores
+   */
+  const sectors = useSelector((state) => state.sectors.sector);
+  /**
+   * unidades
+   */
+  const units = useSelector((state) => state.units.units);
+
+  const [unit, setUnit] = useState();
+  const [sector, setSector] = useState();
+  const [local, setLocal] = useState();
+  const [dateInitial, setDateInitial] = useState();
+  const [dateFinally, setDateFinally] = useState();
+
+  const prefecture = useSelector((state) => state.prefecture);
+  /**
+   * generate report
+   */
+  const handleReport = async () => {
+    const token = localStorage.getItem("@Omni:token");
+
+    const response = await axios.post(
+      "http://127.0.0.1:3333/reports/inventory",
+      {
+        unit_id: unit,
+        sector_id: sector,
+        organ_id: local,
+        date_initial: moment(dateInitial).format("YYYY-MM-DD HH:mm:ss"),
+        date_finally: moment(dateFinally).format("YYYY-MM-DD HH:mm:ss"),
+        prefecture_id: prefecture.prefecture.id,
+      },
+      {
+        responseType: "blob",
+      }
+    );
+    FileDownload(response.data, "relatorio.pdf");
+
+    // const file = new Blob([response.data], {
+    //   type: 'application/pdf'
+    // })
+  };
+
   return (
     <Grid
       container
@@ -111,6 +162,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateInitial(event.target.value)}
               />
             </div>
           </Grid>
@@ -126,6 +178,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateFinally(event.target.value)}
               />
             </div>
           </Grid>
@@ -146,8 +199,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Orgão:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setLocal(event.target.value)}
+          >
             <option value="" />
+            {locals.map((lc) => (
+              <option value={lc.id} key={lc.id}>
+                {lc.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -160,8 +224,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Setor:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setSector(event.target.value)}
+          >
             <option value="" />
+            {sectors.map((sc) => (
+              <option value={sc.id} key={sc.id}>
+                {sc.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -174,8 +249,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Únidade:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setUnit(event.target.value)}
+          >
             <option value="" />
+            {units.map((un) => (
+              <option value={un.id} key={un.id}>
+                {un.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -215,6 +301,7 @@ export default function Create() {
           variant="contained"
           style={{ color: "#0174DF", width: "100%" }}
           type="submit"
+          onClick={() => handleReport()}
         >
           Gerar
         </Button>
