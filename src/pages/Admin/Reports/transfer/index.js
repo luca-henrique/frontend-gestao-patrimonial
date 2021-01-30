@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import FileDownload from "js-file-download";
+import moment from "moment";
+import { useSelector } from "react-redux";
 
 import { Typography, Grid, TextField, Button } from "@material-ui/core/";
 
 export default function Create() {
+  const [dateInitial, setDateInitial] = useState();
+  const [dateFinally, setDateFinally] = useState();
+  const prefecture = useSelector((state) => state.prefecture);
+
+  const handleReport = async () => {
+    const response = await axios.post(
+      "http://127.0.0.1:3333/reports/transfer",
+      {
+        date_init: dateInitial,
+        date_finally: dateFinally,
+        prefecture_id: prefecture.prefecture.id,
+      },
+      {
+        responseType: "blob",
+      }
+    );
+
+    FileDownload(response.data, "relatorio.pdf");
+  };
+
   return (
     <Grid
       container
@@ -40,6 +64,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateInitial(event.target.value)}
               />
             </div>
           </Grid>
@@ -54,6 +79,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateFinally(event.target.value)}
               />
             </div>
           </Grid>
@@ -65,6 +91,7 @@ export default function Create() {
           variant="contained"
           style={{ color: "#0174DF", width: "100%" }}
           type="submit"
+          onClick={handleReport}
         >
           Gerar
         </Button>

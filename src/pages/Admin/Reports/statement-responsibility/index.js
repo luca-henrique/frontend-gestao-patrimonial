@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import FileDownload from "js-file-download";
+import moment from "moment";
 
 import {
   Typography,
@@ -75,6 +79,46 @@ function StyledRadio(props) {
 }
 
 export default function Create() {
+  const [organ, setOrgan] = useState();
+  const [sector, setSector] = useState();
+  const [unit, setUnit] = useState();
+  const [dateInitial, setDateInitial] = useState();
+  const [dateFinally, setDateFinally] = useState();
+  const [responsible, setResponsible] = useState();
+
+  /**
+   * orgaos
+   */
+  const locals = useSelector((state) => state.locale.locale_items);
+  /**
+   * setores
+   */
+  const sectors = useSelector((state) => state.sectors.sector);
+  /**
+   * unidades
+   */
+  const units = useSelector((state) => state.units.units);
+
+  const prefecture = useSelector((state) => state.prefecture);
+
+  const handleReport = async () => {
+    const response = await axios.post(
+      "http://127.0.0.1:3333/reports/term",
+      {
+        organ_id: organ,
+        sector_id: sector,
+        unit_id: unit,
+        date_init: dateInitial,
+        date_finally: dateFinally,
+        prefecture_id: prefecture.prefecture.id,
+        responsible,
+      },
+      {
+        responseType: "blob",
+      }
+    );
+    FileDownload(response.data, "relatorio.pdf");
+  };
   return (
     <Grid
       container
@@ -111,6 +155,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateInitial(event.target.value)}
               />
             </div>
           </Grid>
@@ -126,6 +171,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateFinally(event.target.value)}
               />
             </div>
           </Grid>
@@ -146,8 +192,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Orgão:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setOrgan(event.target.value)}
+          >
             <option value="" />
+            {locals.map((lc) => (
+              <option key={lc.id} value={lc.id}>
+                {lc.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -160,8 +217,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Setor:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setSector(event.target.value)}
+          >
             <option value="" />
+            {sectors.map((sc) => (
+              <option value={sc.id} key={sc.id}>
+                {sc.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -174,8 +242,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Únidade:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setUnit(event.target.value)}
+          >
             <option value="" />
+            {units.map((unit) => (
+              <option key={unit.id} value={unit.id}>
+                {unit.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -183,7 +262,13 @@ export default function Create() {
       <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
         <div>
           <Typography variant="button">Responsavel:</Typography>
-          <TextField variant="outlined" size="small" fullWidth type="text" />
+          <TextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            type="text"
+            onChange={(event) => setResponsible(event.target.value)}
+          />
         </div>
       </Grid>
 
@@ -192,6 +277,7 @@ export default function Create() {
           variant="contained"
           style={{ color: "#0174DF", width: "100%" }}
           type="submit"
+          onClick={handleReport}
         >
           Gerar
         </Button>
