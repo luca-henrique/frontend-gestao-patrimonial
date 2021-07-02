@@ -1,6 +1,8 @@
-import React from "react";
-
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import FileDownload from "js-file-download";
+import moment from "moment"
 
 import {
   Typography,
@@ -80,6 +82,79 @@ function StyledRadio(props) {
 export default function Create() {
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
+  const [organ, setOrgan] = useState();
+  const [sector, setSector] = useState();
+  const [unit, setUnit] = useState();
+
+  const [dateBuy, setDateBuy] = useState();
+  const [dateEntry, setDateEntry] = useState();
+  const [dateLow, setDateLow] = useState();
+
+  const [titleReport, setTitleReport] = useState("");
+  const [typeGood, setTypeGood] = useState();
+  const [stateConservation, setStateConservation] = useState();
+  const [nature, setNature] = useState();
+  const [typeLow, setTypeLow] = useState();
+  const [statusTypeLow, setStatusTypeLow] = useState();
+
+  /**
+   * orgaos
+   */
+  const locals = useSelector((state) => state.locale.locale_items);
+  /**
+   * setores
+   */
+  const sectors = useSelector((state) => state.sectors.sector);
+  /**
+   * unidades
+   */
+  const units = useSelector((state) => state.units.units);
+  /**
+   * natureza
+   */
+  const natures = useSelector((state) => state.nature.nature_items);
+  /**
+   * tipos de bens
+   */
+  const types_goods = useSelector((state) => state.good.good_items);
+  /**
+   * tipo de baixa
+   */
+  const type_lows = useSelector((state) => state.low.low_items);
+  /**
+   * estado de conservado
+   */
+  const state_patrimonies = useSelector((state) => state.state.state_items);
+
+  const prefecture = useSelector((state) => state.prefecture);
+
+  const handleReport = async () => {
+    const response = await axios.post(
+      "http://127.0.0.1:3333/reports/patrimony/general",
+      {
+        date_entry: dateEntry,
+        date_buy: dateBuy,
+        date_low: dateLow,
+        organ_id: organ,
+        sector_id: sector,
+        unit_id: unit,
+        prefecture_id: prefecture.prefecture.id,
+        nature_item_id: nature,
+        report_name: titleReport,
+        low_item_id: typeLow,
+        status: statusTypeLow === "baixados" ? true : false,
+        type_low: typeLow,
+        good_item_id: typeGood,
+        state_item_id: stateConservation
+      },
+      {
+        responseType: "blob",
+      }
+    );
+
+    // FileDownload(response.data, "relatorio.pdf");
+
+  };
 
   return (
     <Grid
@@ -98,7 +173,12 @@ export default function Create() {
       <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
         <div>
           <Typography variant="button">Titulo do relatório:</Typography>
-          <TextField variant="outlined" size="small" fullWidth />
+          <TextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            onChange={(event) => setTitleReport(event.target.value)}
+          />
         </div>
       </Grid>
 
@@ -124,6 +204,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateEntry(event.target.value)}
               />
             </div>
           </Grid>
@@ -170,6 +251,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateLow(event.target.value)}
               />
             </div>
           </Grid>
@@ -216,6 +298,7 @@ export default function Create() {
                 size="small"
                 fullWidth
                 type="date"
+                onChange={(event) => setDateBuy(event.target.value)}
               />
             </div>
           </Grid>
@@ -254,8 +337,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Orgão:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setOrgan(event.target.value)}
+          >
             <option value="" />
+            {locals.map((lc) => (
+              <option key={lc.id} value={lc.id}>
+                {lc.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -268,8 +362,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Setor:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setSector(event.target.value)}
+          >
             <option value="" />
+            {sectors.map((sec) => (
+              <option key={sec.id} value={sec.id}>
+                {sec.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -282,8 +387,19 @@ export default function Create() {
           fullWidth
         >
           <Typography variant="button">Únidade:</Typography>
-          <Select native size="small" fullWidth style={{ paddingLeft: "5px" }}>
+          <Select
+            native
+            size="small"
+            fullWidth
+            style={{ paddingLeft: "5px" }}
+            onChange={(event) => setUnit(event.target.value)}
+          >
             <option value="" />
+            {units.map((unit) => (
+              <option key={unit.id} value={unit.id}>
+                {unit.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -291,8 +407,18 @@ export default function Create() {
       <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
         <FormControl variant="outlined" size="small" fullWidth>
           <Typography variant="button">Tipo de bem:</Typography>
-          <Select native size="small" fullWidth>
+          <Select
+            native
+            size="small"
+            fullWidth
+            onChange={(event) => setTypeGood(event.target.value)}
+          >
             <option value="" />
+            {types_goods.map((tg) => (
+              <option key={tg.id} value={tg.id}>
+                {tg.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -300,8 +426,18 @@ export default function Create() {
       <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
         <FormControl variant="outlined" size="small" fullWidth>
           <Typography variant="button">Estado de convervação:</Typography>
-          <Select native size="small" fullWidth>
+          <Select
+            native
+            size="small"
+            fullWidth
+            onChange={(event) => setStateConservation(event.target.value)}
+          >
             <option value="" />
+            {state_patrimonies.map((sp) => (
+              <option key={sp.id} value={sp.id}>
+                {sp.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -309,8 +445,18 @@ export default function Create() {
       <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
         <FormControl variant="outlined" size="small" fullWidth>
           <Typography variant="button">Natureza:</Typography>
-          <Select native size="small" fullWidth>
+          <Select
+            native
+            size="small"
+            fullWidth
+            onChange={(event) => setNature(event.target.value)}
+          >
             <option value="" />
+            {natures.map((nat) => (
+              <option key={nat.id} value={nat.id}>
+                {nat.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -318,8 +464,18 @@ export default function Create() {
       <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
         <FormControl variant="outlined" size="small" fullWidth>
           <Typography variant="button">Tipo de baixa:</Typography>
-          <Select native size="small" fullWidth>
+          <Select
+            native
+            size="small"
+            fullWidth
+            onChange={(event) => setTypeLow(event.target.value)}
+          >
             <option value="" />
+            {type_lows.map((tl) => (
+              <option key={tl.id} value={tl.id}>
+                {tl.description}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -347,6 +503,7 @@ export default function Create() {
             defaultValue="abertos"
             aria-label="gender"
             name="customized-radios"
+            onChange={(event) => setStatusTypeLow(event.target.value)}
           >
             <FormControlLabel
               value="abertos"
@@ -425,6 +582,7 @@ export default function Create() {
           variant="contained"
           style={{ color: "#0174DF", width: "100%" }}
           type="submit"
+          onClick={handleReport}
         >
           Gerar
         </Button>
