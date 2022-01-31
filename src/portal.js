@@ -1,113 +1,113 @@
-import React, { lazy, Suspense } from "react";
-import ReactDOM from "react-dom";
+import React, {lazy, Suspense} from 'react';
+import ReactDOM from 'react-dom';
 
-import Loader from "./components/Loader";
+import Loader from './components/atomic/atoms/Loader';
 
 const ChangerPasswordModal = lazy(() =>
-  import("./pages/Admin/Account/change-password")
+  import('./pages/Users/ChangerPassword.jsx'),
 );
-const CreateAccountModal = lazy(() => import("./pages/Admin/Account/create"));
-const UpdateAccountModal = lazy(() => import("./pages/Admin/Account/update"));
+const CreateAccountModal = lazy(() => import('./pages/Users/Create'));
+const UpdateAccountModal = lazy(() => import('./pages/Users/update'));
 
 const CreateLowItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/low-item/create")
+  import('./pages/Admin/GeneralRecord/low-item/create'),
 );
 
 const UpdateLowItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/low-item/update")
+  import('./pages/Admin/GeneralRecord/low-item/update'),
 );
 
 const CreateGoodItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/good-item/create")
+  import('./pages/Admin/GeneralRecord/good-item/create'),
 );
 const UpdateGoodItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/good-item/update")
+  import('./pages/Admin/GeneralRecord/good-item/update'),
 );
 
 const CreateStateItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/state-item/create")
+  import('./pages/Admin/GeneralRecord/state-item/create'),
 );
 const UpdateStateItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/state-item/update")
+  import('./pages/Admin/GeneralRecord/state-item/update'),
 );
 
 const CreateNatureItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/nature-item/create")
+  import('./pages/Admin/GeneralRecord/nature-item/create'),
 );
 const UpdateNatureItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/nature-item/update")
+  import('./pages/Admin/GeneralRecord/nature-item/update'),
 );
 
 const CreateOriginItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/origin-item/create")
+  import('./pages/Admin/GeneralRecord/origin-item/create'),
 );
 const UpdateOriginItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/origin-item/update")
+  import('./pages/Admin/GeneralRecord/origin-item/update'),
 );
 
 const CreateOccurrenceItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/occurrence-item/create")
+  import('./pages/Admin/GeneralRecord/occurrence-item/create'),
 );
 const UpdateOccurrenceItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/occurrence-item/update")
+  import('./pages/Admin/GeneralRecord/occurrence-item/update'),
 );
 
 const CreateLocaleItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/locale-item/create")
+  import('./pages/Admin/GeneralRecord/locale-item/create'),
 );
 const UpdateLocaleItemModal = lazy(() =>
-  import("./pages/Admin/General-Record/locale-item/update")
+  import('./pages/Admin/GeneralRecord/locale-item/update'),
 );
 
 const CreateSectorModal = lazy(() =>
-  import("./pages/Admin/General-Record/sectors/table/create")
+  import('./pages/Admin/GeneralRecord/sectors/table/create'),
 );
 const UpdateSectorModal = lazy(() =>
-  import("./pages/Admin/General-Record/sectors/table/update")
+  import('./pages/Admin/GeneralRecord/sectors/table/update'),
 );
 
 const CreateUnitModal = lazy(() =>
-  import("./pages/Admin/General-Record/units/table/create")
+  import('./pages/Admin/GeneralRecord/units/table/create'),
 );
 const UpdateUnitModal = lazy(() =>
-  import("./pages/Admin/General-Record/units/table/update")
+  import('./pages/Admin/GeneralRecord/units/table/update'),
 );
 
 const CreateLowItemPatrimonyModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-low/create")
+  import('./pages/Admin/Patrimony/update/components/modal-low/create'),
 );
 
 const RemoveLowItemPatrimonyModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-low/remove")
+  import('./pages/Admin/Patrimony/update/components/modal-low/remove'),
 );
 
 const CreateOccurrenceItemPatrimonyModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-occurrence/create")
+  import('./pages/Admin/Patrimony/update/components/modal-occurrence/create'),
 );
 const UpdateOccurrenceItemPatrimonyModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-occurrence/update")
+  import('./pages/Admin/Patrimony/update/components/modal-occurrence/update'),
 );
 
 const DialogRemoveLowPatrimony = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/low-remove-confirmation/")
+  import('./pages/Admin/Patrimony/update/components/low-remove-confirmation/'),
 );
 
 const ListTransferenceModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-transfer/list")
+  import('./pages/Admin/Patrimony/update/components/modal-transfer/list'),
 );
 const CreateTransferenceModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-transfer/create")
+  import('./pages/Admin/Patrimony/update/components/modal-transfer/create'),
 );
 const UpdateTransferenceModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-transfer/update")
+  import('./pages/Admin/Patrimony/update/components/modal-transfer/update'),
 );
 
 const DuplicatePatrimonyModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-duplicate")
+  import('./pages/Admin/Patrimony/update/components/modal-duplicate'),
 );
 
 const ImagesModal = lazy(() =>
-  import("./pages/Admin/Patrimony/update/components/modal-images/")
+  import('./pages/Admin/Patrimony/update/components/modal-images/'),
 );
 
 const Main = () => {
@@ -213,6 +213,6 @@ const Main = () => {
 };
 
 const create = (Component) =>
-  ReactDOM.createPortal(Component, document.getElementById("modal"));
+  ReactDOM.createPortal(Component, document.getElementById('modal'));
 
 export default Main;

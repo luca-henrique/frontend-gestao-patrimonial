@@ -1,35 +1,21 @@
-import React, { lazy, Suspense } from "react";
-import { Switch } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
+import React, {lazy, Suspense} from 'react';
+import {Switch, Route} from 'react-router-dom';
+import {ConnectedRouter} from 'connected-react-router';
 
-import Loader from "~/components/Loader";
+import Loader from '~/components/atomic/atoms/Loader';
 
-import history from "./history";
+import history from './history';
 
-import Route from "./Route";
-
-const License = lazy(() => import("../pages/License"));
-const SignIn = lazy(() => import("../pages/SignIn"));
-const AdminPage = lazy(() => import("../pages/Admin/"));
-
+const SignIn = lazy(() => import('../pages/SignIn'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
 export default function Routes() {
   return (
     <Suspense fallback={<Loader />}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/" exact component={(props) => <License {...props} />} />
-          <Route
-            path="/entrar"
-            component={(props) => <SignIn {...props} />}
-            isLicensed
-          />
+          <Route path='/' component={Dashboard} />
 
-          <Route
-            path="/admin"
-            component={(props) => <AdminPage {...props} />}
-            isLicensed
-            isPrivate
-          />
+          <Route path='/dashboard' component={Dashboard} />
         </Switch>
       </ConnectedRouter>
     </Suspense>
