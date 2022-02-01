@@ -7,7 +7,7 @@ const ChangerPasswordModal = lazy(() =>
   import('./pages/Users/ChangerPassword.jsx'),
 );
 const CreateAccountModal = lazy(() => import('./pages/Users/Create'));
-const UpdateAccountModal = lazy(() => import('./pages/Users/update'));
+const UpdateAccountModal = lazy(() => import('./pages/Users/Update'));
 
 const CreateLowItemModal = lazy(() =>
   import('./pages/Admin/GeneralRecord/low-item/create'),

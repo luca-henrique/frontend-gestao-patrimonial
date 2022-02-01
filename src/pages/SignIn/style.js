@@ -1,4 +1,17 @@
-import styled, { keyframes } from "styled-components";
+import styled, {keyframes} from 'styled-components';
+
+export const Container = styled.div`
+  display: flex;
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+    margin: 10px;
+  }
+  @media (min-width: 992px) {
+    justify-content: flex-end;
+    margin: 10px;
+  }
+`;
 
 const desktopAnimationLeft = keyframes`
  from {
@@ -28,10 +41,10 @@ export const Main = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 `;
 
-export const Container = styled.div`
+export const StyledContainer = styled.div`
   display: flex;
   flex-direction: row;
 

@@ -7,7 +7,7 @@ import logger from 'redux-logger';
 
 import rootReducer from './ducks';
 import rootSaga from './sagas';
-import history from '../routes/history';
+import history from '../router/history';
 const sagaMonitor =
   process.env.NODE_ENV === 'development'
     ? console.tron.createSagaMonitor()
@@ -21,8 +21,6 @@ const store = createStore(
   compose(applyMiddleware(...middlewares)),
 );
 
-const persistor = store;
-
 sagaMiddleware.run(rootSaga);
 
-export {store};
+export default store;

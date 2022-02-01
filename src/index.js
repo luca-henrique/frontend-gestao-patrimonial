@@ -1,28 +1,25 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {Provider} from 'react-redux';
 import ReduxToastr from 'react-redux-toastr';
 
-import Portal from './portal';
-
-import {store} from './store';
+import store from './store';
 
 import GlobalStyle from './styles/global';
 import './config/ReactotronConfig';
-import Routes from './routes/index';
 
-const Providers = (props) => {
-  return <Provider store={store}>{props.children}</Provider>;
-};
+import {Router} from 'react-router-dom';
+import history from '~/router/history';
+import Routes from '~/router';
 
 ReactDOM.render(
-  <Providers store={store}>
-    <Fragment>
-      <Routes />
-      <GlobalStyle />
+  <Provider store={store}>
+    <Router history={history}>
       <ReduxToastr />
-    </Fragment>
-  </Providers>,
+      <GlobalStyle />
+      <Routes />
+    </Router>
+  </Provider>,
   document.getElementById('root'),
 );
